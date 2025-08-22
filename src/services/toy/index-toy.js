@@ -17,5 +17,39 @@ function getEmptyToy() {
     }
 }
 
+function getDefaultFilter() {
+    return {
+        name: '',
+        price: 0,
+        inStock: 'all',
+        labels: [],
+        // sortType: 'createdAt',
+        // dir: -1,
+        // pageIdx: 0
+    }
+}
+
+
+function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+
+    for (const field in defaultFilter) {
+        if (field === 'inStock') {
+            const inStock = searchParams.get(field) || defaultFilter[field]
+            filterBy[field] = inStock !== 'all' ? JSON.parse(inStock) : 'all'
+        } else if (field === 'labels') {
+            filterBy[field] = searchParams.getAll(`labels`) || defaultFilter[field]
+        } else if (field === 'price') {
+            filterBy[field] = +searchParams.get(`price`) || defaultFilter[field]
+        } else {
+            filterBy[field] = searchParams.get(field) || defaultFilter[field]
+        }
+    }
+
+    return filterBy
+}
+
+
 const service = local
-export const toyService = { getEmptyToy, ...service }
+export const toyService = { getEmptyToy, getDefaultFilter, getFilterFromSearchParams, ...service }

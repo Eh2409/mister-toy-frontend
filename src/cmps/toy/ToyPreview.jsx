@@ -11,6 +11,7 @@ export function ToyPreview({ toy }) {
             <div>Name: {toy.name}</div>
             <div>Price: {toy.price}</div>
             <div>In Stock: {`${toy.inStock}`}</div>
+            <div>labels: {toy.labels.join(', ')}</div>
         </>
     )
 

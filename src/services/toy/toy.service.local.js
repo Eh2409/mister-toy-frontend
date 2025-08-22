@@ -5,7 +5,8 @@ export const toyService = {
     query,
     getById,
     remove,
-    save
+    save,
+    getLabels
 }
 
 const TOY_KEY = 'TOY_KEY'
@@ -14,6 +15,25 @@ _createToysArray()
 
 function query(filterBy = {}) {
     return storageService.query(TOY_KEY).then(toys => {
+
+        if (filterBy.name) {
+            const regExp = new RegExp(filterBy.name, 'i')
+            toys = toys.filter(toy => regExp.test(toy.name))
+        }
+
+        if (filterBy.price) {
+            toys = toys.filter(toy => toy.price >= filterBy.price)
+        }
+
+        if (filterBy.inStock !== 'all') {
+            toys = toys.filter(toy => toy.inStock === filterBy.inStock)
+        }
+
+        if (filterBy.labels?.length > 0) {
+            toys = toys.filter(toy => {
+                return filterBy.labels.some(label => toy.labels.includes(label))
+            })
+        }
 
         toys = toys.sort((t1, t2) => (t1.createdAt - t2.createdAt) * -1)
 
@@ -53,8 +73,8 @@ function _createToysArray() {
     if (!toys || !toys.length) {
         var toys = []
         const labels = getLabels()
-        const toyLabel = labels[1]
         for (let i = 0; i < 20; i++) {
+            const toyLabel = labels[getRandomIntInclusive(0, labels.length - 1)]
             toys.push(_createToy(toyLabel))
         }
         saveToStorage(TOY_KEY, toys)

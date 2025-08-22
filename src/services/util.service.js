@@ -53,3 +53,18 @@ export function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
 }
+
+export function cleanSearchParams(searchParams) {
+
+    const cleanedParams = {}
+
+    for (const field in searchParams) {
+        if (field === 'pageIdx' || field === 'inStock') {
+            cleanedParams[field] = searchParams[field]
+        } else if (searchParams[field]) {
+            cleanedParams[field] = searchParams[field]
+        }
+    }
+
+    return cleanedParams
+}
