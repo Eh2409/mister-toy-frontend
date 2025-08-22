@@ -1,0 +1,52 @@
+.toy-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 0.5em;
+    padding-inline: 0.5em;
+    margin-block-end: 1em;
+
+    .toy-item {
+        background-color: white;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        padding: 0.5em;
+        border-inline: solid 10px var(--mainSiteClrTheme);
+        outline: 1px solid var(--outlineClr1);
+        cursor: pointer;
+
+        &:hover {
+            .toy-name {
+                text-decoration: underline;
+            }
+        }
+
+        img {
+            grid-row: span 2;
+        }
+
+        .toy-prev-info {
+            padding-block: 0.5em;
+
+            .toy-price {
+                font-size: 1.5em;
+                font-weight: bold;
+                padding-block: 0.5em;
+
+                &.out {
+                    text-decoration: line-through;
+                }
+            }
+        }
+
+        .toy-actions {
+            cursor: auto;
+            grid-column: 2/2;
+            gap: 0.5em;
+
+            &>* {
+                flex-grow: 1;
+                text-align: center;
+            }
+        }
+    }
+}

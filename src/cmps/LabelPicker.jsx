@@ -33,10 +33,10 @@ export function LabelPicker({ labels, filterLabels, onSaveLabels }) {
     }
 
     return (
-        <section className="labels-picker">
+        <section className="labels-picker flex flex-column">
 
             {labels.map(label => {
-                return <label htmlFor={label} key={label}>
+                return <label htmlFor={label} key={label} className={labelsToEdit.includes(label) ? "active" : ""}>
                     <input type="checkbox"
                         name={label}
                         id={label}

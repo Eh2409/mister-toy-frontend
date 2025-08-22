@@ -1,0 +1,54 @@
+button,
+.btn {
+    cursor: pointer;
+
+    /* toy-action */
+    &.t-a {
+        background-color: var(--taBtnBgClr);
+        padding: 0.5em;
+        outline: none;
+        border: none;
+        color: white;
+        text-decoration: none;
+        transition: 200ms;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
+    }
+
+    /* pagination-button */
+    &.p-b {
+        background-color: white;
+        padding: 6px 12px;
+        border: 1px solid var(--outlineClr1);
+        color: var(--mainSiteClrTheme);
+
+        &:disabled {
+            cursor: auto;
+            color: var(--outlineClr1);
+        }
+
+        &:hover:not(:disabled, .active) {
+            filter: grayscale(1);
+            background-color: var(--outlineClr1);
+        }
+
+        &.active {
+            background-color: var(--mainSiteClrTheme);
+            border: 1px solid var(--mainSiteClrTheme);
+            color: white;
+
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+    }
+
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.5em;
+}

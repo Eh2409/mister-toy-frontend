@@ -1,0 +1,21 @@
+.labels-picker {
+    gap: 0.3em;
+
+    label {
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+            color: var(--mainSiteClrTheme);
+            text-decoration: underline;
+        }
+
+        &.active {
+            font-weight: bold;
+        }
+
+        input {
+            display: none;
+        }
+    }
+}

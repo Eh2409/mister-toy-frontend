@@ -1,14 +1,18 @@
 /* setup */
-/* @import "./setup/vars";
-@import "./setup/mixins";
-@import "./setup/functions"; */
+@import "./setup/vars";
 
 /* base */
 @import "./base/helpers.css";
 @import "./base/layout";
+@import "./base/form";
 @import "./base/base";
 
 /* pages */
-
+@import "./pages/ToyIndex.css";
 
 /* cmps */
+@import "./cmps/Pagination.css";
+@import "./cmps/LabelsPicker.css";
+
+@import "./cmps/toy/ToyList.css";
+@import "./cmps/toy/ToyFilter.css";

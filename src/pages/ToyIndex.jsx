@@ -72,6 +72,11 @@ export function ToyIndex(props) {
     return (
         <section className="toy-index">
 
+            <div className='toy-content-header flex justify-between align-center'>
+                <Link to='/toy/edit' className='btn t-a'>Add Toy</Link>
+                <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
+            </div>
+
             <aside className='toy-filter-wrapper'>
                 <ToyFilter
                     filterBy={{ name, price, labels, inStock }}
@@ -81,10 +86,6 @@ export function ToyIndex(props) {
             </aside>
 
             <main className='toy-index-content'>
-                <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
-
-                <Link to='/toy/edit'>Add Toy</Link>
-
                 {toys.length > 0 && <ToyList toys={toys} onRemove={onRemove} />}
 
                 <Pagination

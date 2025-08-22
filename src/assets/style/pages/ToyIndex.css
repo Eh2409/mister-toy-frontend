@@ -1,0 +1,12 @@
+.toy-index {
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+
+    .toy-content-header {
+        grid-column: 1/-1;
+        padding: 1em;
+    }
+
+    .toy-index-content {}
+
+}

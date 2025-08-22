@@ -35,15 +35,20 @@ export function Pagination({ maxPageCount, pageIdx, setPageIdx }) {
     }
 
     return (
-        <section className="pagination">
-            <button disabled={pageIdx <= 0} onClick={() => { onSetPageBydiff(-1) }}>Prev</button>
+        <section className="pagination flex justify-center align-center">
+            <button
+                disabled={pageIdx <= 0}
+                onClick={() => { onSetPageBydiff(-1) }}
+                className='p-b'
+            >«</button>
 
             {maxPageCount > 0 &&
                 pages.map((pageNum, idx) => {
                     return <Fragment key={pageNum}>
                         {isGap(pages, idx, pageNum) && <button className="gap" disabled={true}>...</button>}
-                        <button className={pageIdx === pageNum ? "active" : ""}
-                            onClick={() => { onSetPageIdx(pageNum) }}>
+                        <button className={`p-b ${pageIdx === pageNum ? "active" : ""}`}
+                            onClick={() => { onSetPageIdx(pageNum) }}
+                        >
                             {pageNum + 1}
                         </button>
                     </Fragment>
@@ -51,7 +56,12 @@ export function Pagination({ maxPageCount, pageIdx, setPageIdx }) {
                 })
             }
 
-            <button disabled={pageIdx >= maxPageCount - 1} onClick={() => { onSetPageBydiff(1) }}>Next</button>
+            <button
+                disabled={pageIdx >= maxPageCount - 1}
+                onClick={() => { onSetPageBydiff(1) }}
+                className='p-b'
+            >»</button>
+
         </section>
     )
 }

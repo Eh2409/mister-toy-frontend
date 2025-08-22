@@ -8,10 +8,11 @@ export function ToyPreview({ toy }) {
                 alt={toy.name}
                 onError={ev => ev.currentTarget.src = "/public/images/toys/no-toy-image.jpg"}
             />
-            <div>Name: {toy.name}</div>
-            <div>Price: {toy.price}</div>
-            <div>In Stock: {`${toy.inStock}`}</div>
-            <div>labels: {toy.labels.join(', ')}</div>
+            <div className="toy-prev-info">
+                <h2 className="toy-name">{toy.name}</h2>
+                <div>Labels: {toy.labels.join(', ')}</div>
+                <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
+            </div>
         </>
     )
 

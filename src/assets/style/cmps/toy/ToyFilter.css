@@ -1,0 +1,48 @@
+.toy-filter {
+    padding: .5em;
+
+    h2,
+    h3 {
+        border-block-end: 2px solid var(--mainSiteClrTheme);
+        margin-block-end: 0.5em;
+    }
+
+    .applied-filter {
+        padding-block-end: 0.5em;
+        gap: 0.5em;
+        flex-wrap: wrap;
+
+        .filter-val {
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: var(--appliedfilterClr);
+            outline: 2px solid var(--outlineClr1);
+            border-radius: 100vh;
+            padding: 0.5em;
+
+            word-break: break-all;
+            transition: 100ms ease-in-out;
+
+            &:hover {
+                filter: brightness(0.9);
+            }
+
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .filter-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        margin-block-end: 1em;
+
+        input,
+        select {
+            border: 1px solid var(--mainSiteClrTheme);
+
+        }
+    }
+}
