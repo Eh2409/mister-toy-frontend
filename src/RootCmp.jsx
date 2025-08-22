@@ -1,5 +1,8 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { store } from "../store/store.js";
+import { useEffect } from 'react'
+// services
+import { toyActions } from "../store/actions/toy.actions.js";
 
 //pages
 import { HomePage } from "./pages/HomePage.jsx"
@@ -12,6 +15,17 @@ import { Provider } from "react-redux";
 import { ToyDetails } from "./pages/ToyDetails.jsx";
 
 function RootCmp() {
+
+  useEffect(() => {
+    loadLabels()
+  })
+
+  function loadLabels() {
+    return toyActions.loadLabels()
+      .catch(err => {
+        console.log('err:', err)
+      })
+  }
 
 
   return (

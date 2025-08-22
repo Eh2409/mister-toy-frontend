@@ -18,6 +18,7 @@ export function ToyIndex(props) {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const maxPageCount = useSelector(storeState => storeState.toyModule.maxPageCount)
+    const toysLabels = useSelector(storeState => storeState.toyModule.labels)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(toyService.getFilterFromSearchParams(searchParams))
@@ -26,6 +27,12 @@ export function ToyIndex(props) {
         setSearchParams(cleanSearchParams(filterBy))
         load(filterBy)
     }, [filterBy])
+
+    useEffect(() => {
+        if (toysLabels?.length < 0) {
+            loadLabels()
+        }
+    }, [])
 
     function load(filterBy) {
         return toyActions.load(filterBy)
@@ -44,6 +51,14 @@ export function ToyIndex(props) {
             })
     }
 
+    function loadLabels() {
+        return toyActions.loadLabels()
+            .catch(err => {
+                console.log('err:', err)
+            })
+    }
+
+
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
@@ -58,7 +73,11 @@ export function ToyIndex(props) {
         <section className="toy-index">
 
             <aside className='toy-filter-wrapper'>
-                <ToyFilter filterBy={{ name, price, labels, inStock }} onSetFilterBy={onSetFilterBy} />
+                <ToyFilter
+                    filterBy={{ name, price, labels, inStock }}
+                    onSetFilterBy={onSetFilterBy}
+                    toysLabels={toysLabels}
+                />
             </aside>
 
             <main className='toy-index-content'>

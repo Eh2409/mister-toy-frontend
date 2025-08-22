@@ -5,7 +5,7 @@ import { LabelPicker } from '../LabelPicker'
 import { toyService } from '../../services/Toy/index-toy.js'
 
 
-export function ToyFilter({ filterBy, onSetFilterBy }) {
+export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const resetFilterRef = useRef({ name: '', price: 0, labels: [], inStock: 'all' })
@@ -64,7 +64,7 @@ export function ToyFilter({ filterBy, onSetFilterBy }) {
                         <option value="false">Out of stock</option>
                     </select>
 
-                    <LabelPicker labels={toyService.getLabels()} filterLabels={labels} onSaveLabels={onSaveLabels} />
+                    <LabelPicker labels={toysLabels} filterLabels={labels} onSaveLabels={onSaveLabels} />
 
                     <button type="button" className="reset-btn" onClick={onReset}>Reset</button>
                 </form>

@@ -85,8 +85,9 @@ function save(toy) {
 }
 
 function getLabels() {
-    return ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
+    const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
         'Outdoor', 'Battery Powered']
+    return Promise.resolve(labels)
 }
 
 

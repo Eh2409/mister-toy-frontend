@@ -1,11 +1,12 @@
 import { toyService } from "../../src/services/Toy/index-toy.js";
-import { ADD_TOY, REMOVE_TOY, SET_MAX_PAGE_COUNT, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, REMOVE_TOY, SET_LABELS, SET_MAX_PAGE_COUNT, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export const toyActions = {
     load,
     remove,
     save,
+    loadLabels
 }
 
 function load(filterBy = {}) {
@@ -46,6 +47,18 @@ function save(toyToSave) {
         })
         .catch(err => {
             console.log('toy action -> Cannot save toys', err)
+            throw err
+        })
+}
+
+
+function loadLabels() {
+    return toyService.getLabels()
+        .then(labels => {
+            store.dispatch({ type: SET_LABELS, labels })
+        })
+        .catch(err => {
+            console.log('toy action -> Cannot load toys labels', err)
             throw err
         })
 }
