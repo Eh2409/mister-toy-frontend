@@ -4,9 +4,12 @@ export const REMOVE_TOY = 'REMOVE_TOY'
 export const ADD_TOY = 'ADD_TOY'
 export const UPDATE_TOY = 'UPDATE_TOY'
 
+export const SET_MAX_PAGE_COUNT = 'SET_MAX_PAGE_COUNT'
+
 
 const initialState = {
     toys: [],
+    maxPageCount: 0
 }
 
 export function toyReducer(state = initialState, cmd = {}) {
@@ -28,6 +31,8 @@ export function toyReducer(state = initialState, cmd = {}) {
                 ...state,
                 toys: state.toys.map(t => t._id === cmd.toy._id ? cmd.toy : t)
             }
+        case SET_MAX_PAGE_COUNT:
+            return { ...state, maxPageCount: cmd.maxPageCount }
 
         default: return state
     }

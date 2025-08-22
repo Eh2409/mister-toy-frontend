@@ -10,6 +10,7 @@ export const toyService = {
 }
 
 const TOY_KEY = 'TOY_KEY'
+const PAGE_SIZE = 8
 
 _createToysArray()
 
@@ -45,17 +46,33 @@ function query(filterBy = {}) {
             }
         }
 
-        return toys
+        const maxPageCount = Math.ceil(toys.length / PAGE_SIZE)
+
+        if (filterBy.pageIdx !== undefined) {
+            const startIdx = filterBy.pageIdx * PAGE_SIZE
+            toys = toys.slice(startIdx, startIdx + PAGE_SIZE)
+        }
+
+        return { toys, maxPageCount }
+
     })
 }
+
 
 function getById(toyId) {
     return storageService.get(TOY_KEY, toyId)
 }
 
 function remove(toyId) {
-    return storageService.remove(TOY_KEY, toyId)
+    return storageService.remove(TOY_KEY, toyId).then(() => getMaxPage())
 }
+
+function getMaxPage() {
+    return storageService.query(TOY_KEY)
+        .then(toys => Math.ceil(toys.length / PAGE_SIZE))
+        .catch(err => { throw err })
+}
+
 
 function save(toy) {
 
