@@ -23,8 +23,8 @@ function getDefaultFilter() {
         price: 0,
         inStock: 'all',
         labels: [],
-        // sortType: 'createdAt',
-        // dir: -1,
+        sortType: 'createdAt',
+        dir: -1,
         // pageIdx: 0
     }
 }
@@ -40,8 +40,8 @@ function getFilterFromSearchParams(searchParams) {
             filterBy[field] = inStock !== 'all' ? JSON.parse(inStock) : 'all'
         } else if (field === 'labels') {
             filterBy[field] = searchParams.getAll(`labels`) || defaultFilter[field]
-        } else if (field === 'price') {
-            filterBy[field] = +searchParams.get(`price`) || defaultFilter[field]
+        } else if (field === 'price' || field === 'dir') {
+            filterBy[field] = +searchParams.get(field) || defaultFilter[field]
         } else {
             filterBy[field] = searchParams.get(field) || defaultFilter[field]
         }

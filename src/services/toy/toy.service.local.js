@@ -35,7 +35,15 @@ function query(filterBy = {}) {
             })
         }
 
-        toys = toys.sort((t1, t2) => (t1.createdAt - t2.createdAt) * -1)
+        if (filterBy.sortType && filterBy.dir) {
+            if (filterBy.sortType === 'price') {
+                toys = toys.sort((t1, t2) => (t1.price - t2.price) * filterBy.dir)
+            } else if (filterBy.sortType === 'createdAt') {
+                toys = toys.sort((t1, t2) => (t1.createdAt - t2.createdAt) * filterBy.dir)
+            } else if (filterBy.sortType === 'name') {
+                toys = toys.sort((t1, t2) => (t1.name.localeCompare(t2.name)) * filterBy.dir)
+            }
+        }
 
         return toys
     })

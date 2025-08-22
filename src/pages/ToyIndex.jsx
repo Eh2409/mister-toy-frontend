@@ -11,6 +11,7 @@ import { cleanSearchParams } from '../services/util.service.js'
 // cmps
 import { ToyList } from '../cmps/toy/ToyList.jsx'
 import { ToyFilter } from '../cmps/toy/ToyFilter.jsx'
+import { ToySort } from '../cmps/toy/ToySort.jsx'
 
 export function ToyIndex(props) {
 
@@ -45,7 +46,7 @@ export function ToyIndex(props) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    const { name, price, labels, inStock } = filterBy
+    const { name, price, labels, inStock, sortType, dir } = filterBy
 
     return (
         <section className="toy-index">
@@ -55,6 +56,8 @@ export function ToyIndex(props) {
             </aside>
 
             <main className='toy-index-content'>
+                <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
+
                 <Link to='/toy/edit'>Add Toy</Link>
 
                 {toys.length > 0 && <ToyList toys={toys} onRemove={onRemove} />}
