@@ -9,6 +9,7 @@
 
 /* pages */
 @import "./pages/ToyIndex.css";
+@import "./pages/ToyEdit.css";
 
 /* cmps */
 @import "./cmps/Pagination.css";

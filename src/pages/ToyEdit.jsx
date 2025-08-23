@@ -60,25 +60,27 @@ export function ToyEdit(props) {
 
     return (
         <section className="toy-edit">
-            <h2>{toyId ? "Update" : "Add"} toy</h2>
+
+            <h2>{toyId ? "Update" : "Add"} Toy</h2>
+
             <form onSubmit={onSubmit}>
 
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Name:</label>
                 <input type="text" name="name" id="name" value={name} onChange={handleChange} required />
 
-                <label htmlFor="price">Price</label>
+                <label htmlFor="price">Price:</label>
                 <input type="number" name="price" id="price" min={1} value={price || ''} onChange={handleChange} required />
 
-                <label htmlFor="imgUrl">Toy Image Url</label>
+                <label htmlFor="imgUrl">Toy Image Url:</label>
                 <input type="text" name="imgUrl" id="imgUrl" value={imgUrl} onChange={handleChange} />
 
-                <label htmlFor="inStock">In Stock</label>
+                <label htmlFor="inStock">In Stock:</label>
                 <input type="checkbox" name="inStock" id="inStock" checked={inStock} onChange={handleChange} />
 
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">Description:</label>
                 <textarea type="text" name="description" id="description" value={description} onChange={handleChange} required ></textarea>
 
-                <button>Save</button>
+                <button className="t-a">Save</button>
             </form>
         </section>
     )

@@ -1,5 +1,6 @@
 .app-header {
     background: white;
+    margin-block-end: 1em;
     /* position: sticky;
     top: 0;
     z-index: 1000; */

@@ -1,0 +1,26 @@
+.toy-edit {
+    border-inline: solid 10px var(--mainSiteClrTheme);
+    outline: 1px solid var(--outlineClr1);
+    padding: 0.5em;
+    background-color: white;
+
+    h2 {
+        text-align: center;
+        margin-block-end: 1em;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        gap: 1em;
+
+        label {
+            font-weight: bold;
+        }
+
+        button {
+            grid-column: 1/-1;
+        }
+    }
+}
