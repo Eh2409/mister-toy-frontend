@@ -11,11 +11,11 @@
     }
 
     .app-header {
-        height: 5vh;
+        height: 15vh;
     }
 
     .app-main-content {
-        min-height: calc(100vh - 5vh);
+        min-height: calc(100vh - 15vh);
     }
 
 }

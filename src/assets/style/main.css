@@ -13,6 +13,7 @@
 /* cmps */
 @import "./cmps/Pagination.css";
 @import "./cmps/LabelsPicker.css";
+@import "./cmps/AppHeader.css";
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";

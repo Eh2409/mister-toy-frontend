@@ -8,10 +8,13 @@ export const SET_MAX_PAGE_COUNT = 'SET_MAX_PAGE_COUNT'
 
 export const SET_LABELS = 'SET_LABELS'
 
+export const SET_SEARCH_WORD = 'SET_SEARCH_WORD'
+
 const initialState = {
     toys: [],
     maxPageCount: 0,
-    labels: []
+    labels: [],
+    searchWord: ''
 }
 
 export function toyReducer(state = initialState, cmd = {}) {
@@ -35,8 +38,12 @@ export function toyReducer(state = initialState, cmd = {}) {
             }
         case SET_MAX_PAGE_COUNT:
             return { ...state, maxPageCount: cmd.maxPageCount }
+
         case SET_LABELS:
             return { ...state, labels: cmd.labels }
+
+        case SET_SEARCH_WORD:
+            return { ...state, searchWord: cmd.searchWord }
 
         default: return state
     }

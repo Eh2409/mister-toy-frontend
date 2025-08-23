@@ -1,12 +1,13 @@
 import { toyService } from "../../src/services/Toy/index-toy.js";
-import { ADD_TOY, REMOVE_TOY, SET_LABELS, SET_MAX_PAGE_COUNT, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, REMOVE_TOY, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export const toyActions = {
     load,
     remove,
     save,
-    loadLabels
+    loadLabels,
+    setSearchWord
 }
 
 function load(filterBy = {}) {
@@ -61,4 +62,8 @@ function loadLabels() {
             console.log('toy action -> Cannot load toys labels', err)
             throw err
         })
+}
+
+function setSearchWord(searchWord) {
+    store.dispatch({ type: SET_SEARCH_WORD, searchWord })
 }

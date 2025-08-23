@@ -1,16 +1,29 @@
 
 import { useState, useEffect, useRef } from 'react'
+import { useSelector } from "react-redux"
+
+//services
+import { toyActions } from '../../../store/actions/toy.actions.js'
+
+//cmps
 import { LabelPicker } from '../LabelPicker'
 
 
 export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
-
+    toyActions
+    const searchWord = useSelector(storeState => storeState.toyModule.searchWord)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const resetFilterRef = useRef({ name: '', price: 0, labels: [], inStock: 'all' })
 
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
+
+    useEffect(() => {
+        if (searchWord) {
+            setSearchWordInFilter(searchWord)
+        }
+    }, [searchWord])
 
     function handleChange({ target }) {
         var { value, name, type } = target
@@ -53,13 +66,13 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
         }
     }
 
+    function setSearchWordInFilter(searchWord) {
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, name: searchWord }))
+        toyActions.setSearchWord('')
+    }
+
     function isAppliedFilterVisible(filterByToEdit) {
         const { name, price, labels, inStock } = filterByToEdit
-        console.log('Here:', !name)
-        console.log('Here:', !price)
-        console.log('Here:', labels.length <= 0)
-        console.log('Here:', inStock === 'all')
-        console.log('Here:', !name && !price && labels.length <= 0 && inStock === 'all')
         if (!name && !price && labels.length <= 0 && inStock === 'all') return false
         else return true
     }
