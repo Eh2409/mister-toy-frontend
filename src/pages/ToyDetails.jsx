@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 // services
 import { toyService } from '../services/Toy/index-toy.js'
@@ -29,16 +29,38 @@ export function ToyDetails(props) {
     return (
         <section className='toy-details'>
 
-            <img
-                src={toy.imgUrl}
-                alt={toy.name}
-                onError={ev => ev.currentTarget.src = "/public/images/toys/no-toy-image.jpg"}
-            />
+            <div className='toy-details-header'>
+                <h2>{toy.name}</h2>
+                {toy.labels.length > 0 &&
+                    <div>Labels:
+                        {toy.labels.map(l => {
+                            return <Link to={`/toy?labels=${l}`} key={l} className='toy-label'>{l}</Link>
+                        })}
+                    </div>}
+            </div>
 
-            <div>Name: {toy.name}</div>
-            <div>Price: {toy.price}</div>
-            <div>In Stock: {`${toy.inStock}`}</div>
-            <div>Description: {toy.description}</div>
-        </section>
+            <hr />
+
+            <section className='toy-details-content'>
+                <img
+                    src={toy.imgUrl}
+                    alt={toy.name}
+                    className='toy-img'
+                    onError={ev => ev.currentTarget.src = "/public/images/toys/no-toy-image.jpg"}
+                />
+
+                <div className='toy-info'>
+                    <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
+                    <div className='toy-description'>
+                        <h3>Product Description</h3>
+                        <p>{toy.description}</p>
+                    </div>
+                </div>
+
+            </section>
+
+
+
+        </section >
     )
 }
