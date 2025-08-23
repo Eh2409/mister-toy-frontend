@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 export function LabelPicker({ labels, filterLabels, onSaveLabels }) {
 
     const [labelsToEdit, setLabelsToEdit] = useState(filterLabels)
-
+ 
 
     useEffect(() => {
         const filterLabelsStr = JSON.stringify(filterLabels.sort())
@@ -33,7 +33,7 @@ export function LabelPicker({ labels, filterLabels, onSaveLabels }) {
     }
 
     return (
-        <section className="labels-picker flex flex-column">
+        <section className="labels-picker flex flex-column" onClick={(evnet) => event.stopPropagation()}>
 
             {labels.map(label => {
                 return <label htmlFor={label} key={label} className={labelsToEdit.includes(label) ? "active" : ""}>
