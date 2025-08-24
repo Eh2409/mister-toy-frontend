@@ -62,6 +62,25 @@ button,
         }
     }
 
+
+    &.chat-btn {
+        position: fixed;
+        right: 1em;
+        bottom: 1em;
+        width: 70px;
+        aspect-ratio: 1/1;
+        background-color: var(--mainSiteClrTheme);
+        border-radius: 20px;
+        padding: 0.5em;
+    }
+
+    &.close-btn {
+        background-color: inherit;
+        border-radius: 50%;
+        min-width: 20px;
+        aspect-ratio: 1/1;
+        border: 1px solid var(--outlineClr1);
+    }
 }
 
 input,

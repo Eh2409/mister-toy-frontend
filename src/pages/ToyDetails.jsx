@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom'
 
 // services
 import { toyService } from '../services/Toy/index-toy.js'
+import { Popup } from '../cmps/Popup.jsx'
+import { Chat } from '../cmps/Chat.jsx'
 
 export function ToyDetails(props) {
 
@@ -10,6 +12,7 @@ export function ToyDetails(props) {
     const { toyId } = params
 
     const [toy, setToy] = useState(null)
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
 
     useEffect(() => {
         if (toyId) {
@@ -17,12 +20,39 @@ export function ToyDetails(props) {
         }
     }, [])
 
+    useEffect(() => {
+        if (isPopupOpen) {
+            addEventListener('keydown', onKeydown)
+        } else {
+            removeEventListener('keydown', onKeydown)
+        }
+
+        return (() => {
+            removeEventListener('keydown', onKeydown)
+        })
+    }, [isPopupOpen])
+
+
     function loadToy(toyId) {
         toyService.getById(toyId)
             .then(toy => setToy(toy))
             .catch(err => {
                 console.log('err:', err)
             })
+    }
+
+    function toggleIsPopupOpen() {
+        setIsPopupOpen(!isPopupOpen)
+    }
+
+    function onClosePopup() {
+        setIsPopupOpen(false)
+    }
+
+    function onKeydown(ev) {
+        if (ev.key === 'Escape') {
+            toggleIsPopupOpen()
+        }
     }
 
     if (!toy) return 'loading...'
@@ -60,6 +90,17 @@ export function ToyDetails(props) {
             </section>
 
 
+            <div className='btn chat-btn' onClick={toggleIsPopupOpen}>
+                <img src="/public/images/chat.svg" alt="chat" className='icon' />
+            </div>
+
+            <Popup
+                isPopupOpen={isPopupOpen}
+                onClosePopup={onClosePopup}
+                header={<h2>Toy Chat</h2>}
+            >
+                <Chat />
+            </Popup>
 
         </section >
     )

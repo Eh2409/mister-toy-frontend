@@ -1,0 +1,49 @@
+.chat {
+    .chat-messages {
+        height: 300px;
+        background-color: white;
+        margin-block-end: 1em;
+        border-radius: 10px;
+        overflow-y: scroll;
+        padding: 0.5em;
+
+        .msg {
+            background-color: var(--chatMsgClr1);
+            width: max-content;
+            max-width: 90%;
+            border-radius: 20px;
+            padding: 1em;
+            margin-block-end: 0.5em;
+
+            &.chat-bot {
+                margin-inline-end: 1em;
+            }
+
+            &.you {
+                background-color: var(--chatMsgClr2);
+                justify-self: end;
+                margin-inline-start: 1em;
+            }
+
+            .msg-header {
+                gap: 1em;
+                margin-block-end: 0.2em;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    form {
+        overflow: hidden;
+        border-radius: 10px;
+
+        &:has(input:focus) {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.21);
+        }
+
+        input {
+            outline: none;
+            border: none;
+        }
+    }
+}

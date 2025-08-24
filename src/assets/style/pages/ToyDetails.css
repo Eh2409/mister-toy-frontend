@@ -1,4 +1,5 @@
 .toy-details {
+    position: relative;
     margin-block-end: 1em;
 
     .toy-details-header {
