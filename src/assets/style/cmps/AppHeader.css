@@ -1,16 +1,22 @@
 .app-header {
     background: white;
-    margin-block-end: 1em;
+    /* margin-block-end: 1em; */
     /* position: sticky;
     top: 0;
     z-index: 1000; */
 
+    display: flex;
+    flex-direction: column;
+
     &>* {
         padding-inline: 3em;
         padding-block: 0.5em;
+        flex: 1;
     }
 
     .header-content {
+
+
         .main-search {
             min-width: 40vw;
             outline: 2px solid var(--mainSiteClrTheme);

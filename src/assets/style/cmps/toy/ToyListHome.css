@@ -1,0 +1,97 @@
+    .home-toys {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(10px, 1fr));
+        grid-template-rows: 400px;
+        gap: 1.5em;
+
+        margin-block-end: 1em;
+
+        .toy-item {
+            display: grid;
+            grid-template-rows: subgrid;
+            grid-row: 2 span;
+            gap: 0;
+
+            cursor: pointer;
+            outline: solid 2px var(--taBtnBgClr);
+            transition: 200ms ease-in-out;
+
+
+            &:nth-child(1),
+            &:nth-child(2) {
+                grid-column: span 2;
+
+
+                .toy-image-wrapper {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    overflow: hidden;
+
+                    .toy-image {
+                        width: 100%;
+                        height: 100%;
+                        scale: 1;
+                        transition: 300ms ease-in-out;
+                        object-fit: cover;
+                    }
+
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    outline: solid 2px var(--mainSiteClrTheme);
+
+
+                    .toy-image {
+                        scale: 1.1;
+                    }
+                }
+            }
+
+
+            .toy-image-wrapper {
+                width: 100%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                overflow: hidden;
+
+                .toy-image {
+                    width: 100%;
+                    scale: 1;
+                    transition: 300ms ease-in-out;
+                    object-fit: cover;
+                }
+
+            }
+
+            .toy-name {
+                padding: 0.5em;
+                text-align: center;
+                background-color: var(--taBtnBgClr);
+                transition: 200ms ease-in-out;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            &:hover {
+                cursor: pointer;
+                outline: solid 2px var(--mainSiteClrTheme);
+
+
+                .toy-image {
+                    scale: 1.1;
+                }
+
+                .toy-name {
+                    padding: 0.5em;
+                    text-align: center;
+                    background-color: var(--mainSiteClrTheme);
+                    text-decoration: underline;
+                }
+            }
+
+        }
+    }

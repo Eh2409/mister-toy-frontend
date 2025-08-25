@@ -5,6 +5,10 @@
     >* {
         grid-column: 2;
 
+        &:has(.home-page) {
+            grid-column: 1/-1;
+        }
+
         &.full {
             grid-column: 1/-1;
         }

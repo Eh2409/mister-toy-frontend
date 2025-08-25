@@ -18,8 +18,17 @@ import { About } from "./pages/About.jsx";
 function RootCmp() {
 
   useEffect(() => {
+    const filterBy = { sortType: 'createdAt', dir: -1, inStock: true }
+    loadToys(filterBy)
     loadLabels()
-  })
+  }, [])
+
+  function loadToys(filterBy) {
+    return toyActions.load(filterBy)
+      .catch(err => {
+        console.log('err:', err)
+      })
+  }
 
   function loadLabels() {
     return toyActions.loadLabels()

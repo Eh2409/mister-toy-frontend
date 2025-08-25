@@ -25,7 +25,7 @@ export function ToyIndex(props) {
 
     useEffect(() => {
         setSearchParams(cleanSearchParams(filterBy))
-        load(filterBy)
+        loadToys(filterBy)
     }, [filterBy])
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export function ToyIndex(props) {
         }
     }, [])
 
-    function load(filterBy) {
+    function loadToys(filterBy) {
         return toyActions.load(filterBy)
             .catch(err => {
                 console.log('err:', err)

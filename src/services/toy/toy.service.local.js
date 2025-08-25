@@ -26,9 +26,11 @@ function query(filterBy = {}) {
             toys = toys.filter(toy => toy.price >= filterBy.price)
         }
 
+
         if (filterBy.inStock !== 'all') {
             toys = toys.filter(toy => toy.inStock === filterBy.inStock)
         }
+
 
         if (filterBy.labels?.length > 0) {
             toys = toys.filter(toy => {
@@ -47,6 +49,8 @@ function query(filterBy = {}) {
         }
 
         const maxPageCount = Math.ceil(toys.length / PAGE_SIZE)
+
+
 
         if (filterBy.pageIdx !== undefined) {
             const startIdx = filterBy.pageIdx * PAGE_SIZE

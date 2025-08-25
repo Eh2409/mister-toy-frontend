@@ -12,6 +12,7 @@
 @import "./pages/ToyEdit.css";
 @import "./pages/ToyDetails.css";
 @import "./pages/About.css";
+@import "./pages/HomePage.css";
 
 /* cmps */
 @import "./cmps/Pagination.css";
@@ -22,3 +23,4 @@
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";
+@import "./cmps/toy/ToyListHome.css";
