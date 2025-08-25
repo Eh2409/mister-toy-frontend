@@ -13,6 +13,7 @@ import { ToyEdit } from "./pages/ToyEdit.jsx";
 import { AppHeader } from "./cmps/AppHeader.jsx";
 import { Provider } from "react-redux";
 import { ToyDetails } from "./pages/ToyDetails.jsx";
+import { About } from "./pages/About.jsx";
 
 function RootCmp() {
 
@@ -36,6 +37,7 @@ function RootCmp() {
           <main className="app-main-content">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<About />} />
               <Route path="/toy" element={<ToyIndex />} />
               <Route path="/toy/:toyId" element={<ToyDetails />} />
               <Route path="/toy/edit" element={<ToyEdit />} />

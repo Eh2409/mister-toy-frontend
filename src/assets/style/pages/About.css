@@ -1,0 +1,51 @@
+.about {
+
+    &>* {
+        margin-block-end: 0.5em;
+    }
+
+    p {
+        max-width: 80vw;
+        font-size: 1rem;
+    }
+
+    .branches-list {
+        outline: solid 1px var(--outlineClr1);
+
+        .branche-header {
+            background-color: var(--mainSiteClrTheme);
+            color: white;
+            padding: 0.5em;
+            cursor: pointer;
+            box-shadow: inset 0px -1px 0px var(--outlineClr1);
+
+            .toggle-symbol {
+                display: inline-block;
+                width: 20px;
+                text-align: center;
+            }
+        }
+
+        .branche-info {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: 200ms ease-in-out;
+
+            &.open {
+                grid-template-rows: 1fr;
+            }
+
+            &>* {
+                overflow: hidden;
+
+                &>* {
+                    padding: 0.5em;
+
+                    span {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -44,6 +44,7 @@ export function AppHeader(props) {
 
             <nav className="header-nav flex  align-center">
                 <NavLink to="/">Home</NavLink>
+                <NavLink to="/about">About Us</NavLink>
                 <NavLink to="/toy">Toys</NavLink>
             </nav>
 
