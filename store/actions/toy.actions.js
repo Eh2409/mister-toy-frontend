@@ -10,9 +10,10 @@ export const toyActions = {
     setSearchWord
 }
 
-function load(filterBy = {}) {
-
-    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+function load(filterBy = {}, isLoaderActive = true) {
+    if (isLoaderActive) {
+        store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    }
 
     return toyService.query(filterBy)
         .then(({ toys, maxPageCount }) => {
@@ -24,7 +25,9 @@ function load(filterBy = {}) {
             throw err
         })
         .finally(() => {
-            store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+            if (isLoaderActive) {
+                store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+            }
         })
 }
 

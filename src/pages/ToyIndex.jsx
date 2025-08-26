@@ -26,6 +26,7 @@ export function ToyIndex(props) {
     const [filterBy, setFilterBy] = useState(toyService.getFilterFromSearchParams(searchParams))
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
     const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
+    const [isMiniLoading, setIsMiniLoading] = useState({ isLoading: false, toyId: '' })
 
     useEffect(() => {
         setSearchParams(cleanSearchParams(filterBy))
@@ -39,20 +40,25 @@ export function ToyIndex(props) {
         }
     }, [])
 
-    function loadToys(filterBy) {
-        return toyActions.load(filterBy)
+    function loadToys(filterBy, isLoaderActive = true) {
+        return toyActions.load(filterBy, isLoaderActive)
             .catch(err => {
                 console.log('err:', err)
             })
     }
 
     function onRemove(toyId) {
+        setIsMiniLoading({ isLoading: true, toyId: toyId })
         return toyActions.remove(toyId)
             .then(() => {
-                console.log('toy removes:')
+                const isLoaderActive = false
+                loadToys(filterBy, isLoaderActive)
             })
             .catch(err => {
                 console.log('err:', err)
+            })
+            .finally(() => {
+                setIsMiniLoading({ isLoading: false, toyId: '' })
             })
     }
 
@@ -119,7 +125,7 @@ export function ToyIndex(props) {
                 {isLoading
                     ? <ToyLoader />
                     : (toys?.length > 0
-                        ? <ToyList toys={toys} onRemove={onRemove} />
+                        ? <ToyList toys={toys} onRemove={onRemove} isMiniLoading={isMiniLoading} />
                         : <div className='no-toys-found-msg'>No items match your search criteria.</div>
                     )
                 }

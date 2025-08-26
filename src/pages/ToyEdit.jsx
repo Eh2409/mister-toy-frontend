@@ -202,7 +202,7 @@ export function ToyEdit(props) {
                     <textarea type="text" name="description" id="description" value={description} onChange={handleChange} required ></textarea>
 
                     <button className="t-a">
-                        {isLoading ? <div className={isLoading ? "mini-loader" : ""}></div> : "Save"}
+                        {isLoading ? <div className="mini-loader"></div> : "Save"}
                     </button>
                 </form>
             </div>
