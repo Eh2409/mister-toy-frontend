@@ -1,6 +1,6 @@
 .toy-details {
     position: relative;
-    margin-block-end: 1em;
+    margin-block-end: 2em;
 
     .toy-details-header {
         h2 {
@@ -9,7 +9,7 @@
 
         .toy-labels {
             flex-wrap: wrap;
-            gap: 1em;
+            gap: 0.5em;
 
             .toy-label {
                 padding-inline-start: 0.5em;
@@ -28,9 +28,6 @@
     }
 
     .toy-details-content {
-        display: grid;
-        grid-template-columns: 500px 1fr;
-        gap: 1em;
 
         .toy-img {
             outline: solid 1px var(--outlineClr1);
@@ -51,4 +48,45 @@
         }
     }
 
+    .chat-btn {
+        width: 50px;
+        aspect-ratio: 1/1;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+}
+
+
+@media (min-width: 750px) {
+    .toy-details {
+
+        .toy-details-header {
+            .toy-labels {
+                gap: 1em;
+            }
+        }
+
+
+        .toy-details-content {
+            display: grid;
+            grid-template-columns: minmax(10px, 40%) 1fr;
+            gap: 1em;
+
+        }
+
+        .chat-btn {
+            width: 70px;
+            aspect-ratio: 1/1;
+            opacity: 1;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+        }
+
+    }
 }
