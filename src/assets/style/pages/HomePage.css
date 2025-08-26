@@ -3,11 +3,17 @@
     color: white;
     background-color: #1c1c1c;
 
-    padding-inline: 8em;
+    padding-inline: 3em;
     padding-block-start: 1em;
 
     h2 {
         margin-block-end: 0.5em;
     }
 
+}
+
+@media (min-width: 750px) {
+    .home-page {
+        padding-inline: 8em;
+    }
 }

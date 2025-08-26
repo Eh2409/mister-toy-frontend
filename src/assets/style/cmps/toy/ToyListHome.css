@@ -1,8 +1,7 @@
     .home-toys {
         display: grid;
-        grid-template-columns: repeat(4, minmax(10px, 1fr));
-        grid-template-rows: 400px;
-        gap: 1.5em;
+        grid-template-columns: repeat(auto-fill, 1fr);
+        gap: 1em;
 
         margin-block-end: 1em;
 
@@ -93,5 +92,15 @@
                 }
             }
 
+        }
+    }
+
+
+
+    @media (min-width: 750px) {
+        .home-toys {
+            grid-template-columns: repeat(4, minmax(10px, 1fr));
+            grid-template-rows: 400px;
+            gap: 1.5em;
         }
     }
