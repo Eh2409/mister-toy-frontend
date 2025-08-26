@@ -13,6 +13,7 @@
         border-inline: solid 10px var(--mainSiteClrTheme);
         outline: 1px solid var(--outlineClr1);
         cursor: pointer;
+        gap: 0.5em;
 
         &:hover {
             .toy-name {
@@ -26,6 +27,13 @@
 
         .toy-prev-info {
             padding-block: 0.5em;
+            overflow: hidden;
+
+            .toy-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
 
             .toy-price {
                 font-size: 1.5em;
