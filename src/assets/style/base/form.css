@@ -81,6 +81,13 @@ button,
         aspect-ratio: 1/1;
         border: 1px solid var(--outlineClr1);
     }
+
+    &.user-btn,
+    &.mobile-nav-btn {
+        background-color: inherit;
+        outline: none;
+        border: none;
+    }
 }
 
 input,

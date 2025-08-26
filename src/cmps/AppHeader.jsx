@@ -1,4 +1,5 @@
-import { NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useNavigate, useLocation, Link } from 'react-router-dom'
 
 //services
 import { toyActions } from '../../store/actions/toy.actions.js'
@@ -7,6 +8,8 @@ export function AppHeader(props) {
 
     const navigate = useNavigate()
     const location = useLocation()
+
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
 
     function onSearch(ev) {
         ev.preventDefault()
@@ -24,11 +27,28 @@ export function AppHeader(props) {
 
     }
 
+    function toggleIsMobileNavOpen() {
+        setIsMobileNavOpen(!isMobileNavOpen)
+    }
+
+    function onCloseMobileNav() {
+        setIsMobileNavOpen(false)
+    }
+
     return (
         <header className="app-header full">
 
-            <div className='header-content flex justify-between align-center'>
-                <h1>Mister Toy</h1>
+
+            <div className='header-content'>
+
+                <button className='mobile-nav-btn' onClick={toggleIsMobileNavOpen}>
+                    {isMobileNavOpen
+                        ? <img src="/images/x.svg" alt="x" className='icon' />
+                        : <img src="/images/bars.svg" alt="bars" className='icon' />
+                    }
+                </button>
+
+                <Link to="/" className='main-app-logo'>Mister Toy</Link>
 
                 <form className='main-search flex' onSubmit={onSearch}>
                     <input type="text" name="search" className='m-s' placeholder='Ready, set, toy search!' />
@@ -38,14 +58,21 @@ export function AppHeader(props) {
                     </button>
                 </form>
 
-                <button>user</button>
+                <button className='user-btn'>
+                    <img src="/images/user.svg" alt="user" className='icon' />
+                </button>
             </div>
 
+            <div className={`nav-black-wrapper ${isMobileNavOpen ? "nav-open" : ""}`} onClick={onCloseMobileNav}></div>
 
-            <nav className="header-nav flex  align-center">
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/about">About Us</NavLink>
-                <NavLink to="/toy">Toys</NavLink>
+            <nav className={`main-app-nav flex  align-center ${isMobileNavOpen ? "nav-open" : ""}`}>
+                <div className='nav-header flex justify-between align-center'>
+                    <span>Mister Toy</span>
+                    <button className='close-btn' onClick={onCloseMobileNav}>x</button>
+                </div>
+                <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
+                <NavLink to="/about" onClick={onCloseMobileNav}>About Us</NavLink>
+                <NavLink to="/toy" onClick={onCloseMobileNav}>Toys</NavLink>
             </nav>
 
         </header>
