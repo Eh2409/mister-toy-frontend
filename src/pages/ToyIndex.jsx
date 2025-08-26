@@ -67,7 +67,7 @@ export function ToyIndex(props) {
         setFilterBy(prevFilter => ({ ...prevFilter, pageIdx: pageNum }))
     }
 
-    const { name, price, labels, inStock, sortType, dir, pageIdx } = filterBy
+    const { name, price, brands, productTypes, companies, inStock, sortType, dir, pageIdx } = filterBy
 
     return (
         <section className="toy-index">
@@ -79,7 +79,7 @@ export function ToyIndex(props) {
 
             <aside className='toy-filter-wrapper'>
                 <ToyFilter
-                    filterBy={{ name, price, labels, inStock }}
+                    filterBy={{ name, price, brands, productTypes, companies, inStock }}
                     onSetFilterBy={onSetFilterBy}
                     toysLabels={toysLabels}
                 />

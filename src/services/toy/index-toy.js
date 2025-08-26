@@ -11,7 +11,9 @@ function getEmptyToy() {
         name: '',
         imgUrl: '',
         price: 0,
-        labels: [],
+        brands: [],
+        productTypes: [],
+        companies: [],
         inStock: true,
         description: ''
     }
@@ -22,7 +24,9 @@ function getDefaultFilter() {
         name: '',
         price: 0,
         inStock: 'all',
-        labels: [],
+        brands: [],
+        productTypes: [],
+        companies: [],
         sortType: 'createdAt',
         dir: -1,
         pageIdx: 0
@@ -38,8 +42,8 @@ function getFilterFromSearchParams(searchParams) {
         if (field === 'inStock') {
             const inStock = searchParams.get(field) || defaultFilter[field]
             filterBy[field] = inStock !== 'all' ? JSON.parse(inStock) : 'all'
-        } else if (field === 'labels') {
-            filterBy[field] = searchParams.getAll(`labels`) || defaultFilter[field]
+        } else if (field === 'brands' || field === 'productTypes' || field === 'companies') {
+            filterBy[field] = searchParams.getAll(field) || defaultFilter[field]
         } else if (field === 'price' || field === 'dir' || field === 'pageIdx') {
             filterBy[field] = +searchParams.get(field) || defaultFilter[field]
         } else {

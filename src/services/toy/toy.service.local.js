@@ -32,11 +32,25 @@ function query(filterBy = {}) {
         }
 
 
-        if (filterBy.labels?.length > 0) {
+        if (filterBy.brands?.length > 0) {
             toys = toys.filter(toy => {
-                return filterBy.labels.some(label => toy.labels.includes(label))
+                return filterBy.brands.some(brand => toy.brands.includes(brand))
             })
         }
+
+        if (filterBy.productTypes?.length > 0) {
+            toys = toys.filter(toy => {
+                return filterBy.productTypes.some(productType => toy.productTypes.includes(productType))
+            })
+        }
+
+        if (filterBy.companies?.length > 0) {
+            toys = toys.filter(toy => {
+                return filterBy.companies.some(company => toy.companies.includes(company))
+            })
+        }
+
+
 
         if (filterBy.sortType && filterBy.dir) {
             if (filterBy.sortType === 'price') {
@@ -88,10 +102,33 @@ function save(toy) {
     }
 }
 
-function getLabels() {
-    const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
-        'Outdoor', 'Battery Powered']
-    return Promise.resolve(labels)
+function getLabels(params) {
+
+    const brands = [
+        "Naruto",
+        "Dragon Ball",
+        "One Piece",
+        "My Hero Academia",
+        "Demon Slayer"
+    ]
+
+    const productTypes = [
+        "Action Figure",
+        "Nendoroid",
+        "Model Kit",
+        "Plush Toy",
+        "Statue"
+    ]
+
+    const companies = [
+        "Bandai",
+        "Good Smile Company",
+        "Banpresto",
+        "Kotobukiya",
+        "Funko"
+    ]
+
+    return Promise.resolve({ brands, productTypes, companies })
 }
 
 
@@ -102,23 +139,31 @@ function _createToysArray() {
     var toys = loadFromStorage(TOY_KEY)
     if (!toys || !toys.length) {
         var toys = []
-        const labels = getLabels()
-        for (let i = 0; i < 20; i++) {
-            const toyLabel = labels[getRandomIntInclusive(0, labels.length - 1)]
-            toys.push(_createToy(toyLabel))
-        }
-        saveToStorage(TOY_KEY, toys)
+
+        return getLabels().then(({ brands, productTypes, companies }) => {
+            for (let i = 0; i < 20; i++) {
+                const brand = brands[getRandomIntInclusive(0, brands.length - 1)]
+                const productType = productTypes[getRandomIntInclusive(0, productTypes.length - 1)]
+                const company = companies[getRandomIntInclusive(0, companies.length - 1)]
+                toys.push(_createToy(brand, productType, company))
+            }
+            saveToStorage(TOY_KEY, toys)
+        })
+
+
     }
 }
 
 
-function _createToy(label) {
+function _createToy(brand, productType, company) {
     return {
         _id: makeId(),
         name: makeLorem(1),
         imgUrl: `/public/images/toys/${getRandomIntInclusive(1, 5)}.png`,
         price: getRandomIntInclusive(10, 100),
-        labels: [label],
+        brands: [brand] || [],
+        productTypes: [productType] || [],
+        companies: [company] || [],
         createdAt: Date.now(),
         inStock: Math.random() > 0.5 ? true : false,
         description: makeLorem(20),

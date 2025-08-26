@@ -61,12 +61,22 @@ export function ToyDetails(props) {
 
             <div className='toy-details-header'>
                 <h2>{toy.name}</h2>
-                {toy.labels.length > 0 &&
-                    <div>Labels:
-                        {toy.labels.map(l => {
-                            return <Link to={`/toy?labels=${l}`} key={l} className='toy-label'>{l}</Link>
-                        })}
-                    </div>}
+
+                <div className='toy-labels flex'>
+                    {toy.companies?.length > 0 &&
+                        <div>By:
+                            {toy.companies.map(c => {
+                                return <Link to={`/toy?companies=${c}`} key={c} className='toy-label'>{c}</Link>
+                            })}
+                        </div>}
+                    {toy.brands?.length > 0 &&
+                        <div>Brand:
+                            {toy.brands.map(b => {
+                                return <Link to={`/toy?brands=${b}`} key={b} className='toy-label'>{b}</Link>
+                            })}
+                        </div>}
+                </div>
+
             </div>
 
             <hr />

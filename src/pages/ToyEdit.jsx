@@ -18,10 +18,13 @@ export function ToyEdit(props) {
     const { toyId } = params
 
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
-    const [isLabelsPickerOpen, setIsLabelsPickerOpen] = useState(false)
+    const [isLabelsPickerOpen, setIsLabelsPickerOpen] = useState({ isOpen: false, type: '' })
     const toysLabels = useSelector(storeState => storeState.toyModule.labels)
 
-    const labelsPickerWrapper = useRef()
+    const brandsPickerWrapper = useRef()
+    const productTypesPickerWrapper = useRef()
+    const companiesPickerWrapper = useRef()
+
 
     useEffect(() => {
         if (toyId) {
@@ -33,7 +36,7 @@ export function ToyEdit(props) {
     }, [])
 
     useEffect(() => {
-        if (isLabelsPickerOpen) {
+        if (isLabelsPickerOpen.isOpen) {
             addEventListener('mousedown', handleClickOutside)
         } else {
             removeEventListener('mousedown', handleClickOutside)
@@ -46,7 +49,11 @@ export function ToyEdit(props) {
     }, [isLabelsPickerOpen])
 
     function handleClickOutside({ target }) {
-        const elLabelsWrapper = labelsPickerWrapper.current
+        var elLabelsWrapper = ''
+        if (isLabelsPickerOpen.type === 'brands') elLabelsWrapper = brandsPickerWrapper.current
+        else if (isLabelsPickerOpen.type === 'productTypes') elLabelsWrapper = productTypesPickerWrapper.current
+        else if (isLabelsPickerOpen.type === 'companies') elLabelsWrapper = companiesPickerWrapper.current
+
         if (target !== elLabelsWrapper && !elLabelsWrapper.contains(target)) {
             toggleLabelsPicker()
         }
@@ -93,23 +100,30 @@ export function ToyEdit(props) {
             })
     }
 
-    function onSaveLabels(labelsToSave) {
+    function onSaveLabels(labelsToSave, labelType) {
 
         const labelsToSaveStr = JSON.stringify(labelsToSave.sort())
-        const toyLabelsStr = JSON.stringify(toyToEdit.labels.sort())
+        const toyLabelsStr = JSON.stringify(toyToEdit[labelType].sort())
 
         if (labelsToSaveStr === toyLabelsStr) return
 
-        setToyToEdit(prev => ({ ...prev, labels: labelsToSave }))
+        setToyToEdit(prev => ({ ...prev, [labelType]: labelsToSave }))
     }
 
-    function toggleLabelsPicker() {
-        setIsLabelsPickerOpen(!isLabelsPickerOpen)
+    function toggleLabelsPicker(type = undefined) {
+        setIsLabelsPickerOpen(prev => {
+            if (!type || type === prev.type) {
+                prev = { isOpen: false, type: '' }
+            } else {
+                prev = { isOpen: true, type: type }
+            }
+            return prev
+        })
     }
 
     if (toyId && !toyToEdit?._id) return "loading..."
 
-    const { name, price, imgUrl, inStock, description, labels } = toyToEdit
+    const { name, price, imgUrl, inStock, description, brands, productTypes, companies } = toyToEdit
 
     return (
         <section className="toy-edit">
@@ -130,12 +144,49 @@ export function ToyEdit(props) {
                 <label htmlFor="inStock">In Stock:</label>
                 <input type="checkbox" name="inStock" id="inStock" checked={inStock} onChange={handleChange} />
 
-                <label>Labels:</label>
-                <div className="labels-picker-wrapper" ref={labelsPickerWrapper}>
-                    <div className="prev-labels" onClick={toggleLabelsPicker}>
-                        {labels?.length > 0 ? labels.join(', ') : 'Choose toy labels'}
+                <label>Brands:</label>
+                <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
+                    <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
+                        {brands?.length > 0 ? brands.join(', ') : 'Choose toy Brands'}
                     </div>
-                    {isLabelsPickerOpen && <LabelPicker labels={toysLabels} filterLabels={labels} onSaveLabels={onSaveLabels} />}
+                    {isLabelsPickerOpen.isOpen &&
+                        isLabelsPickerOpen.type === 'brands' &&
+                        toysLabels?.brands?.length > 0 && < LabelPicker
+                            labels={toysLabels.brands}
+                            filterLabels={brands}
+                            onSaveLabels={onSaveLabels}
+                            labelType={'brands'}
+                        />}
+                </div>
+
+                <label>Product Types:</label>
+                <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
+                    <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
+                        {productTypes?.length > 0 ? productTypes.join(', ') : 'Choose toy Product Types'}
+                    </div>
+                    {isLabelsPickerOpen.isOpen &&
+                        isLabelsPickerOpen.type === 'productTypes' &&
+                        toysLabels?.productTypes?.length > 0 && < LabelPicker
+                            labels={toysLabels.productTypes}
+                            filterLabels={productTypes}
+                            onSaveLabels={onSaveLabels}
+                            labelType={'productTypes'}
+                        />}
+                </div>
+
+                <label>Companies:</label>
+                <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
+                    <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
+                        {companies?.length > 0 ? companies.join(', ') : 'Choose toy Companies'}
+                    </div>
+                    {isLabelsPickerOpen.isOpen &&
+                        isLabelsPickerOpen.type === 'companies' &&
+                        toysLabels?.companies?.length > 0 && < LabelPicker
+                            labels={toysLabels.companies}
+                            filterLabels={companies}
+                            onSaveLabels={onSaveLabels}
+                            labelType={'companies'}
+                        />}
                 </div>
 
                 <label htmlFor="description">Description:</label>

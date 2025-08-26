@@ -7,9 +7,16 @@
             margin-block-end: 0.2em;
         }
 
-        .toy-label {
-            padding-inline-start: 0.5em;
+        .toy-labels {
+            flex-wrap: wrap;
+            gap: 1em;
+
+            .toy-label {
+                padding-inline-start: 0.5em;
+            }
         }
+
+
     }
 
     hr {

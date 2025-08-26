@@ -1,10 +1,10 @@
 
 import { useState, useEffect, useRef } from 'react'
 
-export function LabelPicker({ labels, filterLabels, onSaveLabels }) {
+export function LabelPicker({ labels, filterLabels, onSaveLabels, labelType }) {
 
     const [labelsToEdit, setLabelsToEdit] = useState(filterLabels)
- 
+
 
     useEffect(() => {
         const filterLabelsStr = JSON.stringify(filterLabels.sort())
@@ -18,7 +18,7 @@ export function LabelPicker({ labels, filterLabels, onSaveLabels }) {
 
 
     useEffect(() => {
-        onSaveLabels(labelsToEdit)
+        onSaveLabels(labelsToEdit, labelType)
     }, [labelsToEdit])
 
 

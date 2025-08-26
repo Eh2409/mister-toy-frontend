@@ -10,7 +10,7 @@ export function ToyPreview({ toy }) {
             />
             <div className="toy-prev-info">
                 <h2 className="toy-name">{toy.name}</h2>
-                <div>Labels: {toy.labels.join(', ')}</div>
+                <div>By: {toy.companies.join(', ')}</div>
                 <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
             </div>
         </>

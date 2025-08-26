@@ -10,10 +10,10 @@ import { LabelPicker } from '../LabelPicker'
 
 
 export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
-    toyActions
+
     const searchWord = useSelector(storeState => storeState.toyModule.searchWord)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    const resetFilterRef = useRef({ name: '', price: 0, labels: [], inStock: 'all' })
+    const resetFilterRef = useRef({ name: '', price: 0, brands: [], productTypes: [], companies: [], inStock: 'all' })
 
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
@@ -38,14 +38,14 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [name]: value }))
     }
 
-    function onSaveLabels(labelsToSave) {
+    function onSaveLabels(labelsToSave, labelType) {
 
         const labelsToSaveStr = JSON.stringify(labelsToSave.sort())
-        const filterLabelsStr = JSON.stringify(filterByToEdit.labels.sort())
+        const filterLabelsStr = JSON.stringify(filterByToEdit[labelType].sort())
 
         if (labelsToSaveStr === filterLabelsStr) return
 
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, labels: labelsToSave }))
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, [labelType]: labelsToSave }))
     }
 
 
@@ -54,10 +54,10 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
     }
 
     function onRemoveAppliedFilters(key, val) {
-        if (key === 'labels') {
+        if (key === 'brands' || key === 'productTypes' || key === 'companies') {
             setFilterByToEdit(prevFilter => ({
                 ...prevFilter,
-                labels: prevFilter.labels.filter(l => l !== val)
+                [key]: prevFilter[key].filter(l => l !== val)
             }))
         } else if (key === 'inStock') {
             setFilterByToEdit(prevFilter => ({ ...prevFilter, inStock: 'all' }))
@@ -72,12 +72,13 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
     }
 
     function isAppliedFilterVisible(filterByToEdit) {
-        const { name, price, labels, inStock } = filterByToEdit
-        if (!name && !price && labels.length <= 0 && inStock === 'all') return false
+        const { name, price, brands, productTypes, companies, inStock } = filterByToEdit
+        if (!name && !price && brands?.length <= 0 && productTypes?.length <= 0 && companies?.length <= 0 && inStock === 'all') return false
         else return true
     }
 
-    const { name, price, labels, inStock } = filterByToEdit
+    const { name, price, brands, productTypes, companies, inStock } = filterByToEdit
+    
     return (
         <section className='toy-filter'>
             <div>
@@ -93,13 +94,17 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
                                 onClick={() => onRemoveAppliedFilters(key, val)}>
                                 <span>x</span> {val ? "In Stock" : "Out of Stock"}</div>
 
-                            if (key === 'labels' && val.length <= 0) return
+                            if (key === 'brands' && val.length <= 0 ||
+                                key === 'productTypes' && val.length <= 0 ||
+                                key === 'companies' && val.length <= 0) return
 
-                            if (key === 'labels' && val.length > 0) return val.map(l => {
-                                return <div key={l} className='filter-val'
-                                    onClick={() => onRemoveAppliedFilters(key, l)} >
-                                    <span>x</span> {l}</div>
-                            })
+                            if (key === 'brands' && val.length > 0 ||
+                                key === 'productTypes' && val.length > 0 ||
+                                key === 'companies' && val.length > 0) return val.map(l => {
+                                    return <div key={l} className='filter-val'
+                                        onClick={() => onRemoveAppliedFilters(key, l)} >
+                                        <span>x</span> {l}</div>
+                                })
 
                             if (val) return <div key={val + key} className='filter-val'
                                 onClick={() => onRemoveAppliedFilters(key, val)}><span>x</span> {val}</div>
@@ -132,8 +137,30 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
                     </div>
 
 
-                    <h3>Toy Labels</h3>
-                    <LabelPicker labels={toysLabels} filterLabels={labels} onSaveLabels={onSaveLabels} />
+                    <h3>Brands</h3>
+                    {toysLabels?.brands?.length > 0 && < LabelPicker
+                        labels={toysLabels.brands}
+                        filterLabels={brands}
+                        onSaveLabels={onSaveLabels}
+                        labelType={'brands'} />
+                    }
+
+                    <h3>Product Types</h3>
+                    {toysLabels?.productTypes?.length > 0 && <LabelPicker
+                        labels={toysLabels.productTypes}
+                        filterLabels={productTypes}
+                        onSaveLabels={onSaveLabels}
+                        labelType={'productTypes'} />
+                    }
+
+                    <h3>Companies</h3>
+                    {toysLabels?.companies?.length > 0 && <LabelPicker
+                        labels={toysLabels.companies}
+                        filterLabels={companies}
+                        onSaveLabels={onSaveLabels}
+                        labelType={'companies'} />
+                    }
+
                 </form>
             </div>
         </section >

@@ -1,5 +1,6 @@
 .labels-picker {
     gap: 0.3em;
+    margin-block-end: 1em;
 
     label {
         cursor: pointer;
