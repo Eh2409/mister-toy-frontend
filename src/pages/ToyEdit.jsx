@@ -8,6 +8,7 @@ import { toyService } from "../services/Toy/index-toy.js"
 
 // cmps
 import { LabelPicker } from "../cmps/LabelPicker.jsx"
+import { ToyLoader } from "../cmps/toy/ToyLoader.jsx"
 
 
 export function ToyEdit(props) {
@@ -19,6 +20,7 @@ export function ToyEdit(props) {
 
     const [toyToEdit, setToyToEdit] = useState(toyService.getEmptyToy())
     const [isLabelsPickerOpen, setIsLabelsPickerOpen] = useState({ isOpen: false, type: '' })
+    const [isLoading, setIsLoading] = useState(false)
     const toysLabels = useSelector(storeState => storeState.toyModule.labels)
 
     const brandsPickerWrapper = useRef()
@@ -78,6 +80,8 @@ export function ToyEdit(props) {
     function onSubmit(ev) {
         ev.preventDefault()
 
+        setIsLoading(true)
+
         if (!toyToEdit.imgUrl) {
             toyToEdit.imgUrl = '/public/images/toys/no-toy-image.jpg'
         }
@@ -89,6 +93,7 @@ export function ToyEdit(props) {
             .catch(err => {
                 console.log('err:', err)
             })
+            .finally(() => { setIsLoading(false) })
 
     }
 
@@ -121,79 +126,86 @@ export function ToyEdit(props) {
         })
     }
 
-    if (toyId && !toyToEdit?._id) return "loading..."
+    if (toyId && !toyToEdit?._id) return <section className='toy-edit'>
+        <ToyLoader size={1} />
+    </section>
 
     const { name, price, imgUrl, inStock, description, brands, productTypes, companies } = toyToEdit
 
     return (
         <section className="toy-edit">
 
-            <h2>{toyId ? "Update" : "Add"} Toy</h2>
+            <div className="edit-card">
 
-            <form onSubmit={onSubmit}>
+                <h2>{toyId ? "Update" : "Add"} Toy</h2>
 
-                <label htmlFor="name">Name:</label>
-                <input type="text" name="name" id="name" value={name} onChange={handleChange} required />
+                <form onSubmit={onSubmit}>
 
-                <label htmlFor="price">Price:</label>
-                <input type="number" name="price" id="price" min={1} value={price || ''} onChange={handleChange} required />
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" id="name" value={name} onChange={handleChange} required />
 
-                <label htmlFor="imgUrl">Toy Image Url:</label>
-                <input type="text" name="imgUrl" id="imgUrl" value={imgUrl} onChange={handleChange} />
+                    <label htmlFor="price">Price:</label>
+                    <input type="number" name="price" id="price" min={1} value={price || ''} onChange={handleChange} required />
 
-                <label htmlFor="inStock">In Stock:</label>
-                <input type="checkbox" name="inStock" id="inStock" checked={inStock} onChange={handleChange} />
+                    <label htmlFor="imgUrl">Toy Image Url:</label>
+                    <input type="text" name="imgUrl" id="imgUrl" value={imgUrl} onChange={handleChange} />
 
-                <label>Brands:</label>
-                <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
-                    <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
-                        {brands?.length > 0 ? brands.join(', ') : 'Choose toy Brands'}
+                    <label htmlFor="inStock">In Stock:</label>
+                    <input type="checkbox" name="inStock" id="inStock" checked={inStock} onChange={handleChange} />
+
+                    <label>Brands:</label>
+                    <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
+                        <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
+                            {brands?.length > 0 ? brands.join(', ') : 'Choose toy Brands'}
+                        </div>
+                        {isLabelsPickerOpen.isOpen &&
+                            isLabelsPickerOpen.type === 'brands' &&
+                            toysLabels?.brands?.length > 0 && < LabelPicker
+                                labels={toysLabels.brands}
+                                filterLabels={brands}
+                                onSaveLabels={onSaveLabels}
+                                labelType={'brands'}
+                            />}
                     </div>
-                    {isLabelsPickerOpen.isOpen &&
-                        isLabelsPickerOpen.type === 'brands' &&
-                        toysLabels?.brands?.length > 0 && < LabelPicker
-                            labels={toysLabels.brands}
-                            filterLabels={brands}
-                            onSaveLabels={onSaveLabels}
-                            labelType={'brands'}
-                        />}
-                </div>
 
-                <label>Product Types:</label>
-                <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
-                    <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
-                        {productTypes?.length > 0 ? productTypes.join(', ') : 'Choose toy Product Types'}
+                    <label>Product Types:</label>
+                    <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
+                        <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
+                            {productTypes?.length > 0 ? productTypes.join(', ') : 'Choose toy Product Types'}
+                        </div>
+                        {isLabelsPickerOpen.isOpen &&
+                            isLabelsPickerOpen.type === 'productTypes' &&
+                            toysLabels?.productTypes?.length > 0 && < LabelPicker
+                                labels={toysLabels.productTypes}
+                                filterLabels={productTypes}
+                                onSaveLabels={onSaveLabels}
+                                labelType={'productTypes'}
+                            />}
                     </div>
-                    {isLabelsPickerOpen.isOpen &&
-                        isLabelsPickerOpen.type === 'productTypes' &&
-                        toysLabels?.productTypes?.length > 0 && < LabelPicker
-                            labels={toysLabels.productTypes}
-                            filterLabels={productTypes}
-                            onSaveLabels={onSaveLabels}
-                            labelType={'productTypes'}
-                        />}
-                </div>
 
-                <label>Companies:</label>
-                <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
-                    <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
-                        {companies?.length > 0 ? companies.join(', ') : 'Choose toy Companies'}
+                    <label>Companies:</label>
+                    <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
+                        <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
+                            {companies?.length > 0 ? companies.join(', ') : 'Choose toy Companies'}
+                        </div>
+                        {isLabelsPickerOpen.isOpen &&
+                            isLabelsPickerOpen.type === 'companies' &&
+                            toysLabels?.companies?.length > 0 && < LabelPicker
+                                labels={toysLabels.companies}
+                                filterLabels={companies}
+                                onSaveLabels={onSaveLabels}
+                                labelType={'companies'}
+                            />}
                     </div>
-                    {isLabelsPickerOpen.isOpen &&
-                        isLabelsPickerOpen.type === 'companies' &&
-                        toysLabels?.companies?.length > 0 && < LabelPicker
-                            labels={toysLabels.companies}
-                            filterLabels={companies}
-                            onSaveLabels={onSaveLabels}
-                            labelType={'companies'}
-                        />}
-                </div>
 
-                <label htmlFor="description">Description:</label>
-                <textarea type="text" name="description" id="description" value={description} onChange={handleChange} required ></textarea>
+                    <label htmlFor="description">Description:</label>
+                    <textarea type="text" name="description" id="description" value={description} onChange={handleChange} required ></textarea>
 
-                <button className="t-a">Save</button>
-            </form>
+                    <button className="t-a">
+                        {isLoading ? <div className={isLoading ? "mini-loader" : ""}></div> : "Save"}
+                    </button>
+                </form>
+            </div>
         </section>
     )
 }

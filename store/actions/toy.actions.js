@@ -1,5 +1,5 @@
 import { toyService } from "../../src/services/Toy/index-toy.js";
-import { ADD_TOY, REMOVE_TOY, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, REMOVE_TOY, SET_IS_LOADING, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export const toyActions = {
@@ -11,6 +11,9 @@ export const toyActions = {
 }
 
 function load(filterBy = {}) {
+
+    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+
     return toyService.query(filterBy)
         .then(({ toys, maxPageCount }) => {
             store.dispatch({ type: SET_TOYS, toys })
@@ -19,6 +22,9 @@ function load(filterBy = {}) {
         .catch(err => {
             console.log('toy action -> Cannot load toys', err)
             throw err
+        })
+        .finally(() => {
+            store.dispatch({ type: SET_IS_LOADING, isLoading: false })
         })
 }
 

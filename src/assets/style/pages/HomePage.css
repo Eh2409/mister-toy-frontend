@@ -1,7 +1,7 @@
 .home-page {
     min-height: 100%;
     color: white;
-    background-color: #1c1c1c;
+    background-color: var(--homePageBgClr);
 
     padding-inline: 3em;
     padding-block-start: 1em;

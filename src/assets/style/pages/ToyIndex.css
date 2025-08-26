@@ -13,6 +13,13 @@
         }
     }
 
+    .toy-index-content {
+        .no-toys-found-msg {
+            background-color: var(--noToysMsgClr);
+            padding: 1em;
+            text-align: center;
+        }
+    }
 }
 
 

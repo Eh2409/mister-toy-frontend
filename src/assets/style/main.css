@@ -24,3 +24,5 @@
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";
 @import "./cmps/toy/ToyListHome.css";
+@import "./cmps/toy/ToyLoader.css";
+@import "./cmps/toy/ToyHomeLoader.css";

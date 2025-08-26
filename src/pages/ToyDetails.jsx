@@ -3,8 +3,11 @@ import { useParams, Link } from 'react-router-dom'
 
 // services
 import { toyService } from '../services/Toy/index-toy.js'
+
+// cmps
 import { Popup } from '../cmps/Popup.jsx'
 import { Chat } from '../cmps/Chat.jsx'
+import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 
 export function ToyDetails(props) {
 
@@ -55,7 +58,12 @@ export function ToyDetails(props) {
         }
     }
 
-    if (!toy) return 'loading...'
+    if (!toy) return (
+        <section className='toy-details'>
+            <ToyLoader size={1} />
+        </section>
+    )
+
     return (
         <section className='toy-details'>
 

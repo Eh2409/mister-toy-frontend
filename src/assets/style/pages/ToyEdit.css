@@ -1,61 +1,9 @@
 .toy-edit {
-    border-inline: solid 10px var(--mainSiteClrTheme);
-    outline: 1px solid var(--outlineClr1);
-    padding: 0.5em;
-    background-color: white;
     margin-block: 1em;
 
-    h2 {
-        text-align: center;
-        margin-block-end: 1em;
-    }
-
-    form {
-        display: grid;
-        gap: 0.5em;
-
-        label {
-            font-weight: bold;
-        }
-
-        .labels-picker-wrapper {
-            position: relative;
-
-            .prev-labels {
-                outline: solid 1px black;
-                padding: 0.5em;
-                cursor: pointer;
-            }
-
-            .labels-picker {
-                position: absolute;
-                top: 120%;
-                background-color: white;
-                width: 100%;
-                outline: solid 1px black;
-                box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.266);
-                margin-inline-end: 10em;
-                z-index: 2;
-
-                label {
-                    padding: 0.3em;
-
-                    &:hover {
-                        background-color: var(--appliedfilterClr);
-                    }
-                }
-            }
-        }
-
-        button {
-            grid-column: 1/-1;
-        }
-    }
-}
+    .edit-card {
 
 
-@media (min-width: 750px) {
-    .toy-edit {
         border-inline: solid 10px var(--mainSiteClrTheme);
         outline: 1px solid var(--outlineClr1);
         padding: 0.5em;
@@ -68,9 +16,78 @@
 
         form {
             display: grid;
-            grid-template-columns: max-content 1fr;
-            align-items: center;
-            gap: 1em;
+            gap: 0.5em;
+
+            label {
+                font-weight: bold;
+            }
+
+            .labels-picker-wrapper {
+                position: relative;
+
+                .prev-labels {
+                    outline: solid 1px black;
+                    padding: 0.5em;
+                    cursor: pointer;
+                }
+
+                .labels-picker {
+                    position: absolute;
+                    top: 120%;
+                    background-color: white;
+                    width: 100%;
+                    outline: solid 1px black;
+                    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.266);
+                    margin-inline-end: 10em;
+                    z-index: 2;
+
+                    label {
+                        padding: 0.3em;
+
+                        &:hover {
+                            background-color: var(--appliedfilterClr);
+                        }
+                    }
+                }
+            }
+
+            button {
+                grid-column: 1/-1;
+            }
+        }
+    }
+
+    .toy-loader {
+        .toy-item {
+            min-height: 70vh;
+
+            .img-prev {
+                display: none;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 750px) {
+    .toy-edit {
+        .edit-card {
+            border-inline: solid 10px var(--mainSiteClrTheme);
+            outline: 1px solid var(--outlineClr1);
+            padding: 0.5em;
+            background-color: white;
+
+            h2 {
+                text-align: center;
+                margin-block-end: 1em;
+            }
+
+            form {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+                align-items: center;
+                gap: 1em;
+            }
         }
     }
 }

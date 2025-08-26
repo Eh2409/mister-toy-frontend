@@ -13,12 +13,14 @@ import { ToyList } from '../cmps/toy/ToyList.jsx'
 import { ToyFilter } from '../cmps/toy/ToyFilter.jsx'
 import { ToySort } from '../cmps/toy/ToySort.jsx'
 import { Pagination } from '../cmps/Pagination.jsx'
+import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 
 export function ToyIndex(props) {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const maxPageCount = useSelector(storeState => storeState.toyModule.maxPageCount)
     const toysLabels = useSelector(storeState => storeState.toyModule.labels)
+    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(toyService.getFilterFromSearchParams(searchParams))
@@ -114,13 +116,20 @@ export function ToyIndex(props) {
             </aside>
 
             <main className="toy-index-content">
-                {toys.length > 0 && <ToyList toys={toys} onRemove={onRemove} />}
+                {isLoading
+                    ? <ToyLoader />
+                    : (toys?.length > 0
+                        ? <ToyList toys={toys} onRemove={onRemove} />
+                        : <div className='no-toys-found-msg'>No items match your search criteria.</div>
+                    )
+                }
 
-                <Pagination
+                {toys?.length > 0 && <Pagination
                     maxPageCount={maxPageCount}
                     pageIdx={pageIdx}
                     setPageIdx={setPageIdx}
-                />
+                />}
+
             </main>
         </section>
     )

@@ -59,6 +59,19 @@
         }
     }
 
+
+    .toy-loader {
+        .toy-item {
+            min-height: 90vh;
+
+
+            .img-prev {
+                min-height: 100%;
+                width: max-content;
+            }
+        }
+    }
+
 }
 
 

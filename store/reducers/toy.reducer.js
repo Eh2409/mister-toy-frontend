@@ -10,11 +10,14 @@ export const SET_LABELS = 'SET_LABELS'
 
 export const SET_SEARCH_WORD = 'SET_SEARCH_WORD'
 
+export const SET_IS_LOADING = 'SET_IS_LOADING'
+
 const initialState = {
     toys: [],
     maxPageCount: 0,
     labels: [],
-    searchWord: ''
+    searchWord: '',
+    isLoading: false
 }
 
 export function toyReducer(state = initialState, cmd = {}) {
@@ -44,6 +47,9 @@ export function toyReducer(state = initialState, cmd = {}) {
 
         case SET_SEARCH_WORD:
             return { ...state, searchWord: cmd.searchWord }
+
+        case SET_IS_LOADING:
+            return { ...state, isLoading: cmd.isLoading }
 
         default: return state
     }
