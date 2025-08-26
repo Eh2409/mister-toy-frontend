@@ -1,12 +1,68 @@
 .toy-index {
-    display: grid;
-    grid-template-columns: 20vw 1fr;
 
     .toy-content-header {
-        grid-column: 1/-1;
-        padding: 1em;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.5em;
+        margin-block-end: 1em;
+
+        .t-a {
+            grid-column: 1/-1;
+            grid-row: 2;
+            text-align: center;
+        }
     }
 
-    .toy-index-content {}
+}
 
+
+@media (max-width: 750px) {
+    .toy-index {
+
+        &:has(.mobile-filter-open) {
+            /* i need to imprvoe this */
+            overflow-x: hidden;
+
+            .toy-index-content {
+                height: 75vh;
+                overflow: hidden;
+            }
+        }
+
+        .toy-filter-wrapper {
+            position: fixed;
+            top: 15vh;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            background-color: white;
+            transform: translateX(-100%);
+            transition: 200ms ease-in-out;
+            overflow: scroll;
+
+            &.mobile-filter-open {
+                transform: translateX(0%);
+                z-index: 4;
+            }
+        }
+    }
+}
+
+@media (min-width: 750px) {
+    .toy-index {
+        display: grid;
+        grid-template-columns: 20vw 1fr;
+
+        .toy-content-header {
+            grid-column: 1/-1;
+            display: flex;
+            padding: 1em;
+
+            .mobile-filter-btn {
+                display: none;
+            }
+        }
+
+    }
 }

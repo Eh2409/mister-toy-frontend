@@ -2,6 +2,10 @@
     display: grid;
     grid-template-columns: 3rem 1fr 3rem;
 
+    &:has(.toy-index) {
+        grid-template-columns: 1rem 1fr 1rem;
+    }
+
     >* {
         grid-column: 2;
 
@@ -22,4 +26,15 @@
         min-height: calc(100vh - 15vh);
     }
 
+}
+
+@media (min-width: 750px) {
+    .app-container {
+        display: grid;
+        grid-template-columns: 3rem 1fr 3rem;
+
+        &:has(.toy-index) {
+            grid-template-columns: 3rem 1fr 3rem;
+        }
+    }
 }

@@ -22,9 +22,12 @@ export function ToyIndex(props) {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(toyService.getFilterFromSearchParams(searchParams))
+    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+    const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
 
     useEffect(() => {
         setSearchParams(cleanSearchParams(filterBy))
+        onCountActiveFilterOptions(filterBy)
         loadToys(filterBy)
     }, [filterBy])
 
@@ -67,25 +70,50 @@ export function ToyIndex(props) {
         setFilterBy(prevFilter => ({ ...prevFilter, pageIdx: pageNum }))
     }
 
+    function toggleIsMobileFilterOpen() {
+        setIsMobileFilterOpen(!isMobileFilterOpen)
+    }
+    function closeMobileFilter() {
+        setIsMobileFilterOpen(false)
+    }
+
+    function onCountActiveFilterOptions(filter) {
+
+        const count = Object.entries(filter).filter(([key, val]) => {
+            if (key === 'sortType' || key === 'dir' || key === 'pageIdx') return
+            if (key === 'inStock') return val !== 'all' ? true : false
+            if (key === 'brands' || key === 'productTypes' || key === 'companies') return val?.length > 0 ? true : false
+            else return val
+        }).length
+
+        setActiveFilterOptionsCount(count)
+    }
+
     const { name, price, brands, productTypes, companies, inStock, sortType, dir, pageIdx } = filterBy
 
     return (
         <section className="toy-index">
 
-            <div className='toy-content-header flex justify-between align-center'>
+            <div className="toy-content-header flex justify-between align-center">
+
+                <button className='mobile-filter-btn' onClick={toggleIsMobileFilterOpen}>
+                    Filter {activeFilterOptionsCount ? `(${activeFilterOptionsCount})` : ""}
+                </button>
                 <Link to='/toy/edit' className='btn t-a'>Add Toy</Link>
                 <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
+
             </div>
 
-            <aside className='toy-filter-wrapper'>
+            <aside className={`toy-filter-wrapper ${isMobileFilterOpen ? "mobile-filter-open" : ""}`}>
                 <ToyFilter
                     filterBy={{ name, price, brands, productTypes, companies, inStock }}
                     onSetFilterBy={onSetFilterBy}
                     toysLabels={toysLabels}
+                    closeMobileFilter={closeMobileFilter}
                 />
             </aside>
 
-            <main className='toy-index-content'>
+            <main className="toy-index-content">
                 {toys.length > 0 && <ToyList toys={toys} onRemove={onRemove} />}
 
                 <Pagination

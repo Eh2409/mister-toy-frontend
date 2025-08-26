@@ -1,19 +1,17 @@
 .toy-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+
     gap: 0.5em;
-    padding-inline: 0.5em;
     margin-block-end: 1em;
 
+
+
     .toy-item {
-        background-color: white;
-        display: grid;
-        grid-template-columns: 200px 1fr;
         padding: 0.5em;
         border-inline: solid 10px var(--mainSiteClrTheme);
         outline: 1px solid var(--outlineClr1);
         cursor: pointer;
-        gap: 0.5em;
+        background-color: white;
 
         &:hover {
             .toy-name {
@@ -57,4 +55,24 @@
             }
         }
     }
+}
+
+
+
+@media (min-width: 750px) {
+    .toy-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 0.5em;
+        padding-inline: 0.5em;
+        margin-block-end: 1em;
+
+        .toy-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 0.5em;
+
+        }
+    }
+
 }

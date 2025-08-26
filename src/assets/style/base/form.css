@@ -88,6 +88,11 @@ button,
         outline: none;
         border: none;
     }
+
+    &.mobile-filter-btn {
+        height: 100%;
+        background-color: inherit;
+    }
 }
 
 input,

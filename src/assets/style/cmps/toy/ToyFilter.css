@@ -1,5 +1,15 @@
 .toy-filter {
+    position: relative;
     padding: .5em;
+
+    .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0.2em;
+        font-size: 1.5em;
+        width: 30px;
+        aspect-ratio: 1/1;
+    }
 
     h2,
     h3 {
@@ -43,6 +53,15 @@
         select {
             border: 1px solid var(--mainSiteClrTheme);
 
+        }
+    }
+}
+
+@media (min-width: 750px) {
+    .toy-filter {
+
+        .close-btn {
+            display: none;
         }
     }
 }

@@ -9,7 +9,7 @@ import { toyActions } from '../../../store/actions/toy.actions.js'
 import { LabelPicker } from '../LabelPicker'
 
 
-export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
+export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilter }) {
 
     const searchWord = useSelector(storeState => storeState.toyModule.searchWord)
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
@@ -78,9 +78,12 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels }) {
     }
 
     const { name, price, brands, productTypes, companies, inStock } = filterByToEdit
-    
+
     return (
         <section className='toy-filter'>
+
+            <button className='close-btn' onClick={closeMobileFilter}>x</button>
+
             <div>
 
                 {isAppliedFilterVisible(filterByToEdit) && <section>
