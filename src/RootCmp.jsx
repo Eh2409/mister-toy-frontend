@@ -1,4 +1,6 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
+// import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import { store } from "../store/store.js";
 import { useEffect } from 'react'
 // services
