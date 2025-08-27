@@ -95,8 +95,8 @@ export function ToyDetails(props) {
                 <img
                     src={toy.imgUrl}
                     alt={toy.name}
+                    onError={ev => ev.currentTarget.src = "/images/toys/no-toy-image.jpg"}
                     className='toy-img'
-                    onError={ev => ev.currentTarget.src = "/public/images/toys/no-toy-image.jpg"}
                 />
 
                 <div className='toy-info'>
@@ -111,7 +111,7 @@ export function ToyDetails(props) {
 
 
             <div className='btn chat-btn' onClick={toggleIsPopupOpen}>
-                <img src="/public/images/chat.svg" alt="chat" className='icon' />
+                <img src="/images/chat.svg" alt="chat" className='icon' />
             </div>
 
             <Popup

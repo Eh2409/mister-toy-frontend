@@ -26,7 +26,9 @@ function load(filterBy = {}, isLoaderActive = true) {
         })
         .finally(() => {
             if (isLoaderActive) {
-                store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+                setTimeout(() => {
+                    store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+                }, 300)
             }
         })
 }
