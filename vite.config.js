@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: '../mister toy backend/public',
     emptyOutDir: true,
   },
-  base: '/inmister-toy-frontend/',
+  base: '/mister-toy-frontend/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
