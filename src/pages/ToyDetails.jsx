@@ -10,6 +10,9 @@ import { Popup } from '../cmps/Popup.jsx'
 import { Chat } from '../cmps/Chat.jsx'
 import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 
+//images
+import chatIcon from '/images/chat.svg'
+
 export function ToyDetails(props) {
 
     const params = useParams()
@@ -111,7 +114,7 @@ export function ToyDetails(props) {
 
 
             <div className='btn chat-btn' onClick={toggleIsPopupOpen}>
-                <img src="/images/chat.svg" alt="chat" className='icon' />
+                <img src={chatIcon} alt="chat" className='icon' />
             </div>
 
             <Popup

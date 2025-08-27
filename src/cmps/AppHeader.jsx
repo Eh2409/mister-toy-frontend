@@ -5,6 +5,10 @@ import { NavLink, useNavigate, useLocation, Link } from 'react-router-dom'
 import { toyActions } from '../../store/actions/toy.actions.js'
 // cmps
 import { UserMsg } from './UserMsg.jsx'
+//images
+import xMark from '/images/x.svg'
+import bars from '/images/bars.svg'
+import userIcon from '/images/user.svg'
 
 export function AppHeader(props) {
 
@@ -45,8 +49,8 @@ export function AppHeader(props) {
 
                 <button className='mobile-nav-btn' onClick={toggleIsMobileNavOpen}>
                     {isMobileNavOpen
-                        ? <img src="/images/x.svg" alt="x" className='icon' />
-                        : <img src="/images/bars.svg" alt="bars" className='icon' />
+                        ? <img src={xMark} alt="x" className='icon' />
+                        : <img src={bars} alt="bars" className='icon' />
                     }
                 </button>
 
@@ -61,7 +65,7 @@ export function AppHeader(props) {
                 </form>
 
                 <button className='user-btn'>
-                    <img src="/images/user.svg" alt="user" className='icon' />
+                    <img src={userIcon} alt="user" className='icon' />
                 </button>
             </div>
 

@@ -159,7 +159,7 @@ function _createToy(brand, productType, company) {
     return {
         _id: makeId(),
         name: makeLorem(1),
-        imgUrl: `/public/images/toys/${getRandomIntInclusive(1, 5)}.png`,
+        imgUrl: `./images/toys/${getRandomIntInclusive(1, 5)}.png`,
         price: getRandomIntInclusive(10, 100),
         brands: [brand] || [],
         productTypes: [productType] || [],
