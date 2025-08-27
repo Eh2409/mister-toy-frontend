@@ -1,4 +1,4 @@
-import { toyService } from "../../src/services/Toy/index-toy.js";
+import { toyService } from "../../src/services/toy/index-toy.js";
 import { ADD_TOY, REMOVE_TOY, SET_IS_LOADING, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 

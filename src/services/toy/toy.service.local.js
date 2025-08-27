@@ -102,7 +102,7 @@ function save(toy) {
     }
 }
 
-function getLabels(params) {
+function getLabels() {
 
     const brands = [
         "Naruto",
