@@ -4,11 +4,12 @@ import { useSelector } from "react-redux"
 
 // services
 import { toyActions } from "../../store/actions/toy.actions.js"
-import { toyService } from "../services/Toy/index-toy.js"
+import { toyService } from "../services/toy/index-toy.js"
 
 // cmps
 import { LabelPicker } from "../cmps/LabelPicker.jsx"
 import { ToyLoader } from "../cmps/toy/ToyLoader.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 
 export function ToyEdit(props) {
@@ -61,10 +62,20 @@ export function ToyEdit(props) {
         }
     }
 
+    function loadToy(toyId) {
+        toyService.getById(toyId)
+            .then(toy => setToyToEdit(toy))
+            .catch(err => {
+                console.log('err:', err)
+                showErrorMsg('Cannot load toy ' + toyId)
+            })
+    }
+
     function loadLabels() {
         return toyActions.loadLabels()
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot load labels ' + toyId)
             })
     }
 
@@ -89,21 +100,16 @@ export function ToyEdit(props) {
         toyActions.save(toyToEdit)
             .then(savedToyId => {
                 navigate(`/toy/${savedToyId}`)
+                showSuccessMsg('Toy saved!')
             })
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot save toy')
             })
             .finally(() => { setIsLoading(false) })
 
     }
 
-    function loadToy(toyId) {
-        toyService.getById(toyId)
-            .then(toy => setToyToEdit(toy))
-            .catch(err => {
-                console.log('err:', err)
-            })
-    }
 
     function onSaveLabels(labelsToSave, labelType) {
 

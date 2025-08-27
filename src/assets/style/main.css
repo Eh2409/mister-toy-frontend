@@ -20,6 +20,7 @@
 @import "./cmps/AppHeader.css";
 @import "./cmps/Popup.css";
 @import "./cmps/Chat.css";
+@import "./cmps/UserMsg.css";
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";

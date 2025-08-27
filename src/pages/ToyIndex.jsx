@@ -5,8 +5,9 @@ import { useSelector } from "react-redux"
 
 // services
 import { toyActions } from "../../store/actions/toy.actions.js"
-import { toyService } from '../services/Toy/index-toy.js'
+import { toyService } from '../services/toy/index-toy.js'
 import { cleanSearchParams } from '../services/util.service.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 
 // cmps
 import { ToyList } from '../cmps/toy/ToyList.jsx'
@@ -44,6 +45,7 @@ export function ToyIndex(props) {
         return toyActions.load(filterBy, isLoaderActive)
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot load toys')
             })
     }
 
@@ -53,9 +55,11 @@ export function ToyIndex(props) {
             .then(() => {
                 const isLoaderActive = false
                 loadToys(filterBy, isLoaderActive)
+                showSuccessMsg(`toy removed`)
             })
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot remove toy ' + toyId)
             })
             .finally(() => {
                 setIsMiniLoading({ isLoading: false, toyId: '' })
@@ -66,6 +70,7 @@ export function ToyIndex(props) {
         return toyActions.loadLabels()
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot load labels')
             })
     }
 

@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // services
-import { toyService } from '../services/Toy/index-toy.js'
+import { toyService } from '../services/toy/index-toy.js'
+import { showErrorMsg } from '../services/event-bus.service.js'
 
 // cmps
 import { Popup } from '../cmps/Popup.jsx'
@@ -41,6 +42,7 @@ export function ToyDetails(props) {
             .then(toy => setToy(toy))
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot load toy ' + toyId)
             })
     }
 

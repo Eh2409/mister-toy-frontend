@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react"
-import { toyActions } from "../../store/actions/toy.actions.js"
 import { useSelector } from "react-redux"
+// services
+import { toyActions } from "../../store/actions/toy.actions.js"
+import { showErrorMsg } from "../services/event-bus.service.js"
+// cmps
 import { ToyListHome } from "../cmps/toy/ToyListHome.jsx"
 import { ToyHomeLoader } from "../cmps/toy/ToyHomeLoader.jsx"
 
@@ -20,6 +23,7 @@ export function HomePage(props) {
         return toyActions.load(filterBy)
             .catch(err => {
                 console.log('err:', err)
+                showErrorMsg('Cannot load toys')
             })
     }
 

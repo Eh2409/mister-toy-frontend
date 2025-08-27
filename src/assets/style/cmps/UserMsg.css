@@ -1,0 +1,33 @@
+.user-msg {
+    display: flex;
+    background-color: var(--headerColor1);
+    padding: .5em 1em;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    font-weight: bold;
+    outline: 3px solid var(--userDetailsBgClr1);
+    border-radius: 10px;
+    border-radius: 2px;
+    z-index: 20;
+
+    p {
+        margin: 0;
+    }
+}
+
+.user-msg.success {
+    background-color: rgb(209, 230, 209);
+    outline: 3px solid rgb(132, 156, 132);
+}
+
+.user-msg.error {
+    background-color: rgb(245, 200, 187);
+    outline: 3px solid rgb(156, 132, 132);
+}
+
+
+.user-msg button {
+    float: right;
+    margin: 1em;
+}

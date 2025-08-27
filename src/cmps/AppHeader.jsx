@@ -3,6 +3,8 @@ import { NavLink, useNavigate, useLocation, Link } from 'react-router-dom'
 
 //services
 import { toyActions } from '../../store/actions/toy.actions.js'
+// cmps
+import { UserMsg } from './UserMsg.jsx'
 
 export function AppHeader(props) {
 
@@ -74,7 +76,7 @@ export function AppHeader(props) {
                 <NavLink to="/about" onClick={onCloseMobileNav}>About Us</NavLink>
                 <NavLink to="/toy" onClick={onCloseMobileNav}>Toys</NavLink>
             </nav>
-
+            <UserMsg />
         </header>
     )
 }
