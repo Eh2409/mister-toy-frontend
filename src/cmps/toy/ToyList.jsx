@@ -6,12 +6,9 @@ export function ToyList({ toys, onRemove, isMiniLoading }) {
 
     const navigate = useNavigate()
 
-    console.log('isMiniLoading:', isMiniLoading)
-
     return (
         <ul className='toy-list'>
             {toys.map(toy => {
-                console.log('Here:', isMiniLoading.isLoading && isMiniLoading.toyId === toy._id)
                 return <li key={toy._id} className='toy-item' onClick={() => navigate(`/toy/${toy._id}`)}>
                     <ToyPreview toy={toy} />
                     <div className='toy-actions flex justify-center align-center' onClick={(event) => event.stopPropagation()}>
