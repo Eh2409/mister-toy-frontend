@@ -15,7 +15,7 @@ export function HomePage(props) {
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     useEffect(() => {
-        const filterBy = { sortType: 'createdAt', dir: -1, inStock: true }
+        const filterBy = { sortType: 'createdAt', dir: -1, inStock: true, pageIdx: undefined }
         loadToys(filterBy)
     }, [])
 

@@ -32,6 +32,8 @@
 
         .toy-img {
             outline: solid 1px var(--outlineClr1);
+            object-fit: cover;
+            width: 100%;
         }
 
         .toy-price {

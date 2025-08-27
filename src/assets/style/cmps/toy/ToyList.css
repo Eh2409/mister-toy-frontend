@@ -1,6 +1,6 @@
 .toy-list {
     display: grid;
-
+    grid-template-columns: minmax(100px, 1fr);
     gap: 0.5em;
     margin-block-end: 1em;
 
@@ -21,6 +21,8 @@
 
         img {
             grid-row: span 2;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
         }
 
         .toy-prev-info {
@@ -48,6 +50,7 @@
             cursor: auto;
             grid-column: 2/2;
             gap: 0.5em;
+            flex-wrap: wrap;
 
             &>* {
                 flex-grow: 1;

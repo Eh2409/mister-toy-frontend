@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 export function ToyListHome({ toys }) {
     const navigate = useNavigate()
 
+    console.log('toys:', toys)
+
     return (
         <ul className="home-toys">
             {toys.slice(0, 10).map((t, idx) => {

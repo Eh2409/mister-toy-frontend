@@ -29,10 +29,11 @@
 
                     .toy-image {
                         width: 100%;
-                        height: 100%;
+                        height: max-content;
                         scale: 1;
                         transition: 300ms ease-in-out;
                         object-fit: cover;
+
                     }
 
                 }
@@ -57,6 +58,7 @@
 
                 .toy-image {
                     width: 100%;
+                    height: 100%;
                     scale: 1;
                     transition: 300ms ease-in-out;
                     object-fit: cover;
