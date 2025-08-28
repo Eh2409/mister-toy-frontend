@@ -12,7 +12,7 @@ import Select from '@mui/material/Select'
 
 //services
 import { toyActions } from '../../../store/actions/toy.actions.js'
-import { debounce } from '../../services/util.service.js'
+import { debounce, getUiTheme } from '../../services/util.service.js'
 
 // hooks
 import { useEffectOnUpdate } from '../../hooks/useEffectOnUpdate.js'
@@ -98,28 +98,7 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilt
     const { name, price, brands, productTypes, companies, inStock } = filterByToEdit
 
 
-    const theme = createTheme({
-        components: {
-            MuiOutlinedInput: {
-                styleOverrides: {
-                    root: {
-                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "var(--mainSiteClrTheme)",
-                        },
-                    },
-                },
-            },
-            MuiInputLabel: {
-                styleOverrides: {
-                    root: {
-                        "&.Mui-focused": {
-                            color: "var(--mainSiteClrTheme)",
-                        },
-                    },
-                },
-            },
-        },
-    });
+    const theme = createTheme(getUiTheme())
 
     return (
         <section className='toy-filter'>

@@ -68,3 +68,29 @@ export function cleanSearchParams(searchParams) {
 
     return cleanedParams
 }
+
+
+export function getUiTheme() {
+    return {
+        components: {
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    root: {
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "var(--mainSiteClrTheme)",
+                        },
+                    },
+                },
+            },
+            MuiInputLabel: {
+                styleOverrides: {
+                    root: {
+                        "&.Mui-focused": {
+                            color: "var(--mainSiteClrTheme)",
+                        },
+                    },
+                },
+            },
+        },
+    }
+}

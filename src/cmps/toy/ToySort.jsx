@@ -1,6 +1,18 @@
 
 import { useState, useEffect } from 'react'
 
+// material-ui
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+
+// services
+import { getUiTheme } from '../../services/util.service';
+
+
 export function ToySort({ sortBy, onSetFilterBy }) {
 
     const [sortByToEdit, setSortByToEdit] = useState(sortBy)
@@ -58,16 +70,30 @@ export function ToySort({ sortBy, onSetFilterBy }) {
         setSelectValue(value)
     }
 
+    const theme = createTheme(getUiTheme())
+
+
     return (
         <section className="toy-sort">
-            <select className="btn" name="sort" id="sort" onChange={handleChange} value={selectValue}>
-                <option value="new">Date: New to Old</option>
-                <option value="old">Date: Old to New</option>
-                <option value="a">Name: A to Z</option>
-                <option value="z">Name: Z to A</option>
-                <option value="low">Price: Low to High</option>
-                <option value="high">Price: High to Low</option>
-            </select>
-        </section>
+            <ThemeProvider theme={theme}>
+                <FormControl fullWidth>
+                    <InputLabel id="sortBy">Sort By</InputLabel>
+                    <Select
+                        labelId="sortBy"
+                        id="sortBy"
+                        value={selectValue}
+                        label="Sort By"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="new">Date: New to Old</MenuItem>
+                        <MenuItem value="old">Date: Old to New</MenuItem>
+                        <MenuItem value="a">Name: A to Z</MenuItem>
+                        <MenuItem value="z">Name: Z to A</MenuItem>
+                        <MenuItem value="low">Price: Low to High</MenuItem>
+                        <MenuItem value="high">Price: High to Low</MenuItem>
+                    </Select>
+                </FormControl>
+            </ThemeProvider>
+        </section >
     )
 }

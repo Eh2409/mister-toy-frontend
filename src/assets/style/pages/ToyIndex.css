@@ -4,7 +4,7 @@
         display: grid;
         grid-template-columns: max-content 1fr;
         gap: 0.5em;
-        margin-block-end: 1em;
+        margin-block: 0.5em;
 
         .t-a {
             grid-column: 1/-1;
@@ -65,9 +65,14 @@
             grid-column: 1/-1;
             display: flex;
             padding: 1em;
+            margin-block: 0em;
 
             .mobile-filter-btn {
                 display: none;
+            }
+
+            .MuiFormControl-root {
+                min-width: 15vw;
             }
         }
 
