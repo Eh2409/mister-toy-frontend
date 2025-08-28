@@ -98,7 +98,7 @@ export function ToyDetails(props) {
                 <img
                     src={toy.imgUrl}
                     alt={toy.name}
-                    onError={ev => ev.currentTarget.src = "/images/toys/no-toy-image.jpg"}
+                    onError={ev => ev.currentTarget.src = "./images/toys/no-toy-image.jpg"}
                     className='toy-img'
                 />
 
