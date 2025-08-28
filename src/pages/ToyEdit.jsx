@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup'
+
 // services
 import { toyActions } from "../../store/actions/toy.actions.js"
 import { toyService } from "../services/toy/index-toy.js"
@@ -79,47 +82,6 @@ export function ToyEdit(props) {
             })
     }
 
-    function handleChange({ target }) {
-        var { value, name, type, checked } = target
-
-        if (type === "number") value = +value
-        if (type === "checkbox") value = checked
-
-        setToyToEdit(prev => ({ ...prev, [name]: value }))
-    }
-
-    function onSubmit(ev) {
-        ev.preventDefault()
-
-        setIsLoading(true)
-
-        if (!toyToEdit.imgUrl) {
-            toyToEdit.imgUrl = '/public/images/toys/no-toy-image.jpg'
-        }
-
-        toyActions.save(toyToEdit)
-            .then(savedToyId => {
-                navigate(`/toy/${savedToyId}`)
-                showSuccessMsg('Toy saved!')
-            })
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot save toy')
-            })
-            .finally(() => { setIsLoading(false) })
-
-    }
-
-
-    function onSaveLabels(labelsToSave, labelType) {
-
-        const labelsToSaveStr = JSON.stringify(labelsToSave.sort())
-        const toyLabelsStr = JSON.stringify(toyToEdit[labelType].sort())
-
-        if (labelsToSaveStr === toyLabelsStr) return
-
-        setToyToEdit(prev => ({ ...prev, [labelType]: labelsToSave }))
-    }
 
     function toggleLabelsPicker(type = undefined) {
         setIsLabelsPickerOpen(prev => {
@@ -132,11 +94,50 @@ export function ToyEdit(props) {
         })
     }
 
+    function onSubmit(toyToSave) {
+        setIsLoading(true)
+
+        if (!toyToSave.imgUrl) {
+            toyToSave.imgUrl = '/public/images/toys/no-toy-image.jpg'
+        }
+
+        toyActions.save(toyToSave)
+            .then(savedToyId => {
+                navigate(`/toy/${savedToyId}`)
+                showSuccessMsg('Toy saved!')
+            })
+            .catch(err => {
+                console.log('err:', err)
+                showErrorMsg('Cannot save toy')
+            })
+            .finally(() => { setIsLoading(false) })
+
+    }
+
+    const SignupSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        price: Yup.number()
+            .min(0, 'Too Short!')
+            .required('Required'),
+        imgUrl: Yup.string()
+            .matches(/\.(jpg|jpeg|png|gif)$/i, "Must be a valid image format"),
+        brands: Yup.array()
+            .min(1, 'At least one brand is required')
+            .required('Required'),
+        productTypes: Yup.array()
+            .min(1, 'At least one brand is required')
+            .required('Required'),
+        companies: Yup.array()
+            .min(1, 'At least one brand is required')
+            .required('Required'),
+    })
+
     if (toyId && !toyToEdit?._id) return <section className='toy-edit'>
         <ToyLoader size={1} />
     </section>
-
-    const { name, price, imgUrl, inStock, description, brands, productTypes, companies } = toyToEdit
 
     return (
         <section className="toy-edit">
@@ -145,72 +146,141 @@ export function ToyEdit(props) {
 
                 <h2>{toyId ? "Update" : "Add"} Toy</h2>
 
-                <form onSubmit={onSubmit}>
 
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" name="name" id="name" value={name} onChange={handleChange} required />
+                <Formik
+                    initialValues={{ ...toyToEdit }}
+                    validationSchema={SignupSchema}
+                    onSubmit={values => onSubmit(values)}
+                >
+                    {({ errors, touched }) => (
+                        <Form>
 
-                    <label htmlFor="price">Price:</label>
-                    <input type="number" name="price" id="price" min={1} value={price || ''} onChange={handleChange} required />
+                            <label htmlFor="name">Name:</label>
+                            <Field name="name" id="name" />
+                            {errors.name && touched.name ? (
+                                <div className="err-msg">{errors.name}</div>
+                            ) : null}
 
-                    <label htmlFor="imgUrl">Toy Image Url:</label>
-                    <input type="text" name="imgUrl" id="imgUrl" value={imgUrl} onChange={handleChange} />
+                            <label htmlFor="price">Price:</label>
+                            <Field name="price" id="price" type="number" />
 
-                    <label htmlFor="inStock">In Stock:</label>
-                    <input type="checkbox" name="inStock" id="inStock" checked={inStock} onChange={handleChange} />
+                            {errors.price && touched.price ? (
+                                <div className="err-msg">{errors.price}</div>
+                            ) : null}
 
-                    <label>Brands:</label>
-                    <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
-                        <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
-                            {brands?.length > 0 ? brands.join(', ') : 'Choose toy Brands'}
-                        </div>
-                        {isLabelsPickerOpen.isOpen &&
-                            isLabelsPickerOpen.type === 'brands' &&
-                            toysLabels?.brands?.length > 0 && < LabelPicker
-                                labels={toysLabels.brands}
-                                filterLabels={brands}
-                                onSaveLabels={onSaveLabels}
-                                labelType={'brands'}
-                            />}
-                    </div>
 
-                    <label>Product Types:</label>
-                    <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
-                        <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
-                            {productTypes?.length > 0 ? productTypes.join(', ') : 'Choose toy Product Types'}
-                        </div>
-                        {isLabelsPickerOpen.isOpen &&
-                            isLabelsPickerOpen.type === 'productTypes' &&
-                            toysLabels?.productTypes?.length > 0 && < LabelPicker
-                                labels={toysLabels.productTypes}
-                                filterLabels={productTypes}
-                                onSaveLabels={onSaveLabels}
-                                labelType={'productTypes'}
-                            />}
-                    </div>
+                            <label htmlFor="imgUrl">Toy Image Url:</label>
+                            <Field name="imgUrl" id="imgUrl" />
+                            {errors.imgUrl && touched.imgUrl ? (
+                                <div className="err-msg">{errors.imgUrl}</div>
+                            ) : null}
 
-                    <label>Companies:</label>
-                    <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
-                        <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
-                            {companies?.length > 0 ? companies.join(', ') : 'Choose toy Companies'}
-                        </div>
-                        {isLabelsPickerOpen.isOpen &&
-                            isLabelsPickerOpen.type === 'companies' &&
-                            toysLabels?.companies?.length > 0 && < LabelPicker
-                                labels={toysLabels.companies}
-                                filterLabels={companies}
-                                onSaveLabels={onSaveLabels}
-                                labelType={'companies'}
-                            />}
-                    </div>
+                            <label htmlFor="inStock">In Stock:</label>
+                            <Field name="inStock" id="inStock" type="checkbox" />
+                            {errors.inStock && touched.inStock ? (
+                                <div className="err-msg">{errors.inStock}</div>
+                            ) : null}
 
-                    <label htmlFor="description">Description:</label>
-                    <textarea type="text" name="description" id="description" value={description} onChange={handleChange} required ></textarea>
 
-                    <button className="t-a">
-                        {isLoading ? <div className="mini-loader"></div> : "Save"}
-                    </button>
-                </form>
+                            <label htmlFor="brands">Brands:</label>
+                            <Field name="brands" className="labels-picker-wrapper" ref={brandsPickerWrapper} >
+                                {({ field, form }) => (
+
+                                    <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
+
+                                        <input type="text" id="brands" {...field} hidden />
+
+                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
+                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Brands'}
+                                        </div>
+
+                                        {isLabelsPickerOpen.isOpen &&
+                                            isLabelsPickerOpen.type === 'brands' &&
+                                            toysLabels?.brands?.length > 0 && < LabelPicker
+                                                labels={toysLabels.brands}
+                                                filterLabels={field.value}
+                                                onSaveLabels={(newLabels) => { form.setFieldValue("brands", newLabels) }}
+                                                labelType={'brands'}
+                                            />}
+                                    </div>
+                                )}
+                            </Field>
+                            {errors.brands && touched.brands ? (
+                                <div className="err-msg">{errors.brands}</div>
+                            ) : null}
+
+
+                            <label htmlFor="productTypes">Product Types:</label>
+                            <Field name="productTypes" className="labels-picker-wrapper" ref={productTypesPickerWrapper} >
+                                {({ field, form }) => (
+
+                                    <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
+
+                                        <input type="text" id="productTypes" {...field} hidden />
+
+                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
+                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Product Types'}
+                                        </div>
+
+                                        {isLabelsPickerOpen.isOpen &&
+                                            isLabelsPickerOpen.type === 'productTypes' &&
+                                            toysLabels?.productTypes?.length > 0 && < LabelPicker
+                                                labels={toysLabels.productTypes}
+                                                filterLabels={field.value}
+                                                onSaveLabels={(newLabels) => { form.setFieldValue("productTypes", newLabels) }}
+                                                labelType={'productTypes'}
+                                            />}
+                                    </div>
+                                )}
+                            </Field>
+                            {errors.productTypes && touched.productTypes ? (
+                                <div className="err-msg">{errors.productTypes}</div>
+                            ) : null}
+
+
+                            <label htmlFor="companies">Companies:</label>
+                            <Field name="companies" className="labels-picker-wrapper" ref={companiesPickerWrapper} >
+                                {({ field, form }) => (
+
+                                    <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
+
+                                        <input type="text" id="companies" {...field} hidden />
+
+                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
+                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Companies'}
+                                        </div>
+
+                                        {isLabelsPickerOpen.isOpen &&
+                                            isLabelsPickerOpen.type === 'companies' &&
+                                            toysLabels?.companies?.length > 0 && < LabelPicker
+                                                labels={toysLabels.companies}
+                                                filterLabels={field.value}
+                                                onSaveLabels={(newLabels) => { form.setFieldValue("companies", newLabels) }}
+                                                labelType={'companies'}
+                                            />}
+                                    </div>
+                                )}
+                            </Field>
+                            {errors.companies && touched.companies ? (
+                                <div className="err-msg">{errors.companies}</div>
+                            ) : null}
+
+
+                            <label htmlFor="description">Description:</label>
+                            <Field name="description" id="description" as="textarea" rows="4" cols="40" />
+                            {errors.description && touched.description ? (
+                                <div className="err-msg">{errors.description}</div>
+                            ) : null}
+
+
+                            <button className="t-a" type="submit">
+                                {isLoading ? <div className="mini-loader"></div> : "Save"}
+                            </button>
+
+                        </Form>
+                    )}
+                </Formik>
+
             </div>
         </section>
     )

@@ -22,6 +22,12 @@
                 font-weight: bold;
             }
 
+            .err-msg {
+                grid-column: 1/-1;
+                color: red;
+                text-align: center;
+            }
+
             .labels-picker-wrapper {
                 position: relative;
 
