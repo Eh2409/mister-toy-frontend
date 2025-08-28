@@ -2,6 +2,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSelector } from "react-redux"
 
+// material-ui
+import TextField from '@mui/material/TextField'
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+
 //services
 import { toyActions } from '../../../store/actions/toy.actions.js'
 import { debounce } from '../../services/util.service.js'
@@ -89,6 +97,30 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilt
 
     const { name, price, brands, productTypes, companies, inStock } = filterByToEdit
 
+
+    const theme = createTheme({
+        components: {
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    root: {
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "var(--mainSiteClrTheme)",
+                        },
+                    },
+                },
+            },
+            MuiInputLabel: {
+                styleOverrides: {
+                    root: {
+                        "&.Mui-focused": {
+                            color: "var(--mainSiteClrTheme)",
+                        },
+                    },
+                },
+            },
+        },
+    });
+
     return (
         <section className='toy-filter'>
 
@@ -128,27 +160,55 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilt
 
                 <h2>Filter Toys</h2>
                 <form >
-                    <div className='filter-options'>
+                    <ThemeProvider theme={theme}>
+                        <div className='filter-options'>
 
-                        <input value={name} onChange={handleChange}
-                            type="search" placeholder="By Name" id="name" name="name"
-                        />
 
-                        <div className='flex'>
-                            <input value={price || ''} onChange={handleChange}
-                                type="number" placeholder="By Price" id="price" name="price"
+                            <TextField
+                                id="name"
+                                label="By Name"
+                                variant="outlined"
+                                name="name"
+                                value={name}
+                                onChange={handleChange}
                             />
 
-                            <select name="inStock" id="inStock" value={inStock} onChange={handleChange}>
-                                <option value="all">All</option>
-                                <option value="true">In stock</option>
-                                <option value="false">Out of stock</option>
-                            </select>
+
+                            <div className='flex'>
+
+                                <TextField
+                                    id="price"
+                                    label="By Price"
+                                    variant="outlined"
+                                    name="price"
+                                    type="number"
+                                    value={price || ''}
+                                    onChange={handleChange}
+                                />
+
+                                <FormControl fullWidth>
+                                    <InputLabel id="inStock">Availability</InputLabel>
+                                    <Select
+                                        labelId="inStock"
+                                        id="inStock"
+                                        value={inStock}
+                                        label="Availability"
+                                        name="inStock"
+                                        onChange={handleChange}
+                                    >
+                                        <MenuItem value="all">All</MenuItem>
+                                        <MenuItem value="true">In stock</MenuItem>
+                                        <MenuItem value="false">Out of stock</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+
+
+                            </div>
+
+                            <button type="button" className="t-a" onClick={onReset}>Reset</button>
                         </div>
-
-                        <button type="button" className="t-a" onClick={onReset}>Reset</button>
-                    </div>
-
+                    </ThemeProvider>
 
                     <h3>Brands</h3>
                     {toysLabels?.brands?.length > 0 && < LabelPicker

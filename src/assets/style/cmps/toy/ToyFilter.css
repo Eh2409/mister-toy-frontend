@@ -49,11 +49,6 @@
         gap: 0.5em;
         margin-block-end: 1em;
 
-        input,
-        select {
-            border: 1px solid var(--mainSiteClrTheme);
-
-        }
     }
 }
 
