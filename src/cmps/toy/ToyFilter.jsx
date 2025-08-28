@@ -4,6 +4,10 @@ import { useSelector } from "react-redux"
 
 //services
 import { toyActions } from '../../../store/actions/toy.actions.js'
+import { debounce } from '../../services/util.service.js'
+
+// hooks
+import { useEffectOnUpdate } from '../../hooks/useEffectOnUpdate.js'
 
 //cmps
 import { LabelPicker } from '../LabelPicker'
@@ -15,8 +19,14 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilt
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     const resetFilterRef = useRef({ name: '', price: 0, brands: [], productTypes: [], companies: [], inStock: 'all' })
 
-    useEffect(() => {
-        onSetFilterBy(filterByToEdit)
+    const debounceRef = useRef(debounce(onSetFilterBy, 600))
+
+    useEffectOnUpdate(() => {
+        if (filterBy.name !== filterByToEdit.name || filterBy.price !== filterByToEdit.price) {
+            debounceRef.current(filterByToEdit)
+        } else {
+            onSetFilterBy(filterByToEdit)
+        }
     }, [filterByToEdit])
 
     useEffect(() => {
