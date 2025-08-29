@@ -18,6 +18,12 @@
             display: grid;
             gap: 0.5em;
 
+            .edit-row {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.5em;
+            }
+
             label {
                 font-weight: bold;
             }
@@ -55,6 +61,7 @@
                         }
                     }
                 }
+
             }
 
             button {
@@ -90,9 +97,14 @@
 
             form {
                 display: grid;
-                grid-template-columns: max-content 1fr;
+                /* grid-template-columns: max-content 1fr; */
                 align-items: center;
                 gap: 1em;
+
+                .edit-row {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                }
             }
         }
     }

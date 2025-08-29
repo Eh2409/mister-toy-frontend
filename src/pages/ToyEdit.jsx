@@ -2,15 +2,24 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
+// Formik
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup'
+
+// material-ui
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
 // services
 import { toyActions } from "../../store/actions/toy.actions.js"
 import { toyService } from "../services/toy/index-toy.js"
+import { getUiTheme } from "../services/util.service.js";
 
 // cmps
 import { LabelPicker } from "../cmps/LabelPicker.jsx"
+import { LabelPickerUi } from "../cmps/LabelPickerUi.jsx";
 import { ToyLoader } from "../cmps/toy/ToyLoader.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
@@ -128,12 +137,14 @@ export function ToyEdit(props) {
             .min(1, 'At least one brand is required')
             .required('Required'),
         productTypes: Yup.array()
-            .min(1, 'At least one brand is required')
+            .min(1, 'At least one product type is required')
             .required('Required'),
         companies: Yup.array()
-            .min(1, 'At least one brand is required')
+            .min(1, 'At least one company is required')
             .required('Required'),
     })
+
+    const theme = createTheme(getUiTheme())
 
     if (toyId && !toyToEdit?._id) return <section className='toy-edit'>
         <ToyLoader size={1} />
@@ -146,141 +157,166 @@ export function ToyEdit(props) {
 
                 <h2>{toyId ? "Update" : "Add"} Toy</h2>
 
+                <ThemeProvider theme={theme}>
+                    <Formik
+                        initialValues={{ ...toyToEdit }}
+                        validationSchema={SignupSchema}
+                        onSubmit={values => onSubmit(values)}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
 
-                <Formik
-                    initialValues={{ ...toyToEdit }}
-                    validationSchema={SignupSchema}
-                    onSubmit={values => onSubmit(values)}
-                >
-                    {({ errors, touched }) => (
-                        <Form>
+                                <div className="edit-row">
 
-                            <label htmlFor="name">Name:</label>
-                            <Field name="name" id="name" />
-                            {errors.name && touched.name ? (
-                                <div className="err-msg">{errors.name}</div>
-                            ) : null}
-
-                            <label htmlFor="price">Price:</label>
-                            <Field name="price" id="price" type="number" />
-
-                            {errors.price && touched.price ? (
-                                <div className="err-msg">{errors.price}</div>
-                            ) : null}
-
-
-                            <label htmlFor="imgUrl">Toy Image Url:</label>
-                            <Field name="imgUrl" id="imgUrl" />
-                            {errors.imgUrl && touched.imgUrl ? (
-                                <div className="err-msg">{errors.imgUrl}</div>
-                            ) : null}
-
-                            <label htmlFor="inStock">In Stock:</label>
-                            <Field name="inStock" id="inStock" type="checkbox" />
-                            {errors.inStock && touched.inStock ? (
-                                <div className="err-msg">{errors.inStock}</div>
-                            ) : null}
+                                    <Field name="name" >
+                                        {({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                id="name"
+                                                label="Toy Name"
+                                                variant="outlined"
+                                                error={touched.name && Boolean(errors.name)}
+                                                helperText={touched.name && errors.name}
+                                            />
+                                        )}
+                                    </Field>
 
 
-                            <label htmlFor="brands">Brands:</label>
-                            <Field name="brands" className="labels-picker-wrapper" ref={brandsPickerWrapper} >
-                                {({ field, form }) => (
+                                    <Field name="price">
+                                        {({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                id="price"
+                                                label="Price"
+                                                variant="outlined"
+                                                type="number"
+                                                error={touched.price && Boolean(errors.price)}
+                                                helperText={touched.price && errors.price}
+                                            />
+                                        )}
+                                    </Field>
 
-                                    <div className="labels-picker-wrapper" ref={brandsPickerWrapper}>
-
-                                        <input type="text" id="brands" {...field} hidden />
-
-                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('brands')}>
-                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Brands'}
-                                        </div>
-
-                                        {isLabelsPickerOpen.isOpen &&
-                                            isLabelsPickerOpen.type === 'brands' &&
-                                            toysLabels?.brands?.length > 0 && < LabelPicker
-                                                labels={toysLabels.brands}
-                                                filterLabels={field.value}
-                                                onSaveLabels={(newLabels) => { form.setFieldValue("brands", newLabels) }}
-                                                labelType={'brands'}
-                                            />}
-                                    </div>
-                                )}
-                            </Field>
-                            {errors.brands && touched.brands ? (
-                                <div className="err-msg">{errors.brands}</div>
-                            ) : null}
-
-
-                            <label htmlFor="productTypes">Product Types:</label>
-                            <Field name="productTypes" className="labels-picker-wrapper" ref={productTypesPickerWrapper} >
-                                {({ field, form }) => (
-
-                                    <div className="labels-picker-wrapper" ref={productTypesPickerWrapper}>
-
-                                        <input type="text" id="productTypes" {...field} hidden />
-
-                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('productTypes')}>
-                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Product Types'}
-                                        </div>
-
-                                        {isLabelsPickerOpen.isOpen &&
-                                            isLabelsPickerOpen.type === 'productTypes' &&
-                                            toysLabels?.productTypes?.length > 0 && < LabelPicker
-                                                labels={toysLabels.productTypes}
-                                                filterLabels={field.value}
-                                                onSaveLabels={(newLabels) => { form.setFieldValue("productTypes", newLabels) }}
-                                                labelType={'productTypes'}
-                                            />}
-                                    </div>
-                                )}
-                            </Field>
-                            {errors.productTypes && touched.productTypes ? (
-                                <div className="err-msg">{errors.productTypes}</div>
-                            ) : null}
+                                    <Field name="inStock">
+                                        {({ field }) => (
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        {...field}
+                                                        checked={field.value}
+                                                        sx={{
+                                                            '&.Mui-checked': {
+                                                                color: 'var(--mainSiteClrTheme)',
+                                                            },
+                                                        }}
+                                                    />
+                                                }
+                                                label="In Stock"
+                                            />
+                                        )}
+                                    </Field>
+                                </div>
 
 
-                            <label htmlFor="companies">Companies:</label>
-                            <Field name="companies" className="labels-picker-wrapper" ref={companiesPickerWrapper} >
-                                {({ field, form }) => (
-
-                                    <div className="labels-picker-wrapper" ref={companiesPickerWrapper}>
-
-                                        <input type="text" id="companies" {...field} hidden />
-
-                                        <div className="prev-labels" onClick={() => toggleLabelsPicker('companies')}>
-                                            {field?.value?.length > 0 ? field.value.join(', ') : 'Choose toy Companies'}
-                                        </div>
-
-                                        {isLabelsPickerOpen.isOpen &&
-                                            isLabelsPickerOpen.type === 'companies' &&
-                                            toysLabels?.companies?.length > 0 && < LabelPicker
-                                                labels={toysLabels.companies}
-                                                filterLabels={field.value}
-                                                onSaveLabels={(newLabels) => { form.setFieldValue("companies", newLabels) }}
-                                                labelType={'companies'}
-                                            />}
-                                    </div>
-                                )}
-                            </Field>
-                            {errors.companies && touched.companies ? (
-                                <div className="err-msg">{errors.companies}</div>
-                            ) : null}
+                                <Field name="imgUrl">
+                                    {({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            id="imgUrl"
+                                            label="Toy Image Url"
+                                            variant="outlined"
+                                            error={touched.imgUrl && Boolean(errors.imgUrl)}
+                                            helperText={touched.imgUrl && errors.imgUrl}
+                                        />
+                                    )}
+                                </Field>
 
 
-                            <label htmlFor="description">Description:</label>
-                            <Field name="description" id="description" as="textarea" rows="4" cols="40" />
-                            {errors.description && touched.description ? (
-                                <div className="err-msg">{errors.description}</div>
-                            ) : null}
+                                <div className="edit-row">
+
+                                    <Field name="brands" >
+                                        {({ field, form }) => (
+
+                                            <div className="labels-picker-wrapper">
+
+                                                {toysLabels?.brands?.length > 0 && <LabelPickerUi
+                                                    labels={toysLabels.brands}
+                                                    filterLabels={field.value}
+                                                    onSaveLabels={(newLabels) => { form.setFieldValue("brands", newLabels) }}
+                                                    labelType={'Brands'}
+                                                    error={touched.brands && Boolean(errors.brands)}
+                                                    helperText={touched.brands && errors.brands}
+                                                />}
+
+                                            </div>
+                                        )}
+                                    </Field>
 
 
-                            <button className="t-a" type="submit">
-                                {isLoading ? <div className="mini-loader"></div> : "Save"}
-                            </button>
+                                    <Field name="productTypes" >
+                                        {({ field, form }) => (
 
-                        </Form>
-                    )}
-                </Formik>
+                                            <div className="labels-picker-wrapper">
 
+                                                {toysLabels?.productTypes?.length > 0 && <LabelPickerUi
+                                                    labels={toysLabels.productTypes}
+                                                    filterLabels={field.value}
+                                                    onSaveLabels={(newLabels) => { form.setFieldValue("productTypes", newLabels) }}
+                                                    labelType={'Product Types'}
+                                                    error={touched.productTypes && Boolean(errors.productTypes)}
+                                                    helperText={touched.productTypes && errors.productTypes}
+                                                />}
+
+                                            </div>
+                                        )}
+                                    </Field>
+
+
+                                    <Field name="companies" >
+                                        {({ field, form }) => (
+
+                                            <div className="labels-picker-wrapper">
+
+                                                {toysLabels?.companies?.length > 0 && <LabelPickerUi
+                                                    labels={toysLabels.companies}
+                                                    filterLabels={field.value}
+                                                    onSaveLabels={(newLabels) => { form.setFieldValue("companies", newLabels) }}
+                                                    labelType={'Companies'}
+                                                    error={touched.companies && Boolean(errors.companies)}
+                                                    helperText={touched.companies && errors.companies}
+                                                />}
+
+                                            </div>
+                                        )}
+                                    </Field>
+
+                                </div>
+
+
+
+                                <Field name="description">
+                                    {({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            id="description"
+                                            label="Description"
+                                            variant="outlined"
+                                            multiline
+                                            rows={3}
+                                            error={touched.description && Boolean(errors.description)}
+                                            helperText={touched.description && errors.description}
+                                        />
+                                    )}
+                                </Field>
+
+
+                                <button className="t-a" type="submit">
+                                    {isLoading ? <div className="mini-loader"></div> : "Save"}
+                                </button>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </ThemeProvider>
             </div>
         </section>
     )

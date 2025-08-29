@@ -9,7 +9,7 @@ function getEmptyToy() {
     return {
         name: '',
         imgUrl: '',
-        price: null,
+        price: '',
         brands: [],
         productTypes: [],
         companies: [],
