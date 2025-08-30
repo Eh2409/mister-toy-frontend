@@ -21,9 +21,12 @@
 @import "./cmps/Popup.css";
 @import "./cmps/Chat.css";
 @import "./cmps/UserMsg.css";
+@import "./cmps/GoogleMap.css";
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";
 @import "./cmps/toy/ToyListHome.css";
 @import "./cmps/toy/ToyLoader.css";
 @import "./cmps/toy/ToyHomeLoader.css";
+
+@import "./cmps/about/BranchesList.css";

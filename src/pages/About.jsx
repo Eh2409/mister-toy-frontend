@@ -1,24 +1,30 @@
-import { useState, useEffect, useRef, Fragment } from 'react'
+import { useState } from 'react'
+
+// services
 import { getBranchesData } from '../services/store.service.js'
+
+// cmps
+import { BrancheList } from '../cmps/About/BrancheList.jsx'
+import { GoogleMap } from '../cmps/GoogleMap.jsx'
 
 export function About(props) {
 
     const [branches, setBranches] = useState(getBranchesData())
-    const [isBrancheOpen, setIsBrancheOpen] = useState({ isOpen: false, brancheId: null })
+    const [isBrancheOpen, setIsBrancheOpen] = useState({ isOpen: false, branche: null })
 
-    function toggleIsBrancheOpen(brancheId) {
+    function toggleIsBrancheOpen(branche) {
         setIsBrancheOpen(prev => {
-            if (brancheId === prev.brancheId) {
-                prev = { isOpen: false, brancheId: null }
+            if (branche?._id === prev.branche?._id) {
+                prev = { isOpen: false, branche: null }
             } else {
-                prev = { isOpen: true, brancheId: brancheId }
+                prev = { isOpen: true, branche: branche }
             }
             return prev
         })
     }
 
     return (
-        <section className="about">
+        <section className="about" >
 
             <h2>About Us</h2>
 
@@ -28,26 +34,22 @@ export function About(props) {
                 we’ve got the perfect toy waiting for you!
             </p>
 
-            <h3>Our Branches</h3>
+            <div className='branches-info'>
+                <h3>Our Branches</h3>
 
-            <ul className="branches-list">
-                {branches?.length > 0 && branches.map(b => {
-                    return <Fragment key={b._id}>
-                        <li className="branche-header" onClick={() => toggleIsBrancheOpen(b._id)} >
-                            <span className='toggle-symbol'>{isBrancheOpen.isOpen && isBrancheOpen.brancheId === b._id ? "-" : "+"}</span>
-                            {b.name}
-                        </li>
-                        <li key={b._id + b.name}
-                            className={`branche-info ${isBrancheOpen.isOpen && isBrancheOpen.brancheId === b._id ? "open" : ""}`}>
-                            <div>
-                                <div><span>City:</span> {b.city}</div>
-                                <div><span>Address:</span> {b.address}</div>
-                                <div><span>Phone:</span> {b.phone}</div>
-                            </div>
-                        </li>
-                    </Fragment>
-                })}
-            </ul>
+                <BrancheList
+                    branches={branches}
+                    isBrancheOpen={isBrancheOpen}
+                    toggleIsBrancheOpen={toggleIsBrancheOpen}
+                />
+
+                <GoogleMap
+                    branches={branches}
+                    selectedBranche={isBrancheOpen?.branche}
+                    toggleIsBrancheOpen={toggleIsBrancheOpen}
+                />
+
+            </div>
 
         </section>
     )
