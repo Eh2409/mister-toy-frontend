@@ -1,6 +1,7 @@
 .app-container {
     display: grid;
     grid-template-columns: 1rem 1fr 1rem;
+    grid-template-rows: auto 1fr;
 
     >* {
         grid-column: 2;
@@ -14,12 +15,8 @@
         }
     }
 
-    .app-header {
-        height: 15vh;
-    }
-
     .app-main-content {
-        min-height: calc(100vh - 15vh);
+        min-height: 100vh;
     }
 
 }
