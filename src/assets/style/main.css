@@ -13,6 +13,7 @@
 @import "./pages/ToyDetails.css";
 @import "./pages/About.css";
 @import "./pages/HomePage.css";
+@import "./pages/Dashboard.css";
 
 /* cmps */
 @import "./cmps/Pagination.css";

@@ -10,6 +10,7 @@ import { toyActions } from "../store/actions/toy.actions.js";
 import { HomePage } from "./pages/HomePage.jsx"
 import { ToyIndex } from "./pages/ToyIndex.jsx";
 import { ToyEdit } from "./pages/ToyEdit.jsx";
+import { Dashboard } from "./pages/Dashboard.jsx";
 
 //cmps
 import { AppHeader } from "./cmps/AppHeader.jsx";
@@ -49,6 +50,7 @@ function RootCmp() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<About />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/toy" element={<ToyIndex />} />
               <Route path="/toy/:toyId" element={<ToyDetails />} />
               <Route path="/toy/edit" element={<ToyEdit />} />

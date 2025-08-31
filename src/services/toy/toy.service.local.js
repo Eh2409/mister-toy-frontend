@@ -6,7 +6,8 @@ export const toyService = {
     getById,
     remove,
     save,
-    getLabels
+    getLabels,
+    getLabelsChartsData,
 }
 
 const TOY_KEY = 'TOY_KEY'
@@ -129,6 +130,47 @@ function getLabels() {
     ]
 
     return Promise.resolve({ brands, productTypes, companies })
+}
+
+
+function getLabelsChartsData() {
+    return Promise.all(
+        [calculateLabelPercentages('brands'),
+        calculateLabelPercentages('productTypes'),
+        calculateLabelPercentages('companies')])
+        .then(([brands, productTypes, companies]) => { return { brands, productTypes, companies } })
+        .catch(err => { throw err })
+}
+
+
+function calculateLabelPercentages(LabelType) {
+    return storageService.query(TOY_KEY).then(toys => {
+        const labelCounts = toys.reduce((acc, toy) => {
+
+            if (!toy.inStock) return acc
+
+            toy[LabelType].forEach(label => {
+                if (!acc[label]) acc[label] = 1
+                else acc[label]++
+                if (!acc['totalLength']) acc['totalLength'] = 1
+                else acc['totalLength']++
+
+                return
+            })
+            return acc
+        }, {})
+
+        return Object.entries(labelCounts)
+            .filter(([key]) => key !== 'totalLength')
+            .map(([key, val]) => {
+                return {
+                    name: key,
+                    percent: (val / (labelCounts['totalLength']) * 100).toFixed(1),
+                    toysCount: val
+                }
+
+            })
+    })
 }
 
 

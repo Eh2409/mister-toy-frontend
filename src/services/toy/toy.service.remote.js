@@ -5,7 +5,8 @@ export const toyService = {
     getById,
     remove,
     save,
-    getLabels
+    getLabels,
+    getLabelsChartsData
 }
 
 const BASE_URL = 'toy/'
@@ -29,4 +30,8 @@ function save(toyToSave) {
 
 function getLabels() {
     return httpService.get(BASE_URL + 'labels')
+}
+
+function getLabelsChartsData() {
+    return httpService.get(BASE_URL + 'charts')
 }

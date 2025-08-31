@@ -12,12 +12,15 @@ export const SET_SEARCH_WORD = 'SET_SEARCH_WORD'
 
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 
+export const SET_CHARTS_DATA = 'SET_CHARTS_DATA'
+
 const initialState = {
     toys: [],
     maxPageCount: 0,
     labels: [],
     searchWord: '',
-    isLoading: false
+    isLoading: false,
+    chartsData: {}
 }
 
 export function toyReducer(state = initialState, cmd = {}) {
@@ -50,6 +53,9 @@ export function toyReducer(state = initialState, cmd = {}) {
 
         case SET_IS_LOADING:
             return { ...state, isLoading: cmd.isLoading }
+
+        case SET_CHARTS_DATA:
+            return { ...state, chartsData: cmd.chartsData }
 
         default: return state
     }

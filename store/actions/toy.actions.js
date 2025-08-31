@@ -1,5 +1,5 @@
 import { toyService } from "../../src/services/toy/index-toy.js";
-import { ADD_TOY, REMOVE_TOY, SET_IS_LOADING, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
+import { ADD_TOY, REMOVE_TOY, SET_CHARTS_DATA, SET_IS_LOADING, SET_LABELS, SET_MAX_PAGE_COUNT, SET_SEARCH_WORD, SET_TOYS, UPDATE_TOY } from "../reducers/toy.reducer.js";
 import { store } from "../store.js";
 
 export const toyActions = {
@@ -7,6 +7,7 @@ export const toyActions = {
     remove,
     save,
     loadLabels,
+    loadChartsData,
     setSearchWord
 }
 
@@ -71,6 +72,17 @@ function loadLabels() {
         })
         .catch(err => {
             console.log('toy action -> Cannot load toys labels', err)
+            throw err
+        })
+}
+
+function loadChartsData() {
+    return toyService.getLabelsChartsData()
+        .then(chartsData => {
+            store.dispatch({ type: SET_CHARTS_DATA, chartsData })
+        })
+        .catch(err => {
+            console.log('toy action -> Cannot load Charts data', err)
             throw err
         })
 }

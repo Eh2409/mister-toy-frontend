@@ -79,6 +79,7 @@ export function AppHeader(props) {
                 <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
                 <NavLink to="/about" onClick={onCloseMobileNav}>About Us</NavLink>
                 <NavLink to="/toy" onClick={onCloseMobileNav}>Toys</NavLink>
+                <NavLink to="/dashboard" onClick={onCloseMobileNav}>Dashboard</NavLink>
             </nav>
             <UserMsg />
         </header>

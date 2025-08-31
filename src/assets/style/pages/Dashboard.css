@@ -1,0 +1,41 @@
+.dashboard {
+    padding-block: 1em;
+
+    h3 {
+        text-align: center;
+    }
+
+
+    .charts {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin-block-end: 1em;
+
+        .pie-chart {
+            max-height: 500px;
+        }
+
+    }
+
+    .area-chart {
+        justify-items: center;
+        max-height: 80vh;
+        margin-block-end: 2em;
+    }
+}
+
+
+@media (min-width: 750px) {
+    .dashboard {
+
+        .charts {
+            grid-template-columns: repeat(3, minmax(200px, 1fr));
+
+            .pie-chart {
+                max-height: 500px;
+            }
+
+        }
+
+    }
+}
