@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, Fragment } from "react"
 import { AdvancedMarker, APIProvider, Map, Pin, InfoWindow, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 
 const apiKey = process.env.GOOGLE_MAP_API_KEY
+console.log('apiKey:', apiKey)
 // const apiKey  'AIzaSyD0Pzw5IoHqPkTT9cEnnqDqEO9lPNCmKmg'
 
 export function GoogleMap({ branches, selectedBranche, toggleIsBrancheOpen }) {
