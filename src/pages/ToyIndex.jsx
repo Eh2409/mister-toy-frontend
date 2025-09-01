@@ -127,6 +127,11 @@ export function ToyIndex(props) {
             </aside>
 
             <main className="toy-index-content">
+
+                {filterBy?.brands?.length === 1 && <div className='brand-logo'>
+                    <img src={`./images/brands/${brands[0]}.png`} alt={brands[0]} />
+                </div>}
+
                 {isLoading
                     ? <ToyLoader />
                     : (toys?.length > 0
