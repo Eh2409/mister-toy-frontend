@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { NavLink, useNavigate, useLocation, Link } from 'react-router-dom'
 
 //services
@@ -16,6 +16,26 @@ export function AppHeader(props) {
     const location = useLocation()
 
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+    const headerRef = useRef()
+    const navRef = useRef()
+
+    useEffect(() => {
+        const options = {
+            threshold: 0.3,
+        }
+
+        const headerObserver = new IntersectionObserver(onHeaderObserved, options)
+
+        headerObserver.observe(headerRef.current)
+
+        function onHeaderObserved(entries) {
+            entries.forEach(entry => {
+                navRef.current.classList.toggle('nav-fixed', !entry.isIntersecting)
+            })
+        }
+
+    }, [])
+
 
     function onSearch(ev) {
         ev.preventDefault()
@@ -42,10 +62,10 @@ export function AppHeader(props) {
     }
 
     return (
-        <header className="app-header full">
+        <header className="app-header full" ref={headerRef}>
 
 
-            <div className='header-content'>
+            <div className='header-content' >
 
                 <button className='mobile-nav-btn' onClick={toggleIsMobileNavOpen}>
                     {isMobileNavOpen
@@ -71,7 +91,7 @@ export function AppHeader(props) {
 
             <div className={`nav-black-wrapper ${isMobileNavOpen ? "nav-open" : ""}`} onClick={onCloseMobileNav}></div>
 
-            <nav className={`main-app-nav flex  align-center ${isMobileNavOpen ? "nav-open" : ""}`}>
+            <nav className={`main-app-nav flex  align-center ${isMobileNavOpen ? "nav-open" : ""}`} ref={navRef}>
                 <div className='nav-header flex justify-between align-center'>
                     <span>Mister Toy</span>
                     <button className='close-btn' onClick={onCloseMobileNav}>x</button>
