@@ -2,7 +2,7 @@
     background: white;
 
     position: sticky;
-    top: 0;
+    top: 0px;
     z-index: 1000;
 
     display: flex;
@@ -81,6 +81,8 @@
 @media (max-width: 750px) {
 
     .app-header {
+
+        top: -1px;
 
         .mobile-nav-btn {
             justify-self: start;

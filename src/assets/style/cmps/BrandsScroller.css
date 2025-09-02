@@ -33,7 +33,7 @@
 
                 &:hover {
                     filter: brightness(1.1);
-                    scale: 1.2;
+                    scale: 1.4;
                 }
             }
         }
@@ -45,7 +45,7 @@
         .brand-list {
             a {
                 img {
-                    height: 80px;
+                    height: 70px;
                 }
             }
         }

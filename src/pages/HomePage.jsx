@@ -47,6 +47,7 @@ export function HomePage(props) {
                 <BrandsScroller brands={toysLabels.brands} />}
 
             <h2>NEW ARRIVALS</h2>
+
             {!isLoading
                 ? <ToyListHome toys={toys} />
                 : <ToyHomeLoader />
