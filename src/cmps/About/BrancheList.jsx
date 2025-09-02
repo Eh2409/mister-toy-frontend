@@ -6,7 +6,7 @@ export function BrancheList({ branches, isBrancheOpen, toggleIsBrancheOpen }) {
             {branches?.length > 0 && branches.map(b => {
                 return <Fragment key={b._id}>
                     <li className="branche-header" onClick={() => toggleIsBrancheOpen(b)} >
-                        <span className='toggle-symbol'>{isBrancheOpen.isOpen && isBrancheOpen.brancheId === b._id ? "-" : "+"}</span>
+                        <span className='toggle-symbol'>{isBrancheOpen.isOpen && isBrancheOpen.branche?._id === b._id ? "-" : "+"}</span>
                         {b.name}
                     </li>
                     <li key={b._id + b.name}
