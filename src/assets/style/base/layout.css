@@ -1,6 +1,6 @@
 .app-container {
     display: grid;
-    grid-template-columns: 1rem 1fr 1rem;
+    grid-template-columns: var(--container-gap-mobile) 1fr var(--container-gap-mobile);
     grid-template-rows: auto 1fr;
 
     >* {
@@ -26,6 +26,14 @@
 @media (min-width: 750px) {
     .app-container {
         display: grid;
-        grid-template-columns: 3rem 1fr 3rem;
+        grid-template-columns: var(--container-gap-tablet) 1fr var(--container-gap-tablet);
+    }
+}
+
+
+@media (min-width: 950px) {
+    .app-container {
+        display: grid;
+        grid-template-columns: var(--container-gap-desktop) 1fr var(--container-gap-desktop);
     }
 }

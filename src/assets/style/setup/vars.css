@@ -1,5 +1,5 @@
 :root {
-
+    /* Color */
     --mainSiteClrTheme: rgb(255, 145, 0);
 
     --taBtnBgClr: gray;
@@ -14,4 +14,9 @@
     --noToysMsgClr: rgb(255, 255, 193);
 
     --homePageBgClr: #1c1c1c;
+
+    /* gap */
+    --container-gap-mobile: 1rem;
+    --container-gap-tablet: 2rem;
+    --container-gap-desktop: 3rem;
 }
