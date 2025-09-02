@@ -74,7 +74,7 @@ export function AppHeader(props) {
                     }
                 </button>
 
-                <Link to="/" className='main-app-logo'>Mister Toy</Link>
+                <Link to="/" className='main-app-logo'><span>MISTER</span> TOY</Link>
 
                 <form className='main-search flex' onSubmit={onSearch}>
                     <input type="text" name="search" className='m-s' placeholder='Ready, set, toy search!' />
@@ -93,7 +93,7 @@ export function AppHeader(props) {
 
             <nav className={`main-app-nav flex  align-center ${isMobileNavOpen ? "nav-open" : ""}`} ref={navRef}>
                 <div className='nav-header flex justify-between align-center'>
-                    <span>Mister Toy</span>
+                    <div className='main-app-logo'><span>MISTER</span> TOY</div>
                     <button className='close-btn' onClick={onCloseMobileNav}>x</button>
                 </div>
                 <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>

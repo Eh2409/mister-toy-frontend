@@ -25,7 +25,7 @@ button,
         .glass-icon {
             width: 25px;
             height: 25px;
-            background-color: rgb(255, 145, 0);
+            background-color: var(--mainSiteClrTheme);
             -webkit-mask: url('/public/images/glass.svg');
             -webkit-mask-size: contain;
             mask: url('/public/images/glass.svg');
