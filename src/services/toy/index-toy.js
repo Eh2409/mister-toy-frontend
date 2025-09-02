@@ -3,7 +3,7 @@
 import { toyService as local } from "./toy.service.local.js"
 import { toyService as remote } from "./toy.service.remote.js"
 
-const isRemote = true
+const isRemote = false
 
 function getEmptyToy() {
     return {

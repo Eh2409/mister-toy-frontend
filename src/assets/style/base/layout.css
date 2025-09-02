@@ -4,7 +4,9 @@
     grid-template-rows: 15vh 1fr;
 
     >* {
-        grid-column: 2;
+        &:not(.full) {
+            grid-column: 2;
+        }
 
         &:has(.home-page) {
             grid-column: 1/-1;
