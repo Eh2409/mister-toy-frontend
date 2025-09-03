@@ -15,6 +15,7 @@ import { LoginSignup } from './user/LoginSignup.jsx'
 import xMark from '/images/x.svg'
 import bars from '/images/bars.svg'
 import userIcon from '/images/user.svg'
+import { UserMenu } from './user/UserMenu.jsx'
 
 
 export function AppHeader(props) {
@@ -28,9 +29,13 @@ export function AppHeader(props) {
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [isSignup, setIsSignUp] = useState(false)
     const [isMiniLoading, setIsMiniLoading] = useState(false)
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
     const headerRef = useRef()
     const navRef = useRef()
+
+    const userMenuRef = useRef()
+    const userBtnRef = useRef()
 
     useEffect(() => {
         const options = {
@@ -44,10 +49,36 @@ export function AppHeader(props) {
         function onHeaderObserved(entries) {
             entries.forEach(entry => {
                 navRef.current.classList.toggle('nav-fixed', !entry.isIntersecting)
+
+                if (isUserMenuOpen && !entry.isIntersecting) toggleIsUserMenuOpen()
             })
         }
 
-    }, [])
+    }, [isUserMenuOpen])
+
+
+    useEffect(() => {
+        if (isUserMenuOpen) {
+            addEventListener('mousedown', handleClickOutside)
+        } else {
+            removeEventListener('mousedown', handleClickOutside)
+        }
+
+        return (() => {
+            removeEventListener('mousedown', handleClickOutside)
+        })
+    }, [isUserMenuOpen])
+
+
+    function handleClickOutside({ target }) {
+        const elUserMenu = userMenuRef.current
+        const elUserBtn = userBtnRef.current
+        if (target !== elUserMenu && !elUserMenu.contains(target)) {
+            if (target === elUserBtn || elUserBtn.contains(target)) return
+            toggleIsUserMenuOpen()
+        }
+    }
+
 
 
     function onSearch(ev) {
@@ -105,7 +136,7 @@ export function AppHeader(props) {
         }
     }
 
-    async function logout() {
+    async function onLogout() {
         try {
             await userActions.logout()
             showSuccessMsg('logout successfully')
@@ -125,6 +156,10 @@ export function AppHeader(props) {
     }
     function onClosePopup() {
         setIsPopupOpen(false)
+    }
+
+    function toggleIsUserMenuOpen() {
+        setIsUserMenuOpen(!isUserMenuOpen)
     }
 
 
@@ -153,12 +188,22 @@ export function AppHeader(props) {
 
                 <button
                     className={`user-btn ${loggedinUser ? "loggedin" : ""}`}
-                    onClick={() => { loggedinUser ? logout() : toggleIsPopupOpen() }}
+                    onClick={() => { loggedinUser ? toggleIsUserMenuOpen() : toggleIsPopupOpen() }}
+                    ref={userBtnRef}
                 >
                     {loggedinUser
                         ? <div className=''>{loggedinUser?.username.substring(0, 1)}</div>
                         : <img src={userIcon} alt="user" className='icon' />
                     }
+
+                    {loggedinUser && <UserMenu
+                        loggedinUser={loggedinUser}
+                        onLogout={onLogout}
+                        userMenuRef={userMenuRef}
+                        isUserMenuOpen={isUserMenuOpen}
+                        toggleIsUserMenuOpen={toggleIsUserMenuOpen}
+                    />}
+
                 </button>
 
             </div>

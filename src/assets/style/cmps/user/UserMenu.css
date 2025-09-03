@@ -1,0 +1,58 @@
+.user-menu-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    z-index: 60;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 200ms ease-in-out;
+
+    &.visible {
+        opacity: 1;
+        pointer-events: visible;
+        backdrop-filter: blur(2px);
+
+        .user-menu {
+            scale: 1;
+        }
+    }
+
+    .user-menu {
+        border-radius: 0.5em;
+        width: max-content;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.385);
+
+        background-color: white;
+        color: black;
+
+        font-size: 0.8em;
+        min-width: 10vw;
+        scale: 0.8;
+        transition: 200ms ease-in-out;
+        cursor: auto;
+        overflow: hidden;
+
+        .user-menu-header {
+            box-shadow: 0px 1px 0px var(--outlineClr1);
+            padding: 1em;
+        }
+
+        .user-menu-nav {
+            display: grid;
+
+            a {
+                padding-block: 0.5em;
+
+                &:hover {
+                    background-color: var(--outlineClr1);
+                }
+
+                &.active {
+                    font-weight: normal;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
