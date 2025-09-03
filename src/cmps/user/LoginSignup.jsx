@@ -41,17 +41,17 @@ export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSign
     const SignupSchema = Yup.object().shape({
         username: Yup.string()
             .min(2, 'Too Short!')
-            .max(50, 'Too Long!')
+            .max(20, 'Too Long!')
             .required('Required'),
         password: Yup.string()
-            .min(2, 'Too Short!')
+            .min(3, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
         fullname: Yup.string().when([], {
             is: () => isSignup,
             then: (schema) =>
                 schema.min(2, 'Too Short!')
-                    .max(50, 'Too Long!')
+                    .max(20, 'Too Long!')
                     .required('Required'),
             otherwise: (schema) => schema.notRequired()
         }),
@@ -87,18 +87,14 @@ export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSign
                         return (
                             <Form>
 
-                                <Field name="username">
-                                    {({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            id="username"
-                                            label="Username"
-                                            variant="outlined"
-                                            error={touched.username && Boolean(errors.username)}
-                                            helperText={touched.username && errors.username}
-                                        />
-                                    )}
-                                </Field>
+                                <Field
+                                    as={TextField}
+                                    name="username"
+                                    label="Username"
+                                    variant="outlined"
+                                    error={touched.username && Boolean(errors.username)}
+                                    helperText={touched.username && errors.username}
+                                />
 
 
 
@@ -136,22 +132,17 @@ export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSign
                                 </Field>
 
 
-
-
                                 {isSignup &&
                                     <Fragment>
-                                        <Field name="fullname">
-                                            {({ field }) => (
-                                                <TextField
-                                                    {...field}
-                                                    id="fullname"
-                                                    label="Full Name"
-                                                    variant="outlined"
-                                                    error={touched.fullname && Boolean(errors.fullname)}
-                                                    helperText={touched.fullname && errors.fullname}
-                                                />
-                                            )}
-                                        </Field>
+                                        <Field
+                                            as={TextField}
+                                            name="fullname"
+                                            id="fullname"
+                                            label="Full Name"
+                                            variant="outlined"
+                                            error={touched.fullname && Boolean(errors.fullname)}
+                                            helperText={touched.fullname && errors.fullname}
+                                        />
                                     </Fragment>
                                 }
 
