@@ -1,0 +1,23 @@
+.login-signup {
+    padding-inline: 0.5em;
+
+    form {
+        display: grid;
+        gap: 0.5em;
+
+        input {
+            font-size: 1em;
+        }
+    }
+
+    .signup-msg-toggle {
+        align-self: end;
+        text-align: center;
+        cursor: pointer;
+        color: var(--mainSiteClrTheme);
+
+        &:hover {
+            filter: brightness(0.9);
+        }
+    }
+}

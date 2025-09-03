@@ -1,7 +1,7 @@
 
 import { userService as local } from "./user.service.local.js"
 
-function getEmptyUser() {
+function getEmptyCredentials() {
     return {
         username: '',
         password: '',
@@ -11,4 +11,4 @@ function getEmptyUser() {
 
 
 const service = local
-export const userService = { getEmptyUser, ...service }
+export const userService = { getEmptyCredentials, ...service }

@@ -1,14 +1,21 @@
 import { useEffect, useState, useRef } from 'react'
 import { NavLink, useNavigate, useLocation, Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 //services
 import { toyActions } from '../../store/actions/toy.actions.js'
+import { userActions } from '../../store/actions/user.actions.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+
 // cmps
 import { UserMsg } from './UserMsg.jsx'
+import { Popup } from './Popup.jsx'
+import { LoginSignup } from './user/LoginSignup.jsx'
 //images
 import xMark from '/images/x.svg'
 import bars from '/images/bars.svg'
 import userIcon from '/images/user.svg'
+
 
 export function AppHeader(props) {
 
@@ -16,6 +23,12 @@ export function AppHeader(props) {
     const location = useLocation()
 
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [isSignup, setIsSignUp] = useState(false)
+    const [isMiniLoading, setIsMiniLoading] = useState(false)
+
     const headerRef = useRef()
     const navRef = useRef()
 
@@ -61,6 +74,60 @@ export function AppHeader(props) {
         setIsMobileNavOpen(false)
     }
 
+
+    /// user actions
+
+    async function signup(credentials) {
+        setIsMiniLoading(true)
+        try {
+            await userActions.signup(credentials)
+            showSuccessMsg('Signup successfully')
+            onClosePopup()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot signup')
+        } finally {
+            setIsMiniLoading(false)
+        }
+    }
+
+    async function login(credentials) {
+        setIsMiniLoading(true)
+        try {
+            await userActions.login(credentials)
+            showSuccessMsg('Signup successfully')
+            onClosePopup()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot login')
+        } finally {
+            setIsMiniLoading(false)
+        }
+    }
+
+    async function logout() {
+        try {
+            await userActions.logout()
+            showSuccessMsg('logout successfully')
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot logout')
+        }
+    }
+
+
+    function toggleIsSignup() {
+        setIsSignUp(!isSignup)
+    }
+
+    function toggleIsPopupOpen() {
+        setIsPopupOpen(!isPopupOpen)
+    }
+    function onClosePopup() {
+        setIsPopupOpen(false)
+    }
+
+
     return (
         <header className="app-header full" ref={headerRef}>
 
@@ -84,9 +151,16 @@ export function AppHeader(props) {
                     </button>
                 </form>
 
-                <button className='user-btn'>
-                    <img src={userIcon} alt="user" className='icon' />
+                <button
+                    className={`user-btn ${loggedinUser ? "loggedin" : ""}`}
+                    onClick={() => { loggedinUser ? logout() : toggleIsPopupOpen() }}
+                >
+                    {loggedinUser
+                        ? <div className=''>{loggedinUser?.username.substring(0, 1)}</div>
+                        : <img src={userIcon} alt="user" className='icon' />
+                    }
                 </button>
+
             </div>
 
             <div className={`nav-black-wrapper ${isMobileNavOpen ? "nav-open" : ""}`} onClick={onCloseMobileNav}></div>
@@ -102,6 +176,24 @@ export function AppHeader(props) {
                 <NavLink to="/dashboard" onClick={onCloseMobileNav}>Dashboard</NavLink>
             </nav>
             <UserMsg />
+
+            <Popup
+                header={<h2 className='login-signup-logo'>{isSignup ? "Signup" : "Login"}</h2>}
+                aside={<img src="./images/aside-image.jpg" alt="popup-img" />}
+                onClosePopup={onClosePopup}
+                isPopupOpen={isPopupOpen}>
+
+                <LoginSignup
+                    isPopupOpen={isPopupOpen}
+                    signup={signup}
+                    login={login}
+                    toggleIsSignup={toggleIsSignup}
+                    isSignup={isSignup}
+                    isMiniLoading={isMiniLoading}
+                />
+
+            </Popup>
+
         </header>
     )
 }

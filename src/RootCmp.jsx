@@ -17,6 +17,7 @@ import { AppHeader } from "./cmps/AppHeader.jsx";
 import { Provider } from "react-redux";
 import { ToyDetails } from "./pages/ToyDetails.jsx";
 import { About } from "./pages/About.jsx";
+import { Users } from "./pages/Users.jsx";
 
 function RootCmp() {
 
@@ -55,6 +56,7 @@ function RootCmp() {
               <Route path="/toy/:toyId" element={<ToyDetails />} />
               <Route path="/toy/edit" element={<ToyEdit />} />
               <Route path="/toy/edit/:toyId" element={<ToyEdit />} />
+              <Route path="/user" element={<Users />} />
             </Routes>
           </main>
         </section>

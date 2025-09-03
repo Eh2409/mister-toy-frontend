@@ -63,7 +63,7 @@
         left: 50%;
         translate: -50% -50%;
 
-        min-width: 30vw;
+        min-width: 80vw;
         background-color: white;
 
         cursor: auto;
@@ -111,6 +111,12 @@
                 position: relative;
                 text-align: center;
 
+                .login-signup-logo {
+                    -webkit-text-stroke-color: var(--mainSiteClrTheme);
+                    -webkit-text-stroke-width: 1px;
+                    -webkit-text-fill-color: transparent;
+                }
+
                 .close-btn {
                     position: absolute;
                     top: 0;
@@ -129,6 +135,7 @@
 @media (min-width: 750px) {
     .popup-black-wrapper {
         .popup {
+            min-width: 70vw;
 
             &:has(aside) {
 
@@ -157,6 +164,15 @@
                 }
             }
 
+        }
+    }
+}
+
+
+@media (min-width: 950px) {
+    .popup-black-wrapper {
+        .popup {
+            min-width: 40vw;
         }
     }
 }

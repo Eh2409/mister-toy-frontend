@@ -32,3 +32,5 @@
 @import "./cmps/toy/ToyHomeLoader.css";
 
 @import "./cmps/about/BranchesList.css";
+
+@import "./cmps/user/LoginSignup.css";
