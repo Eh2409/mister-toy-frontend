@@ -12,6 +12,7 @@ import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
+import noImg from '/images/toys/no-toy-image.jpg'
 
 export function ToyDetails(props) {
 
@@ -98,7 +99,7 @@ export function ToyDetails(props) {
                 <img
                     src={toy.imgUrl}
                     alt={toy.name}
-                    onError={ev => ev.currentTarget.src = "./images/toys/no-toy-image.jpg"}
+                    onError={ev => ev.currentTarget.src = noImg}
                     className='toy-img'
                 />
 
