@@ -22,6 +22,7 @@ export function ToyIndex(props) {
     const maxPageCount = useSelector(storeState => storeState.toyModule.maxPageCount)
     const toysLabels = useSelector(storeState => storeState.toyModule.labels)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(toyService.getFilterFromSearchParams(searchParams))
@@ -107,12 +108,12 @@ export function ToyIndex(props) {
     return (
         <section className="toy-index">
 
-            <div className="toy-content-header flex justify-between align-center">
+            <div className="toy-content-header">
 
                 <button className='mobile-filter-btn' onClick={toggleIsMobileFilterOpen}>
                     Filter {activeFilterOptionsCount ? `(${activeFilterOptionsCount})` : ""}
                 </button>
-                <Link to='/toy/edit' className='btn t-a'>Add Toy</Link>
+                {loggedinUser?.isAdmin && <Link to='/toy/edit' className='btn t-a'>Add Toy</Link>}
                 <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
 
             </div>
@@ -135,7 +136,12 @@ export function ToyIndex(props) {
                 {isLoading
                     ? <ToyLoader />
                     : (toys?.length > 0
-                        ? <ToyList toys={toys} onRemove={onRemove} isMiniLoading={isMiniLoading} />
+                        ? <ToyList
+                            toys={toys}
+                            onRemove={onRemove}
+                            isMiniLoading={isMiniLoading}
+                            loggedinUser={loggedinUser}
+                        />
                         : <div className='no-toys-found-msg'>No items match your search criteria.</div>
                     )
                 }

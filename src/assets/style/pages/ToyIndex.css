@@ -79,8 +79,14 @@
         .toy-content-header {
             grid-column: 1/-1;
             display: flex;
+            justify-content: end;
+            align-items: center;
             padding: 1em;
             margin-block: 0em;
+
+            &:has(.t-a) {
+                justify-content: space-between;
+            }
 
             .mobile-filter-btn {
                 display: none;
