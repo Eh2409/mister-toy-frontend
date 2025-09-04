@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 
 // services
@@ -9,6 +10,7 @@ import { showErrorMsg } from '../services/event-bus.service.js'
 import { Popup } from '../cmps/Popup.jsx'
 import { Chat } from '../cmps/Chat.jsx'
 import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
+import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
@@ -20,6 +22,8 @@ export function ToyDetails(props) {
 
     const [toy, setToy] = useState(null)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
+
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
 
     useEffect(() => {
         if (toyId) {
@@ -60,6 +64,16 @@ export function ToyDetails(props) {
     function onKeydown(ev) {
         if (ev.key === 'Escape') {
             toggleIsPopupOpen()
+        }
+    }
+
+    async function onSaveMsg(msgToSave) {
+        try {
+            const savedMsg = await toyService.saveMsg(msgToSave, toy._id)
+            setToy(prev => ({ ...prev, msgs: [...prev.msgs, savedMsg] }))
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot save msg')
         }
     }
 
@@ -122,7 +136,10 @@ export function ToyDetails(props) {
                 onClosePopup={onClosePopup}
                 header={<h2>Toy Chat</h2>}
             >
-                <Chat />
+                {/* <Chat /> */}
+
+                <ToyMsgChat toyMsgs={toy.msgs} loggedinUser={loggedinUser} onSaveMsg={onSaveMsg} />
+
             </Popup>
 
         </section >

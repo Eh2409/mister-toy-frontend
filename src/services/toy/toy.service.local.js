@@ -1,3 +1,4 @@
+import { Await } from "react-router-dom"
 import { storageService } from "../async-storage.service"
 import { getRandomIntInclusive, loadFromStorage, makeId, makeLorem, saveToStorage } from "../util.service"
 
@@ -8,6 +9,7 @@ export const toyService = {
     save,
     getLabels,
     getLabelsChartsData,
+    saveMsg
 }
 
 const TOY_KEY = 'TOY_KEY'
@@ -174,6 +176,20 @@ function calculateLabelPercentages(LabelType) {
 }
 
 
+async function saveMsg(msgToSave, toyId) {
+    try {
+        const toy = await getById(toyId)
+        msgToSave.id = makeId()
+        msgToSave.at = Date.now()
+        toy.msgs.push(msgToSave)
+        await save(toy)
+        return msgToSave
+    } catch (err) {
+        throw err
+    }
+}
+
+
 // private func
 
 function _createToysArray() {
@@ -187,7 +203,8 @@ function _createToysArray() {
                 const brand = brands[getRandomIntInclusive(0, brands.length - 1)]
                 const productType = productTypes[getRandomIntInclusive(0, productTypes.length - 1)]
                 const company = companies[getRandomIntInclusive(0, companies.length - 1)]
-                toys.push(_createToy(brand, productType, company))
+                const msgs = _createMsgsArray()
+                toys.push(_createToy(brand, productType, company, msgs))
             }
             saveToStorage(TOY_KEY, toys)
         })
@@ -197,7 +214,7 @@ function _createToysArray() {
 }
 
 
-function _createToy(brand, productType, company) {
+function _createToy(brand, productType, company, msgs) {
     return {
         _id: makeId(),
         name: makeLorem(1),
@@ -209,5 +226,28 @@ function _createToy(brand, productType, company) {
         createdAt: Date.now(),
         inStock: Math.random() > 0.5 ? true : false,
         description: makeLorem(20),
+        msgs: msgs
+    }
+}
+
+function _createMsgsArray() {
+    const msgs = []
+    for (let i = 0; i < getRandomIntInclusive(1, 4); i++) {
+        msgs.push(_createMsg())
+    }
+    return msgs
+}
+
+
+
+function _createMsg() {
+    return {
+        id: makeId(),
+        txt: makeLorem(getRandomIntInclusive(1, 10)),
+        at: Date.now(),
+        by: {
+            _id: makeId(),
+            username: makeLorem(1)
+        }
     }
 }
