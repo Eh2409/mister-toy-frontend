@@ -1,5 +1,5 @@
 import { userService } from "../../src/services/user/index-user.js"
-import { REMOVE_USER, SET_LOGGEDIN_USER, SET_USERS, UPDATE_USER } from "../reducers/user.reducer"
+import { REMOVE_USER, SET_IS_LOGIN_OPEN, SET_LOGGEDIN_USER, SET_USERS, UPDATE_USER } from "../reducers/user.reducer"
 import { store } from "../store.js"
 
 
@@ -7,10 +7,11 @@ export const userActions = {
     loadUsers,
     remove,
     update,
+    setIsLoginSignupPopupOpen,
     // auth
     signup,
     login,
-    logout
+    logout,
 }
 
 async function loadUsers(filterBy = {}) {
@@ -66,7 +67,10 @@ async function logout() {
         store.dispatch({ type: SET_LOGGEDIN_USER, loggedinUser: null })
     } catch (err) {
         throw err
-    }   
+    }
 }
 
 
+function setIsLoginSignupPopupOpen(isOpen) {
+    store.dispatch({ type: SET_IS_LOGIN_OPEN, isLoginSignupOpen: isOpen })
+}

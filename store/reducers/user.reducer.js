@@ -7,9 +7,12 @@ export const UPDATE_USER = 'UPDATE_USER'
 
 export const SET_LOGGEDIN_USER = 'SET_LOGGEDIN_USER'
 
+export const SET_IS_LOGIN_OPEN = 'SET_IS_LOGIN_OPEN'
+
 const initialState = {
     users: [],
     loggedinUser: userService.getLoggedinUser(),
+    isLoginSignupOpen: false
 }
 
 export function userReducer(state = initialState, cmd = {}) {
@@ -33,6 +36,9 @@ export function userReducer(state = initialState, cmd = {}) {
             }
         case SET_LOGGEDIN_USER:
             return { ...state, loggedinUser: cmd.loggedinUser }
+
+        case SET_IS_LOGIN_OPEN:
+            return { ...state, isLoginSignupOpen: cmd.isLoginSignupOpen }
 
         default: return state
     }

@@ -46,4 +46,14 @@
             border: none;
         }
     }
+
+    .authentication-msg {
+        text-align: center;
+        color: white;
+
+        span {
+            cursor: pointer;
+            color: blue;
+        }
+    }
 }

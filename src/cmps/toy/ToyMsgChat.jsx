@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react"
+import { userActions } from "../../../store/actions/user.actions.js"
 
 export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
 
-    const [chatMessages, setChatMessages] = useState(toyMsgs)
     const [msgToEdit, setMsgToEdit] = useState({ txt: '' })
 
     const chatMessagesRef = useRef()
@@ -18,10 +18,6 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
             top: chatMessagesRef.current.scrollHeight,
             behavior: 'smooth'
         })
-    }, [chatMessages])
-
-    useEffect(() => {
-        setChatMessages(toyMsgs)
     }, [toyMsgs])
 
 
@@ -35,6 +31,9 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
         setMsgToEdit(prev => ({ txt: '' }))
     }
 
+    function onOpenLoginPopup() {
+        userActions.setIsLoginSignupPopupOpen(true)
+    }
 
     const options = { hour: "2-digit", minute: "2-digit", hour12: false }
 
@@ -42,7 +41,7 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
         <section className="chat">
 
             <ul className="chat-messages" ref={chatMessagesRef}>
-                {chatMessages.length > 0 && chatMessages.map((m, idx) => {
+                {toyMsgs.length > 0 && toyMsgs.map((m, idx) => {
                     return <li key={m.at + idx} className={`msg ${loggedinUser?._id === m.by._id ? 'you' : ''}`}>
                         <div className="msg-header flex justify-between align-center ">
                             <span>by: {m.by.username}</span>
@@ -64,7 +63,9 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
                         onChange={handleChange} />
                     <button className="t-a">Send</button>
                 </form>
-                : <div> Login / Signup to add msg</div>
+                : <div className="authentication-msg">
+                    <span onClick={onOpenLoginPopup}> Login / Signup</span> to add massage
+                </div>
             }
 
         </section>

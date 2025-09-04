@@ -26,6 +26,8 @@ export function AppHeader(props) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    const isLoginSignupOpen = useSelector(storeState => storeState.userModule.isLoginSignupOpen)
+
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [isSignup, setIsSignUp] = useState(false)
     const [isMiniLoading, setIsMiniLoading] = useState(false)
@@ -36,6 +38,13 @@ export function AppHeader(props) {
 
     const userMenuRef = useRef()
     const userBtnRef = useRef()
+
+    useEffect(() => {
+        if (isLoginSignupOpen) {
+            setIsPopupOpen(true)
+            userActions.setIsLoginSignupPopupOpen(false)
+        }
+    }, [isLoginSignupOpen])
 
     useEffect(() => {
         const options = {
