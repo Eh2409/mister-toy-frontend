@@ -3,21 +3,22 @@ import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import { store } from "../store/store.js";
 import { useEffect } from 'react'
+import { Provider } from "react-redux";
+
 // services
 import { toyActions } from "../store/actions/toy.actions.js";
 
 //pages
 import { HomePage } from "./pages/HomePage.jsx"
 import { ToyIndex } from "./pages/ToyIndex.jsx";
+import { ToyDetails } from "./pages/ToyDetails.jsx";
 import { ToyEdit } from "./pages/ToyEdit.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
+import { About } from "./pages/About.jsx";
+import { UserDetails } from "./pages/UserDetails.jsx";
 
 //cmps
 import { AppHeader } from "./cmps/AppHeader.jsx";
-import { Provider } from "react-redux";
-import { ToyDetails } from "./pages/ToyDetails.jsx";
-import { About } from "./pages/About.jsx";
-import { Users } from "./pages/Users.jsx";
 
 function RootCmp() {
 
@@ -56,7 +57,7 @@ function RootCmp() {
               <Route path="/toy/:toyId" element={<ToyDetails />} />
               <Route path="/toy/edit" element={<ToyEdit />} />
               <Route path="/toy/edit/:toyId" element={<ToyEdit />} />
-              <Route path="/user" element={<Users />} />
+              <Route path="/user/:userId" element={<UserDetails />} />
             </Routes>
           </main>
         </section>

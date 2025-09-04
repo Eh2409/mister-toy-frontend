@@ -14,6 +14,7 @@
 @import "./pages/About.css";
 @import "./pages/HomePage.css";
 @import "./pages/Dashboard.css";
+@import "./pages/UserDetails.css";
 
 /* cmps */
 @import "./cmps/Pagination.css";
