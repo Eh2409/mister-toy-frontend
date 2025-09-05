@@ -170,33 +170,26 @@ export function ToyEdit(props) {
 
                                 <div className="edit-row">
 
-                                    <Field name="name" >
-                                        {({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                id="name"
-                                                label="Toy Name"
-                                                variant="outlined"
-                                                error={touched.name && Boolean(errors.name)}
-                                                helperText={touched.name && errors.name}
-                                            />
-                                        )}
-                                    </Field>
+                                    <Field
+                                        as={TextField}
+                                        name="name"
+                                        id="name"
+                                        label="Toy Name"
+                                        variant="outlined"
+                                        error={touched.name && Boolean(errors.name)}
+                                        helperText={touched.name && errors.name}
+                                    />
 
-
-                                    <Field name="price">
-                                        {({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                id="price"
-                                                label="Price"
-                                                variant="outlined"
-                                                type="number"
-                                                error={touched.price && Boolean(errors.price)}
-                                                helperText={touched.price && errors.price}
-                                            />
-                                        )}
-                                    </Field>
+                                    <Field
+                                        as={TextField}
+                                        name="price"
+                                        id="price"
+                                        label="Price"
+                                        variant="outlined"
+                                        type="number"
+                                        error={touched.price && Boolean(errors.price)}
+                                        helperText={touched.price && errors.price}
+                                    />
 
                                     <Field name="inStock">
                                         {({ field }) => (
@@ -216,21 +209,19 @@ export function ToyEdit(props) {
                                             />
                                         )}
                                     </Field>
+
                                 </div>
 
 
-                                <Field name="imgUrl">
-                                    {({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            id="imgUrl"
-                                            label="Toy Image Url"
-                                            variant="outlined"
-                                            error={touched.imgUrl && Boolean(errors.imgUrl)}
-                                            helperText={touched.imgUrl && errors.imgUrl}
-                                        />
-                                    )}
-                                </Field>
+                                <Field
+                                    as={TextField}
+                                    name="imgUrl"
+                                    id="imgUrl"
+                                    label="Toy Image Url"
+                                    variant="outlined"
+                                    error={touched.imgUrl && Boolean(errors.imgUrl)}
+                                    helperText={touched.imgUrl && errors.imgUrl}
+                                />
 
 
                                 <div className="edit-row">
@@ -294,21 +285,17 @@ export function ToyEdit(props) {
                                 </div>
 
 
-
-                                <Field name="description">
-                                    {({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            id="description"
-                                            label="Description"
-                                            variant="outlined"
-                                            multiline
-                                            rows={3}
-                                            error={touched.description && Boolean(errors.description)}
-                                            helperText={touched.description && errors.description}
-                                        />
-                                    )}
-                                </Field>
+                                <Field
+                                    as={TextField}
+                                    name="description"
+                                    id="description"
+                                    label="Description"
+                                    variant="outlined"
+                                    multiline
+                                    rows={3}
+                                    error={touched.description && Boolean(errors.description)}
+                                    helperText={touched.description && errors.description}
+                                />
 
 
                                 <button className="t-a" type="submit">
