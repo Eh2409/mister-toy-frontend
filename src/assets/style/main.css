@@ -25,6 +25,7 @@
 @import "./cmps/UserMsg.css";
 @import "./cmps/GoogleMap.css";
 @import "./cmps/BrandsScroller.css";
+@import "./cmps/ImageLoader.css";
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";

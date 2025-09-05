@@ -15,6 +15,7 @@ import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
 //images
 import chatIcon from '/images/chat.svg'
 import noImg from '/images/toys/no-toy-image.jpg'
+import { ImageLoader } from '../cmps/ImageLoader.jsx'
 
 export function ToyDetails(props) {
 
@@ -111,12 +112,7 @@ export function ToyDetails(props) {
             <hr />
 
             <section className='toy-details-content'>
-                <img
-                    src={toy.imgUrl}
-                    alt={toy.name}
-                    onError={ev => ev.currentTarget.src = noImg}
-                    className='toy-img'
-                />
+                <ImageLoader img={toy?.imgUrl} alt={toy?.name} />
 
                 <div className='toy-info'>
                     <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
@@ -140,7 +136,7 @@ export function ToyDetails(props) {
             >
                 {/* <Chat /> */}
 
-                <ToyMsgChat toyMsgs={toy.msgs} loggedinUser={loggedinUser} onSaveMsg={onSaveMsg} />
+                <ToyMsgChat toyMsgs={toy?.msgs || []} loggedinUser={loggedinUser} onSaveMsg={onSaveMsg} />
 
             </Popup>
 
