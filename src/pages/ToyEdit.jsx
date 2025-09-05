@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { toyActions } from "../../store/actions/toy.actions.js"
 import { toyService } from "../services/toy/index-toy.js"
 import { getUiTheme } from "../services/util.service.js";
+import { useConfirmTabClose } from "../hooks/useConfirmTabClose.js";
 
 // cmps
 import { LabelPicker } from "../cmps/LabelPicker.jsx"
@@ -39,6 +40,7 @@ export function ToyEdit(props) {
     const brandsPickerWrapper = useRef()
     const productTypesPickerWrapper = useRef()
     const companiesPickerWrapper = useRef()
+    const setHasUnsavedChanges = useConfirmTabClose()
 
 
     useEffect(() => {
@@ -124,6 +126,11 @@ export function ToyEdit(props) {
 
     }
 
+    function customHandleChange(ev, handleChange) {
+        handleChange(ev)
+        setHasUnsavedChanges(true)
+    }
+
 
     const SignupSchema = Yup.object().shape({
         name: Yup.string()
@@ -144,6 +151,7 @@ export function ToyEdit(props) {
         companies: Yup.array()
             .min(1, 'At least one company is required')
             .required('Required'),
+        inStock: Yup.boolean(),
     })
 
     const theme = createTheme(getUiTheme())
@@ -165,7 +173,7 @@ export function ToyEdit(props) {
                         validationSchema={SignupSchema}
                         onSubmit={values => onSubmit(values)}
                     >
-                        {({ errors, touched }) => (
+                        {({ errors, touched, handleChange }) => (
                             <Form>
 
                                 <div className="edit-row">
@@ -178,6 +186,7 @@ export function ToyEdit(props) {
                                         variant="outlined"
                                         error={touched.name && Boolean(errors.name)}
                                         helperText={touched.name && errors.name}
+                                        onChange={e => customHandleChange(e, handleChange)}
                                     />
 
                                     <Field
@@ -189,6 +198,7 @@ export function ToyEdit(props) {
                                         type="number"
                                         error={touched.price && Boolean(errors.price)}
                                         helperText={touched.price && errors.price}
+                                        onChange={e => customHandleChange(e, handleChange)}
                                     />
 
                                     <Field name="inStock">
@@ -221,12 +231,13 @@ export function ToyEdit(props) {
                                     variant="outlined"
                                     error={touched.imgUrl && Boolean(errors.imgUrl)}
                                     helperText={touched.imgUrl && errors.imgUrl}
+                                    onChange={e => customHandleChange(e, handleChange)}
                                 />
 
 
                                 <div className="edit-row">
 
-                                    <Field name="brands" >
+                                    <Field name="brands"  >
                                         {({ field, form }) => (
 
                                             <div className="labels-picker-wrapper">
@@ -234,7 +245,10 @@ export function ToyEdit(props) {
                                                 {toysLabels?.brands?.length > 0 && <LabelPickerUi
                                                     labels={toysLabels.brands}
                                                     filterLabels={field.value}
-                                                    onSaveLabels={(newLabels) => { form.setFieldValue("brands", newLabels) }}
+                                                    onSaveLabels={(newLabels) => {
+                                                        form.setFieldValue("brands", newLabels)
+                                                        customHandleChange({ target: { name: "brands", value: newLabels } }, form.handleChange)
+                                                    }}
                                                     labelType={'Brands'}
                                                     error={touched.brands && Boolean(errors.brands)}
                                                     helperText={touched.brands && errors.brands}
@@ -253,7 +267,10 @@ export function ToyEdit(props) {
                                                 {toysLabels?.productTypes?.length > 0 && <LabelPickerUi
                                                     labels={toysLabels.productTypes}
                                                     filterLabels={field.value}
-                                                    onSaveLabels={(newLabels) => { form.setFieldValue("productTypes", newLabels) }}
+                                                    onSaveLabels={(newLabels) => {
+                                                        form.setFieldValue("productTypes", newLabels)
+                                                        customHandleChange({ target: { name: "productTypes", value: newLabels } }, form.handleChange)
+                                                    }}
                                                     labelType={'Product Types'}
                                                     error={touched.productTypes && Boolean(errors.productTypes)}
                                                     helperText={touched.productTypes && errors.productTypes}
@@ -272,7 +289,10 @@ export function ToyEdit(props) {
                                                 {toysLabels?.companies?.length > 0 && <LabelPickerUi
                                                     labels={toysLabels.companies}
                                                     filterLabels={field.value}
-                                                    onSaveLabels={(newLabels) => { form.setFieldValue("companies", newLabels) }}
+                                                    onSaveLabels={(newLabels) => {
+                                                        form.setFieldValue("companies", newLabels)
+                                                        customHandleChange({ target: { name: "companies", value: newLabels } }, form.handleChange)
+                                                    }}
                                                     labelType={'Companies'}
                                                     error={touched.companies && Boolean(errors.companies)}
                                                     helperText={touched.companies && errors.companies}
@@ -295,6 +315,7 @@ export function ToyEdit(props) {
                                     rows={3}
                                     error={touched.description && Boolean(errors.description)}
                                     helperText={touched.description && errors.description}
+                                    onChange={e => customHandleChange(e, handleChange)}
                                 />
 
 
