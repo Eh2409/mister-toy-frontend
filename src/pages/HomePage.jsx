@@ -11,7 +11,6 @@ import { ToyHomeLoader } from "../cmps/toy/ToyHomeLoader.jsx"
 import { BrandsScroller } from "../cmps/BrandsScroller.jsx"
 
 
-
 export function HomePage(props) {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)
@@ -25,19 +24,22 @@ export function HomePage(props) {
         loadLabels()
     }, [])
 
-    function loadToys(filterBy) {
-        return toyActions.load(filterBy)
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load toys')
-            })
+    async function loadToys(filterBy) {
+        try {
+            await toyActions.load(filterBy)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load toys')
+        }
     }
 
-    function loadLabels() {
-        return toyActions.loadLabels()
-            .catch(err => {
-                console.log('err:', err)
-            })
+    async function loadLabels() {
+        try {
+            await toyActions.loadLabels()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load labels')
+        }
     }
 
     return (

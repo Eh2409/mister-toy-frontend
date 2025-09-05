@@ -45,13 +45,14 @@ export function ToyDetails(props) {
     }, [isPopupOpen])
 
 
-    function loadToy(toyId) {
-        toyService.getById(toyId)
-            .then(toy => setToy(toy))
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load toy ' + toyId)
-            })
+    async function loadToy(toyId) {
+        try {
+            const toy = await toyService.getById(toyId)
+            setToy(toy)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load toy ' + toyId)
+        }
     }
 
     function toggleIsPopupOpen() {

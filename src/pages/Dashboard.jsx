@@ -17,11 +17,12 @@ export function Dashboard() {
         loadChatData()
     }, [])
 
-    function loadChatData() {
-        toyActions.loadChartsData()
-            .catch(err => {
-                showErrorMsg('Cannot load charts data')
-            })
+    async function loadChatData() {
+        try {
+            await toyActions.loadChartsData()
+        } catch (err) {
+            showErrorMsg('Cannot load charts data')
+        }
     }
 
 

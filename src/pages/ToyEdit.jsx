@@ -74,23 +74,24 @@ export function ToyEdit(props) {
         }
     }
 
-    function loadToy(toyId) {
-        toyService.getById(toyId)
-            .then(toy => setToyToEdit(toy))
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load toy ' + toyId)
-            })
+    async function loadToy(toyId) {
+        try {
+            const toy = await toyService.getById(toyId)
+            setToyToEdit(toy)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load toy ' + toyId)
+        }
     }
 
-    function loadLabels() {
-        return toyActions.loadLabels()
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load labels ' + toyId)
-            })
+    async function loadLabels() {
+        try {
+            await toyActions.loadLabels()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load labels')
+        }
     }
-
 
     function toggleLabelsPicker(type = undefined) {
         setIsLabelsPickerOpen(prev => {
@@ -103,25 +104,26 @@ export function ToyEdit(props) {
         })
     }
 
-    function onSubmit(toyToSave) {
+    async function onSubmit(toyToSave) {
         setIsLoading(true)
 
         if (!toyToSave.imgUrl) {
             toyToSave.imgUrl = '/public/images/toys/no-toy-image.jpg'
         }
 
-        toyActions.save(toyToSave)
-            .then(savedToyId => {
-                navigate(`/toy/${savedToyId}`)
-                showSuccessMsg('Toy saved!')
-            })
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot save toy')
-            })
-            .finally(() => { setIsLoading(false) })
+        try {
+            const savedToyId = await toyActions.save(toyToSave)
+            navigate(`/toy/${savedToyId}`)
+            showSuccessMsg('Toy saved!')
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot save toy')
+        } finally {
+            setIsLoading(false)
+        }
 
     }
+
 
     const SignupSchema = Yup.object().shape({
         name: Yup.string()

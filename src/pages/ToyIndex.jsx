@@ -42,39 +42,41 @@ export function ToyIndex(props) {
         }
     }, [])
 
-    function loadToys(filterBy, isLoaderActive = true) {
-        return toyActions.load(filterBy, isLoaderActive)
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load toys')
-            })
+    async function loadToys(filterBy, isLoaderActive = true) {
+        try {
+            await toyActions.load(filterBy, isLoaderActive)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load toys')
+        }
     }
 
-    function onRemove(toyId) {
+
+
+    async function onRemove(toyId) {
         setIsMiniLoading({ isLoading: true, toyId: toyId })
-        return toyActions.remove(toyId)
-            .then(() => {
-                const isLoaderActive = false
-                loadToys(filterBy, isLoaderActive)
-                showSuccessMsg(`toy removed`)
-            })
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot remove toy ' + toyId)
-            })
-            .finally(() => {
-                setIsMiniLoading({ isLoading: false, toyId: '' })
-            })
+
+        try {
+            await toyActions.remove(toyId)
+            const isLoaderActive = false
+            showSuccessMsg(`toy removed`)
+            await loadToys(filterBy, isLoaderActive)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot remove toy ' + toyId)
+        } finally {
+            setIsMiniLoading({ isLoading: false, toyId: '' })
+        }
     }
 
-    function loadLabels() {
-        return toyActions.loadLabels()
-            .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot load labels')
-            })
+    async function loadLabels() {
+        try {
+            await toyActions.loadLabels()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load labels')
+        }
     }
-
 
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))

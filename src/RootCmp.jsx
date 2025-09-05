@@ -28,20 +28,21 @@ function RootCmp() {
     loadLabels()
   }, [])
 
-  function loadToys(filterBy) {
-    return toyActions.load(filterBy)
-      .catch(err => {
-        console.log('err:', err)
-      })
+  async function loadToys(filterBy) {
+    try {
+      await toyActions.load(filterBy)
+    } catch (err) {
+      console.log('err:', err)
+    }
   }
 
-  function loadLabels() {
-    return toyActions.loadLabels()
-      .catch(err => {
-        console.log('err:', err)
-      })
+  async function loadLabels() {
+    try {
+      await toyActions.loadLabels()
+    } catch (err) {
+      console.log('err:', err)
+    }
   }
-
 
   return (
     <Provider store={store}>
