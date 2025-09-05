@@ -73,3 +73,10 @@ a {
         text-decoration: underline;
     }
 }
+
+pre {
+    font-family: inherit;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

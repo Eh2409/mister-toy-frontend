@@ -122,7 +122,7 @@ export function ToyDetails(props) {
                     <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
                     <div className='toy-description'>
                         <h3>Product Description</h3>
-                        <p>{toy.description}</p>
+                        <pre>{toy.description}</pre>
                     </div>
                 </div>
 
