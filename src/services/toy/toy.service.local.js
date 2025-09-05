@@ -1,4 +1,3 @@
-import { Await } from "react-router-dom"
 import { storageService } from "../async-storage.service"
 import { getRandomIntInclusive, loadFromStorage, makeId, makeLorem, saveToStorage } from "../util.service"
 
@@ -17,8 +16,10 @@ const PAGE_SIZE = 8
 
 _createToysArray()
 
-function query(filterBy = {}) {
-    return storageService.query(TOY_KEY).then(toys => {
+async function query(filterBy = {}) {
+
+    try {
+        var toys = await storageService.query(TOY_KEY)
 
         if (filterBy.name) {
             const regExp = new RegExp(filterBy.name, 'i')
@@ -54,7 +55,6 @@ function query(filterBy = {}) {
         }
 
 
-
         if (filterBy.sortType && filterBy.dir) {
             if (filterBy.sortType === 'price') {
                 toys = toys.sort((t1, t2) => (t1.price - t2.price) * filterBy.dir)
@@ -67,8 +67,6 @@ function query(filterBy = {}) {
 
         const maxPageCount = Math.ceil(toys.length / PAGE_SIZE)
 
-
-
         if (filterBy.pageIdx !== undefined) {
             const startIdx = filterBy.pageIdx * PAGE_SIZE
             toys = toys.slice(startIdx, startIdx + PAGE_SIZE)
@@ -76,26 +74,31 @@ function query(filterBy = {}) {
 
         return { toys, maxPageCount }
 
-    })
+    } catch (err) {
+        throw err
+    }
 }
 
 
-function getById(toyId) {
+async function getById(toyId) {
     return storageService.get(TOY_KEY, toyId)
 }
 
-function remove(toyId) {
+async function remove(toyId) {
     return storageService.remove(TOY_KEY, toyId).then(() => getMaxPage())
 }
 
-function getMaxPage() {
-    return storageService.query(TOY_KEY)
-        .then(toys => Math.ceil(toys.length / PAGE_SIZE))
-        .catch(err => { throw err })
+async function getMaxPage() {
+    try {
+        const toys = await storageService.query(TOY_KEY)
+        return Math.ceil(toys.length / PAGE_SIZE)
+    } catch (error) {
+        throw err
+    }
 }
 
 
-function save(toy) {
+async function save(toy) {
 
     if (toy?._id) {
         return storageService.put(TOY_KEY, toy)
@@ -105,7 +108,7 @@ function save(toy) {
     }
 }
 
-function getLabels() {
+async function getLabels() {
 
     const brands = [
         "Naruto",
@@ -131,59 +134,73 @@ function getLabels() {
         "Funko"
     ]
 
-    return Promise.resolve({ brands, productTypes, companies })
+    return { brands, productTypes, companies }
 }
 
 
-function getLabelsChartsData() {
-    return Promise.all(
-        [calculateLabelPercentages('brands'),
-        calculateLabelPercentages('productTypes'),
-        calculateLabelPercentages('companies')])
-        .then(([brands, productTypes, companies]) => { return { brands, productTypes, companies } })
-        .catch(err => { throw err })
+async function getLabelsChartsData() {
+    try {
+        const [brands, productTypes, companies] = await Promise.all(
+            [calculateLabelPercentages('brands'),
+            calculateLabelPercentages('productTypes'),
+            calculateLabelPercentages('companies')])
+
+        return { brands, productTypes, companies }
+
+    } catch (err) {
+        throw err
+    }
 }
 
 
-function calculateLabelPercentages(LabelType) {
-    return storageService.query(TOY_KEY).then(toys => {
-        const labelCounts = toys.reduce((acc, toy) => {
+async function calculateLabelPercentages(LabelType) {
 
-            if (!toy.inStock) return acc
+    const toys = await storageService.query(TOY_KEY)
 
-            toy[LabelType].forEach(label => {
-                if (!acc[label]) acc[label] = 1
-                else acc[label]++
-                if (!acc['totalLength']) acc['totalLength'] = 1
-                else acc['totalLength']++
+    const labelCounts = toys.reduce((acc, toy) => {
 
-                return
-            })
-            return acc
-        }, {})
+        if (!toy.inStock) return acc
 
-        return Object.entries(labelCounts)
-            .filter(([key]) => key !== 'totalLength')
-            .map(([key, val]) => {
-                return {
-                    name: key,
-                    percent: (val / (labelCounts['totalLength']) * 100).toFixed(1),
-                    toysCount: val
-                }
+        toy[LabelType].forEach(label => {
+            if (!acc[label]) acc[label] = 1
+            else acc[label]++
+            if (!acc['totalLength']) acc['totalLength'] = 1
+            else acc['totalLength']++
 
-            })
-    })
+            return
+        })
+        return acc
+    }, {})
+
+    return Object.entries(labelCounts)
+        .filter(([key]) => key !== 'totalLength')
+        .map(([key, val]) => {
+            return {
+                name: key,
+                percent: (val / (labelCounts['totalLength']) * 100).toFixed(1),
+                toysCount: val
+            }
+
+        })
 }
 
 
 async function saveMsg(msgToSave, toyId) {
     try {
+
         const toy = await getById(toyId)
+
+        if (!toy) {
+            throw new Error(`Toy with id ${toyId} not found`)
+        }
+
         msgToSave.id = makeId()
         msgToSave.at = Date.now()
         toy.msgs.push(msgToSave)
+
         await save(toy)
         return msgToSave
+
     } catch (err) {
         throw err
     }

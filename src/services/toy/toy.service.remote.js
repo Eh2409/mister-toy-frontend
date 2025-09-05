@@ -11,27 +11,27 @@ export const toyService = {
 
 const BASE_URL = 'toy/'
 
-function query(filterBy = {}) {
+async function query(filterBy = {}) {
     return httpService.get(BASE_URL, filterBy)
 }
-function getById(toyId) {
+async function getById(toyId) {
     return httpService.get(BASE_URL + toyId)
 }
 
-function remove(toyId) {
+async function remove(toyId) {
     return httpService.delete(BASE_URL + toyId)
 }
 
-function save(toyToSave) {
+async function save(toyToSave) {
     const method = toyToSave._id ? 'put' : 'post'
     const toyId = toyToSave._id ? toyToSave._id : ''
     return httpService[method](BASE_URL + toyId, toyToSave)
 }
 
-function getLabels() {
+async function getLabels() {
     return httpService.get(BASE_URL + 'labels')
 }
 
-function getLabelsChartsData() {
+async function getLabelsChartsData() {
     return httpService.get(BASE_URL + 'charts')
 }

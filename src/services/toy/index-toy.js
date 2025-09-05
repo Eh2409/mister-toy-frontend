@@ -14,7 +14,8 @@ function getEmptyToy() {
         productTypes: [],
         companies: [],
         inStock: true,
-        description: ''
+        description: '',
+        msgs: []
     }
 }
 

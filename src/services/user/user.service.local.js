@@ -1,5 +1,5 @@
 import { storageService } from "../async-storage.service"
-import { loadFromStorage, makeId, makeLorem, saveToStorage } from "../util.service"
+import { loadFromStorage, makeId, saveToStorage } from "../util.service"
 
 export const userService = {
     query,
@@ -22,11 +22,11 @@ _createUsersArray()
 
 /// user 
 
-function query(filterBy = {}) {
+async function query(filterBy = {}) {
     return storageService.query(USER_KEY)
 }
 
-function getById(userId) {
+async function getById(userId) {
     return storageService.get(USER_KEY, userId)
 }
 
@@ -36,7 +36,7 @@ async function getByUsername(username) {
     return user
 }
 
-function remove(userId) {
+async function remove(userId) {
     return storageService.remove(USER_KEY, userId)
 }
 

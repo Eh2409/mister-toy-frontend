@@ -11,80 +11,74 @@ export const toyActions = {
     setSearchWord
 }
 
-function load(filterBy = {}, isLoaderActive = true) {
+async function load(filterBy = {}, isLoaderActive = true) {
     if (isLoaderActive) {
         store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     }
 
-    return toyService.query(filterBy)
-        .then(({ toys, maxPageCount }) => {
-            store.dispatch({ type: SET_TOYS, toys })
-            store.dispatch({ type: SET_MAX_PAGE_COUNT, maxPageCount })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot load toys', err)
-            throw err
-        })
-        .finally(() => {
-            if (isLoaderActive) {
-                setTimeout(() => {
-                    store.dispatch({ type: SET_IS_LOADING, isLoading: false })
-                }, 300)
-            }
-        })
+    try {
+        const { toys, maxPageCount } = await toyService.query(filterBy)
+        store.dispatch({ type: SET_TOYS, toys })
+        store.dispatch({ type: SET_MAX_PAGE_COUNT, maxPageCount })
+    } catch (err) {
+        console.log('toy action -> Cannot load toys', err)
+        throw err
+    } finally {
+        if (isLoaderActive) {
+            setTimeout(() => {
+                store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+            }, 300)
+        }
+    }
 }
 
-function remove(toyId) {
-    return toyService.remove(toyId)
-        .then(maxPageCount => {
-            store.dispatch({ type: REMOVE_TOY, toyId })
-            store.dispatch({ type: SET_MAX_PAGE_COUNT, maxPageCount })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot remove toy', err)
-            throw err
-        })
+async function remove(toyId) {
+    try {
+        const maxPageCount = await toyService.remove(toyId)
+        store.dispatch({ type: REMOVE_TOY, toyId })
+        store.dispatch({ type: SET_MAX_PAGE_COUNT, maxPageCount })
+    } catch (err) {
+        console.log('toy action -> Cannot remove toy', err)
+        throw err
+    }
 }
 
-function save(toyToSave) {
+
+async function save(toyToSave) {
     const method = toyToSave?._id ? 'update' : 'add'
 
-    return toyService.save(toyToSave)
-        .then(savedToy => {
-            if (method === 'update') {
-                store.dispatch({ type: UPDATE_TOY, toy: savedToy })
-            } else {
-                store.dispatch({ type: ADD_TOY, toy: savedToy })
-            }
-            return savedToy?._id
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot save toys', err)
-            throw err
-        })
+    try {
+        const savedToy = await toyService.save(toyToSave)
+        if (method === 'update') {
+            store.dispatch({ type: UPDATE_TOY, toy: savedToy })
+        } else {
+            store.dispatch({ type: ADD_TOY, toy: savedToy })
+        }
+        return savedToy?._id
+    } catch (err) {
+        console.log('toy action -> Cannot save toys', err)
+        throw err
+    }
 }
 
-
-function loadLabels() {
-    return toyService.getLabels()
-        .then(labels => {
-            store.dispatch({ type: SET_LABELS, labels })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot load toys labels', err)
-            throw err
-        })
+async function loadLabels() {
+    try {
+        const labels = await toyService.getLabels()
+        store.dispatch({ type: SET_LABELS, labels })
+    } catch (err) {
+        console.log('toy action -> Cannot load toys labels', err)
+        throw err
+    }
 }
 
-function loadChartsData() {
-    return toyService.getLabelsChartsData()
-        .then(chartsData => {
-            store.dispatch({ type: SET_CHARTS_DATA, chartsData })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot load Charts data', err)
-            throw err
-        })
+async function loadChartsData() {
+    try {
+        const chartsData = await toyService.getLabelsChartsData()
+        store.dispatch({ type: SET_CHARTS_DATA, chartsData })
+    } catch (err) {
+        console.log('toy action -> Cannot load Charts data', err)
+        throw err
+    }
 }
 
 function setSearchWord(searchWord) {
