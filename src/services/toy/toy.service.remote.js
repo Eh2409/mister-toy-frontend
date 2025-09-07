@@ -6,7 +6,8 @@ export const toyService = {
     remove,
     save,
     getLabels,
-    getLabelsChartsData
+    getLabelsChartsData,
+    saveMsg
 }
 
 const BASE_URL = 'toy/'
@@ -26,6 +27,10 @@ async function save(toyToSave) {
     const method = toyToSave._id ? 'put' : 'post'
     const toyId = toyToSave._id ? toyToSave._id : ''
     return httpService[method](BASE_URL + toyId, toyToSave)
+}
+
+async function saveMsg(msgToSave, toyId) {
+    return httpService.post(BASE_URL + toyId + '/msg', msgToSave)
 }
 
 async function getLabels() {
