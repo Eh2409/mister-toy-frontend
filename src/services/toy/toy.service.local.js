@@ -1,4 +1,5 @@
 import { storageService } from "../async-storage.service"
+import { getLoggedinUser } from "../user/index-user.js"
 import { getRandomIntInclusive, loadFromStorage, makeId, makeLorem, saveToStorage } from "../util.service"
 
 export const toyService = {
@@ -194,6 +195,13 @@ async function saveMsg(msgToSave, toyId) {
             throw new Error(`Toy with id ${toyId} not found`)
         }
 
+        const loggedinUser = getLoggedinUser()
+
+        if (!loggedinUser) {
+            throw new Error('User must be logged in to add msg')
+        }
+
+        msgToSave.by = { _id: loggedinUser._id, username: loggedinUser.username }
         msgToSave.id = makeId()
         msgToSave.at = Date.now()
         toy.msgs.push(msgToSave)

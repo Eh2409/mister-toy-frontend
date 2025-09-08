@@ -12,7 +12,6 @@ export const userService = {
     login,
     signup,
     logout,
-    getLoggedinUser,
 }
 
 const USER_KEY = 'USER_KEY'
@@ -154,11 +153,6 @@ function logout() {
     sessionStorage.removeItem('loggedinUser')
 }
 
-function getLoggedinUser() {
-    const json = sessionStorage.getItem('loggedinUser')
-    const user = JSON.parse(json)
-    return user
-}
 
 // private func
 

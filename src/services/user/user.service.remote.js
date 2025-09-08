@@ -9,7 +9,6 @@ export const userService = {
     login,
     signup,
     logout,
-    getLoggedinUser,
 }
 
 const BASE_URL_USER = 'user/'
@@ -69,12 +68,6 @@ function setLoggedinUser(user) {
 
     sessionStorage.setItem('loggedinUser', JSON.stringify(user))
 
-    return user
-}
-
-function getLoggedinUser() {
-    const json = sessionStorage.getItem('loggedinUser')
-    const user = JSON.parse(json)
     return user
 }
 

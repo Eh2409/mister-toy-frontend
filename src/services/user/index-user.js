@@ -2,7 +2,7 @@
 import { userService as local } from "./user.service.local.js"
 import { userService as remote } from "./user.service.remote.js"
 
-const isRemote = false
+const isRemote = true
 
 function getEmptyCredentials() {
     return {
@@ -12,6 +12,12 @@ function getEmptyCredentials() {
     }
 }
 
+export function getLoggedinUser() {
+    const json = sessionStorage.getItem('loggedinUser')
+    const user = JSON.parse(json)
+    return user
+}
+
 
 const service = isRemote ? remote : local
-export const userService = { getEmptyCredentials, ...service }
+export const userService = { getEmptyCredentials, getLoggedinUser, ...service }

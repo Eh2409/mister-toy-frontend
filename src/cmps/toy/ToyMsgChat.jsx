@@ -24,8 +24,7 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
     function onSendMsg(ev) {
         ev.preventDefault()
 
-        if (!msgToEdit.txt || !loggedinUser) return
-        msgToEdit.by = { _id: loggedinUser._id, username: loggedinUser.username }
+        if (!msgToEdit.txt) return
 
         onSaveMsg(msgToEdit)
         setMsgToEdit(prev => ({ txt: '' }))

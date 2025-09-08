@@ -3,7 +3,7 @@
 import { toyService as local } from "./toy.service.local.js"
 import { toyService as remote } from "./toy.service.remote.js"
 
-const isRemote = false
+const isRemote = true
 
 function getEmptyToy() {
     return {
@@ -53,7 +53,6 @@ function getFilterFromSearchParams(searchParams) {
 
     return filterBy
 }
-
 
 const service = isRemote ? remote : local
 export const toyService = { getEmptyToy, getDefaultFilter, getFilterFromSearchParams, ...service }

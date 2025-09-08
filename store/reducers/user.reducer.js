@@ -1,4 +1,6 @@
-import { userService } from "../../src/services/user/index-user.js"
+import { getLoggedinUser } from "../../src/services/user/index-user.js"
+
+
 
 export const SET_USERS = 'SET_USERS'
 export const REMOVE_USER = 'REMOVE_USER'
@@ -11,7 +13,7 @@ export const SET_IS_LOGIN_OPEN = 'SET_IS_LOGIN_OPEN'
 
 const initialState = {
     users: [],
-    loggedinUser: userService.getLoggedinUser(),
+    loggedinUser: getLoggedinUser(),
     isLoginSignupOpen: false
 }
 
