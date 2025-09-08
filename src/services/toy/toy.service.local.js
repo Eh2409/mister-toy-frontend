@@ -9,7 +9,8 @@ export const toyService = {
     save,
     getLabels,
     getLabelsChartsData,
-    saveMsg
+    saveMsg,
+    removeMsg,
 }
 
 const TOY_KEY = 'TOY_KEY'
@@ -213,6 +214,26 @@ async function saveMsg(msgToSave, toyId) {
         throw err
     }
 }
+
+async function removeMsg(msgid, toyId) {
+    try {
+
+        const toy = await getById(toyId)
+
+        if (!toy) {
+            throw new Error(`Toy with id ${toyId} not found`)
+        }
+
+        toy.msgs = toy.msgs.filter(m => m.id !== msgid)
+
+        await save(toy)
+        return
+
+    } catch (err) {
+        throw err
+    }
+}
+
 
 
 // private func

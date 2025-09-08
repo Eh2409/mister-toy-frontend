@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { userActions } from "../../../store/actions/user.actions.js"
 
-export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
+export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg }) {
 
     const [msgToEdit, setMsgToEdit] = useState({ txt: '' })
 
@@ -45,6 +45,8 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg }) {
                         <div className="msg-header flex justify-between align-center ">
                             <span>by: {m.by.username}</span>
                             <span>{new Date(m.at).toLocaleTimeString('en-US', options)}</span>
+                            {loggedinUser?.isAdmin &&
+                                <button className="remove-btn" onClick={() => onRemoveMsg(m?.id)}>X</button>}
                         </div>
                         <div>{m.txt}</div>
                     </li>

@@ -11,11 +11,10 @@ import { Popup } from '../cmps/Popup.jsx'
 import { Chat } from '../cmps/Chat.jsx'
 import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
+import { ImageLoader } from '../cmps/ImageLoader.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
-import noImg from '/images/toys/no-toy-image.jpg'
-import { ImageLoader } from '../cmps/ImageLoader.jsx'
 
 export function ToyDetails(props) {
 
@@ -80,6 +79,16 @@ export function ToyDetails(props) {
         }
     }
 
+    async function onRemoveMsg(msgId) {
+        try {
+            await toyService.removeMsg(msgId, toy._id)
+            setToy(prev => ({ ...prev, msgs: prev.msgs.filter(m => m.id !== msgId) }))
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot save msg')
+        }
+    }
+
     if (!toy) return (
         <section className='toy-details'>
             <ToyLoader size={1} />
@@ -136,7 +145,12 @@ export function ToyDetails(props) {
             >
                 {/* <Chat /> */}
 
-                <ToyMsgChat toyMsgs={toy?.msgs || []} loggedinUser={loggedinUser} onSaveMsg={onSaveMsg} />
+                <ToyMsgChat
+                    toyMsgs={toy?.msgs || []}
+                    loggedinUser={loggedinUser}
+                    onSaveMsg={onSaveMsg}
+                    onRemoveMsg={onRemoveMsg}
+                />
 
             </Popup>
 

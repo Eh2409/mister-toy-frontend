@@ -7,7 +7,8 @@ export const toyService = {
     save,
     getLabels,
     getLabelsChartsData,
-    saveMsg
+    saveMsg,
+    removeMsg
 }
 
 const BASE_URL = 'toy/'
@@ -31,6 +32,10 @@ async function save(toyToSave) {
 
 async function saveMsg(msgToSave, toyId) {
     return httpService.post(BASE_URL + toyId + '/msg', msgToSave)
+}
+
+async function removeMsg(msgId, toyId) {
+    return httpService.delete(BASE_URL + toyId + '/msg/' + msgId)
 }
 
 async function getLabels() {
