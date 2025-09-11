@@ -1,0 +1,32 @@
+.review-edit {
+    padding: 1em;
+    outline: 2px solid var(--outlineClr1);
+
+    .review-edit-header {
+        display: grid;
+        grid-template-columns: 1fr max-content max-content;
+        align-items: center;
+        gap: 1em;
+
+        .review-title {
+            font-size: 1em;
+        }
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+    }
+
+}
+
+@media (min-width: 750px) {
+    .review-edit {
+        .review-edit-header {
+            .review-title {
+                font-size: 1.5em;
+            }
+        }
+    }
+}

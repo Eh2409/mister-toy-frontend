@@ -5,6 +5,8 @@ import { useParams, Link } from 'react-router-dom'
 // services
 import { toyService } from '../services/toy/index-toy.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
+import { reviewActions } from '../../store/actions/review.actions.js'
+import { userActions } from '../../store/actions/user.actions.js'
 
 // cmps
 import { Popup } from '../cmps/Popup.jsx'
@@ -12,6 +14,8 @@ import { Chat } from '../cmps/Chat.jsx'
 import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
 import { ImageLoader } from '../cmps/ImageLoader.jsx'
+import { ReviewEdit } from '../cmps/review/ReviewEdit.jsx'
+import { ReviewList } from '../cmps/review/ReviewList.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
@@ -23,12 +27,17 @@ export function ToyDetails(props) {
 
     const [toy, setToy] = useState(null)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [isMiniLoading, setIsMiniLoading] = useState(false)
+    const [isReviewEditOpen, setIsReviewEditOpen] = useState({ isOpen: false, reviewId: null })
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    const reviews = useSelector(storeState => storeState.reviewModule.reviews)
+
 
     useEffect(() => {
         if (toyId) {
             loadToy(toyId)
+            loadReview(toyId)
         }
     }, [])
 
@@ -69,6 +78,8 @@ export function ToyDetails(props) {
         }
     }
 
+    // msgs
+
     async function onSaveMsg(msgToSave) {
         try {
             const savedMsg = await toyService.saveMsg(msgToSave, toy._id)
@@ -88,6 +99,57 @@ export function ToyDetails(props) {
             showErrorMsg('Cannot save msg')
         }
     }
+
+    // review
+
+    async function loadReview(toyId) {
+        try {
+            await reviewActions.load({ byToyId: toyId })
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot load toy ' + toyId)
+        }
+    }
+
+    async function onSaveReview(reviewToSave) {
+        setIsMiniLoading(true)
+        reviewToSave.toyId = toyId
+        try {
+            await reviewActions.save(reviewToSave)
+            onCloseReviewEdit()
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot save review')
+        } finally {
+            setIsMiniLoading(false)
+        }
+    }
+
+    async function onRemoveReview(toyId) {
+        setIsMiniLoading(true)
+        try {
+            await reviewActions.remove(toyId)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot remove review')
+        } finally {
+            setIsMiniLoading(false)
+        }
+    }
+
+
+    function onOpenReviewEdit(reviewId = null) {
+        setIsReviewEditOpen(prev => ({ isOpen: true, reviewId }))
+    }
+    function onCloseReviewEdit() {
+        setIsReviewEditOpen(prev => ({ isOpen: false, reviewId: null }))
+    }
+
+
+    function onOpenLoginPopup() {
+        userActions.setIsLoginSignupPopupOpen(true)
+    }
+
 
     if (!toy) return (
         <section className='toy-details'>
@@ -133,10 +195,43 @@ export function ToyDetails(props) {
 
             </section>
 
-
             <div className='btn chat-btn' onClick={toggleIsPopupOpen}>
                 <img src={chatIcon} alt="chat" className='icon' />
             </div>
+
+            <div className='review-edit-wrapper'>
+                {isReviewEditOpen?.isOpen && !isReviewEditOpen?.reviewId ?
+                    <ReviewEdit
+                        onSaveReview={onSaveReview}
+                        isMiniLoading={isMiniLoading}
+                        onCloseReviewEdit={onCloseReviewEdit}
+                    />
+                    : <button
+                        className='t-a add-review-btn'
+                        onClick={() => loggedinUser ? onOpenReviewEdit() : onOpenLoginPopup()}
+                    >
+                        {loggedinUser ? "Add Review" : "Login / Signup to add Review"}
+                    </button>
+
+                }
+            </div>
+
+
+            {reviews?.length > 0 ?
+                <ReviewList
+                    reviews={reviews}
+                    isReviewEditOpen={isReviewEditOpen}
+                    onOpenReviewEdit={onOpenReviewEdit}
+                    onCloseReviewEdit={onCloseReviewEdit}
+                    onSaveReview={onSaveReview}
+                    isMiniLoading={isMiniLoading}
+                    loggedinUser={loggedinUser}
+                    onRemoveReview={onRemoveReview}
+                />
+                : <div className='no-reviews'>
+                    There are no reviews yet. Be the first to share your thoughts!
+                </div>}
+
 
             <Popup
                 isPopupOpen={isPopupOpen}

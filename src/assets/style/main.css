@@ -37,3 +37,7 @@
 
 @import "./cmps/user/LoginSignup.css";
 @import "./cmps/user/UserMenu.css";
+
+@import "./cmps/review/ReviewEdit.css";
+@import "./cmps/review/ReviewList.css";
+@import "./cmps/review/ReviewLoader.css";

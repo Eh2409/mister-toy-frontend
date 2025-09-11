@@ -52,6 +52,7 @@
     }
 
     .chat-btn {
+        z-index: 3;
         width: 50px;
         aspect-ratio: 1/1;
         opacity: 0.7;
@@ -59,6 +60,23 @@
         &:hover {
             opacity: 1;
         }
+    }
+
+    .review-edit-wrapper {
+        margin-block-end: 1em;
+
+        &:has(.add-review-btn) {
+            text-align: center;
+        }
+
+        .add-review-btn {
+            font-size: 1.5em;
+            min-width: 50vw;
+        }
+    }
+
+    .no-reviews {
+        text-align: center;
     }
 
 
