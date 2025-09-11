@@ -19,6 +19,7 @@ import { ReviewList } from '../cmps/review/ReviewList.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
+import { ToyDataTable } from '../cmps/toy/ToyDataTable.jsx'
 
 export function ToyDetails(props) {
 
@@ -183,13 +184,17 @@ export function ToyDetails(props) {
             <hr />
 
             <section className='toy-details-content'>
-                <ImageLoader img={toy?.imgUrl} alt={toy?.name} />
+                <div className='toy-img-wrapper'>
+                    <ImageLoader img={toy?.imgUrl} alt={toy?.name} />
+                </div>
 
                 <div className='toy-info'>
                     <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
                     <div className='toy-description'>
-                        <h3>Product Description</h3>
-                        <pre>{toy.description}</pre>
+
+                        <h3 >Toy Details</h3>
+                        <ToyDataTable toy={toy} />
+
                     </div>
                 </div>
 

@@ -1,0 +1,23 @@
+.toy-data-table {
+    width: 100%;
+    margin-block-end: 1em;
+
+    tr {
+
+        td {
+            min-width: 50%;
+            padding: 0.4em;
+            background-color: var(--appliedfilterClr);
+
+            &:first-of-type:not(.toy-description) {
+                background-color: var(--mainSiteClrTheme);
+                color: white;
+            }
+
+            &.p-d {
+                text-align: center;
+            }
+        }
+    }
+
+}

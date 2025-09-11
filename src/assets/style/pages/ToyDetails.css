@@ -29,11 +29,20 @@
     }
 
     .toy-details-content {
+        border: solid 1px var(--outlineClr1);
+        margin-block-end: 1em;
+        padding: 0.5em;
 
-        .toy-img {
-            outline: solid 1px var(--outlineClr1);
+        .toy-img-wrapper {
+            border: solid 1px var(--outlineClr1);
             object-fit: cover;
             width: 100%;
+            height: max-content;
+        }
+
+        h3 {
+            text-align: center;
+            margin-block-end: 0.5em;
         }
 
         .toy-price {
@@ -49,6 +58,7 @@
                 text-decoration: line-through;
             }
         }
+      
     }
 
     .chat-btn {

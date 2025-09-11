@@ -79,4 +79,5 @@ pre {
     max-width: 100%;
     white-space: pre-wrap;
     word-wrap: break-word;
+    margin: 0;
 }
