@@ -100,7 +100,7 @@ export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, rev
                         ></Field>
 
                         <button type="submit" className="t-a">
-                            {isMiniLoading ? <div className="mini-loader"></div> : "Save"}
+                            {isMiniLoading?.isLoading ? <div className="mini-loader"></div> : "Save"}
                         </button>
 
                     </Form>

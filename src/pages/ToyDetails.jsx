@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 
 // services
 import { toyService } from '../services/toy/index-toy.js'
-import { showErrorMsg } from '../services/event-bus.service.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { reviewActions } from '../../store/actions/review.actions.js'
 import { userActions } from '../../store/actions/user.actions.js'
 
@@ -16,6 +16,7 @@ import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
 import { ImageLoader } from '../cmps/ImageLoader.jsx'
 import { ReviewEdit } from '../cmps/review/ReviewEdit.jsx'
 import { ReviewList } from '../cmps/review/ReviewList.jsx'
+import { ReviewRatingStats } from '../cmps/review/ReviewRatingStats.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
@@ -28,12 +29,12 @@ export function ToyDetails(props) {
 
     const [toy, setToy] = useState(null)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
-    const [isMiniLoading, setIsMiniLoading] = useState(false)
+    const [isMiniLoading, setIsMiniLoading] = useState({ isLoading: false, reviewId: null })
     const [isReviewEditOpen, setIsReviewEditOpen] = useState({ isOpen: false, reviewId: null })
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const reviews = useSelector(storeState => storeState.reviewModule.reviews)
-
+    const ratingStats = useSelector(storeState => storeState.reviewModule.ratingStats)
 
     useEffect(() => {
         if (toyId) {
@@ -113,28 +114,31 @@ export function ToyDetails(props) {
     }
 
     async function onSaveReview(reviewToSave) {
-        setIsMiniLoading(true)
+        setIsMiniLoading(prev => ({ ...prev, isLoading: true }))
         reviewToSave.toyId = toyId
         try {
             await reviewActions.save(reviewToSave)
+            showSuccessMsg('Review saved successfully')
             onCloseReviewEdit()
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot save review')
         } finally {
-            setIsMiniLoading(false)
+            setIsMiniLoading(prev => ({ ...prev, isLoading: false }))
         }
     }
 
-    async function onRemoveReview(toyId) {
-        setIsMiniLoading(true)
+    async function onRemoveReview(reviewId) {
+        setIsMiniLoading({ isLoading: true, reviewId: reviewId })
         try {
-            await reviewActions.remove(toyId)
+            await reviewActions.remove(reviewId)
+            showSuccessMsg('Review removed successfully')
+            loadReview(toyId)
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot remove review')
         } finally {
-            setIsMiniLoading(false)
+            setIsMiniLoading({ isLoading: false, reviewId: null })
         }
     }
 
@@ -195,10 +199,14 @@ export function ToyDetails(props) {
                         <h3 >Toy Details</h3>
                         <ToyDataTable toy={toy} />
 
+                        {ratingStats?.reviewsLength > 0 &&
+                            <ReviewRatingStats ratingStats={ratingStats} />}
                     </div>
                 </div>
 
             </section>
+
+
 
             <div className='btn chat-btn' onClick={toggleIsPopupOpen}>
                 <img src={chatIcon} alt="chat" className='icon' />

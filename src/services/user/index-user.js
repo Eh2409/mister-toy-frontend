@@ -2,7 +2,7 @@
 import { userService as local } from "./user.service.local.js"
 import { userService as remote } from "./user.service.remote.js"
 
-const isRemote = true
+const isRemote = false
 
 function getEmptyCredentials() {
     return {

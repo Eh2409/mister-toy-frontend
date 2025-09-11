@@ -63,7 +63,8 @@ export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
                             {loggedinUser?.isAdmin && <div className='review-actions flex align-center'>
                                 <button className='t-a' onClick={() => { onOpenReviewEdit(r._id) }}>Edit</button>
                                 <button className='t-a' onClick={() => onRemoveReview(r._id)} >
-                                    {isMiniLoading ? <div className="mini-loader"></div> : "Delete"}
+                                    {isMiniLoading?.isLoading && isMiniLoading?.reviewId === r._id
+                                        ? <div className="mini-loader"></div> : "Delete"}
                                 </button>
                             </div>}
                         </header>

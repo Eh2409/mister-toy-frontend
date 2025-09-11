@@ -1,5 +1,5 @@
 import { reviewService } from "../../src/services/review/index-review.js";
-import { ADD_REVIEW, REMOVE_REVIEW, SET_REVIEWS, UPDATE_REVIEW } from "../reducers/review.reducer.js";
+import { ADD_REVIEW, REMOVE_REVIEW, SET_RATING_STATS, SET_REVIEWS, UPDATE_REVIEW } from "../reducers/review.reducer.js";
 import { store } from "../store.js";
 
 export const reviewActions = {
@@ -11,8 +11,9 @@ export const reviewActions = {
 async function load(filterBy = {}) {
 
     try {
-        const reviews = await reviewService.query(filterBy)
+        const { reviews, ratingStats } = await reviewService.query(filterBy)
         store.dispatch({ type: SET_REVIEWS, reviews })
+        store.dispatch({ type: SET_RATING_STATS, ratingStats })
     } catch (err) {
         console.log('review action -> Cannot load reviews', err)
         throw err
@@ -34,13 +35,15 @@ async function save(reviewToSave) {
     const method = reviewToSave?._id ? 'update' : 'add'
 
     try {
-        const savedReview = await reviewService.save(reviewToSave)
+        const { savedReview, ratingStats } = await reviewService.save(reviewToSave)
 
         if (method === 'update') {
             store.dispatch({ type: UPDATE_REVIEW, review: savedReview })
         } else {
             store.dispatch({ type: ADD_REVIEW, review: savedReview })
         }
+
+        store.dispatch({ type: SET_RATING_STATS, ratingStats })
 
         return savedReview?._id
 

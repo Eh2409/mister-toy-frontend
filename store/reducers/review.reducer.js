@@ -4,9 +4,11 @@ export const REMOVE_REVIEW = 'REMOVE_REVIEW'
 export const ADD_REVIEW = 'ADD_REVIEW'
 export const UPDATE_REVIEW = 'UPDATE_REVIEW'
 
+export const SET_RATING_STATS = 'SET_REVIEW_PERCENTAGES'
 
 const initialState = {
     reviews: [],
+    reviewPercentages: {},
 }
 
 export function reviewReducer(state = initialState, cmd = {}) {
@@ -28,6 +30,8 @@ export function reviewReducer(state = initialState, cmd = {}) {
                 ...state,
                 reviews: state.reviews.map(r => r._id === cmd.review._id ? cmd.review : r)
             }
+        case SET_RATING_STATS:
+            return { ...state, ratingStats: cmd.ratingStats }
 
         default: return state
     }
