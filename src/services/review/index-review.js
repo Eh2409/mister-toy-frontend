@@ -1,5 +1,6 @@
 
-import { reviewService as remote } from "./review.service.local.js"
+import { reviewService as local } from "./review.service.local.js"
+import { reviewService as remote } from "./review.service.remote.js"
 
 const isRemote = false
 
@@ -37,6 +38,5 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-const service = remote
-
+const service = isRemote ? remote : local
 export const reviewService = { getEmptyReview, getDefaultFilter, getFilterFromSearchParams, ...service }

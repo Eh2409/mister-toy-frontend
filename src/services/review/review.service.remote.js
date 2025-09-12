@@ -1,6 +1,6 @@
 import { httpService } from "../http.service.js"
 
-export const toyService = {
+export const reviewService = {
     query,
     getById,
     remove,
