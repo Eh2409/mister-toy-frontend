@@ -114,9 +114,9 @@ export function formatTimeAgo(timestampe) {
         const Hours = Math.floor(timePass / (Hour))
         return Hours + ` ${Hours > 1 ? "Hours" : "Hour"} ago`
     } else {
-        const options = { day: "2-digit", month: "2-digit", year: "2-digit" }
+        const options = { day: "2-digit", month: "long", year: "numeric" }
         const date = new Date(timestampe)
-        const formattedDate = date.toLocaleString("he-IL", options)
+        const formattedDate = date.toLocaleString("en-US", options)
         return formattedDate
     }
 }

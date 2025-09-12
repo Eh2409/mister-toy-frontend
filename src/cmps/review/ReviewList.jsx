@@ -1,11 +1,19 @@
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
+// services
+import { formatTimeAgo } from '../../services/util.service'
+
+// cmps
+import { ReviewEdit } from './ReviewEdit'
+
+// images 
 import StarIcon from '@mui/icons-material/Star'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
-import { ReviewEdit } from './ReviewEdit'
-import { formatTimeAgo } from '../../services/util.service'
-import { useEffect } from 'react'
 
 export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
-    onCloseReviewEdit, onSaveReview, isMiniLoading, loggedinUser, onRemoveReview }) {
+    onCloseReviewEdit, onSaveReview, isMiniLoading, loggedinUser, onRemoveReview
+    , isToyNameShown = true }) {
 
     useEffect(() => {
         const options = {
@@ -28,7 +36,7 @@ export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
                 observer.disconnect()
             }
         }
-    }, [reviews])
+    }, [reviews, isReviewEditOpen])
 
 
     return (
@@ -44,10 +52,19 @@ export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
                     />)
 
                     : (< li key={r._id} className="review-item" >
+
+
+                        {isToyNameShown &&
+                            <Link
+                                to={`/toy/${r?.toy?.toyId || r.toyId}`}
+                                className='toy-name'>
+                                {r?.toy?.name || r.toyId}
+                            </Link>}
+
                         <header className="review-header">
                             <div className="flex flex-column">
                                 <span>By: {r?.user?.username}</span>
-                                <span>{formatTimeAgo(r?.createdAt)}</span>
+                                <span className='review-created-at'>{formatTimeAgo(r?.createdAt)}</span>
                             </div>
 
                             <span>

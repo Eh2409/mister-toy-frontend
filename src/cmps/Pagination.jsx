@@ -18,8 +18,9 @@ export function Pagination({ maxPageCount, pageIdx, setPageIdx }) {
         return btnsCount
     }
 
-    function onSetPageIdx(pageIdx) {
-        setPageIdx(pageIdx)
+    function onSetPageIdx(pageNum) {
+        if (pageNum === pageIdx) return
+        setPageIdx(pageNum)
     }
 
     function onSetPageBydiff(diff) {

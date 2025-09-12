@@ -1,8 +1,8 @@
 .review-list {
-
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.5em;
+    margin-block-end: 1em;
 
     .review-item {
         outline: 2px solid var(--outlineClr1);
@@ -13,6 +13,12 @@
             opacity: 1;
         }
 
+
+        .toy-name {
+            display: block;
+            padding: 0.5em;
+        }
+
         .review-header {
             display: grid;
             grid-template-columns: 1fr max-content;
@@ -21,6 +27,10 @@
 
             padding: 1em;
             outline: 2px solid var(--outlineClr1);
+
+            .review-created-at {
+                font-size: 0.8em;
+            }
 
             .review-actions {
                 grid-column: 1/-1;

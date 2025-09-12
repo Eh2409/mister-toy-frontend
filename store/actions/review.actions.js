@@ -1,5 +1,5 @@
 import { reviewService } from "../../src/services/review/index-review.js";
-import { ADD_REVIEW, REMOVE_REVIEW, SET_RATING_STATS, SET_REVIEWS, UPDATE_REVIEW } from "../reducers/review.reducer.js";
+import { ADD_REVIEW, REMOVE_REVIEW, SET_REVIEWS_MAX_PAGE_COUNT, SET_RATING_STATS, SET_REVIEWS, UPDATE_REVIEW } from "../reducers/review.reducer.js";
 import { store } from "../store.js";
 
 export const reviewActions = {
@@ -11,9 +11,10 @@ export const reviewActions = {
 async function load(filterBy = {}) {
 
     try {
-        const { reviews, ratingStats } = await reviewService.query(filterBy)
+        const { reviews, ratingStats, maxPageCount } = await reviewService.query(filterBy)
         store.dispatch({ type: SET_REVIEWS, reviews })
         store.dispatch({ type: SET_RATING_STATS, ratingStats })
+        store.dispatch({ type: SET_REVIEWS_MAX_PAGE_COUNT, reviewMaxPageCount: maxPageCount })
     } catch (err) {
         console.log('review action -> Cannot load reviews', err)
         throw err

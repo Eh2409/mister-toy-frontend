@@ -48,7 +48,7 @@ export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, rev
         await onSaveReview(reviewToSave)
     }
 
-    if (reviewId && !reviewToEdit?._id) return (<ReviewLoader />)
+    if (reviewId && !reviewToEdit?._id) return (<ReviewLoader size={1} />)
 
     return (
         <section className="review-edit">

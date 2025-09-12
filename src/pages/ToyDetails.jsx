@@ -150,7 +150,6 @@ export function ToyDetails(props) {
         setIsReviewEditOpen(prev => ({ isOpen: false, reviewId: null }))
     }
 
-
     function onOpenLoginPopup() {
         userActions.setIsLoginSignupPopupOpen(true)
     }
@@ -240,6 +239,7 @@ export function ToyDetails(props) {
                     isMiniLoading={isMiniLoading}
                     loggedinUser={loggedinUser}
                     onRemoveReview={onRemoveReview}
+                    isToyNameShown={false}
                 />
                 : <div className='no-reviews'>
                     There are no reviews yet. Be the first to share your thoughts!

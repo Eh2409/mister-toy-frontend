@@ -10,7 +10,7 @@ export const reviewService = {
 }
 
 const REVIEW_KEY = 'REVIEW_KEY'
-
+const PAGE_SIZE = 8
 
 async function query(filterBy = {}) {
     try {
@@ -20,11 +20,35 @@ async function query(filterBy = {}) {
             reviews = reviews.filter(r => r.toyId === filterBy.byToyId)
         }
 
-        reviews = reviews.sort((r1, r2) => (r1.createdAt - r2.createdAt) * -1)
+        if (filterBy.minRating) {
+            reviews = reviews.filter(r => r.rating >= filterBy.minRating)
+        }
+
+        if (filterBy.reviewTxt) {
+            const regExp = new RegExp(filterBy.reviewTxt, 'i')
+            reviews = reviews.filter(r => regExp.test(r.txt))
+        }
+
+
+        if (filterBy.sortType && filterBy.dir) {
+            if (filterBy.sortType === 'rating') {
+                reviews = reviews.sort((r1, r2) => (r1.rating - r2.rating) * filterBy.dir)
+            } else if (filterBy.sortType === 'createdAt') {
+                reviews = reviews.sort((r1, r2) => (r1.createdAt - r2.createdAt) * filterBy.dir)
+            }
+        }
+
 
         if (filterBy.byToyId && reviews?.length > 0) var ratingStats = await calculateRatingStats(reviews)
 
-        return { reviews, ratingStats: ratingStats || {} }
+        const maxPageCount = Math.ceil(reviews.length / PAGE_SIZE)
+
+        if (filterBy.pageIdx !== undefined) {
+            const startIdx = filterBy.pageIdx * PAGE_SIZE
+            reviews = reviews.slice(startIdx, startIdx + PAGE_SIZE)
+        }
+
+        return { reviews, ratingStats: ratingStats || {}, maxPageCount }
 
     } catch (err) {
         throw err

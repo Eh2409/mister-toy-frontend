@@ -15,6 +15,7 @@
 @import "./pages/HomePage.css";
 @import "./pages/Dashboard.css";
 @import "./pages/UserDetails.css";
+@import "./pages/ReviewExplore.css";
 
 /* cmps */
 @import "./cmps/Pagination.css";
@@ -43,3 +44,4 @@
 @import "./cmps/review/ReviewList.css";
 @import "./cmps/review/ReviewLoader.css";
 @import "./cmps/review/ReviewRatingStats.css";
+@import "./cmps/review/ReviewFilter.css";

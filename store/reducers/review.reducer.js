@@ -6,9 +6,12 @@ export const UPDATE_REVIEW = 'UPDATE_REVIEW'
 
 export const SET_RATING_STATS = 'SET_REVIEW_PERCENTAGES'
 
+export const SET_REVIEWS_MAX_PAGE_COUNT = 'SET_REVIEWS_MAX_PAGE_COUNT'
+
 const initialState = {
     reviews: [],
     reviewPercentages: {},
+    reviewMaxPageCount: 0,
 }
 
 export function reviewReducer(state = initialState, cmd = {}) {
@@ -32,6 +35,9 @@ export function reviewReducer(state = initialState, cmd = {}) {
             }
         case SET_RATING_STATS:
             return { ...state, ratingStats: cmd.ratingStats }
+
+        case SET_REVIEWS_MAX_PAGE_COUNT:
+            return { ...state, reviewMaxPageCount: cmd.reviewMaxPageCount }
 
         default: return state
     }

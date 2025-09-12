@@ -1,0 +1,92 @@
+.review-explore {
+    padding-block: 1em;
+
+    .review-explore-header {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        gap: 0.5em;
+        margin-block-end: 1em;
+
+        h2 {
+            display: none;
+        }
+    }
+
+    .review-loader {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+    }
+
+    .review-loader {
+        margin-block-end: 1em;
+    }
+
+
+    .no-review-found-msg {
+        background-color: var(--noToysMsgClr);
+        padding: 1em;
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 750px) {
+    .review-explore {
+
+        .review-filter {
+            position: fixed;
+            top: 15vh;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            background-color: white;
+            transform: translateX(-100%);
+            transition: 200ms ease-in-out;
+            overflow: scroll;
+
+            &.mobile-filter-open {
+                transform: translateX(0%);
+                z-index: 4;
+            }
+        }
+    }
+}
+
+@media (min-width: 750px) {
+    .review-explore {
+
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.5em;
+        padding-block: 1em;
+
+        .review-explore-header {
+            grid-column: 1/-1;
+            grid-template-columns: 1fr 15em;
+
+            h2 {
+                display: block;
+            }
+
+            .mobile-filter-btn {
+                display: none;
+            }
+        }
+
+        .review-list {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .review-loader {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+            .review-item {
+                min-height: 150px;
+            }
+        }
+    }
+
+}

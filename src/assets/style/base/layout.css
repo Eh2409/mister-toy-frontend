@@ -18,7 +18,7 @@
     }
 
     .app-main-content {
-        min-height: 100vh;
+        min-height: calc(100vh - 16vh);
     }
 
 }
