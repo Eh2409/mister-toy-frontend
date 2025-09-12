@@ -42,7 +42,7 @@ export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
     return (
         <ul className="review-list">
             {reviews.map(r =>
-                isReviewEditOpen.isOpen && isReviewEditOpen.reviewId === r._id
+                isReviewEditOpen?.isOpen && isReviewEditOpen?.reviewId === r._id
                     ? (<ReviewEdit
                         key={r._id}
                         onSaveReview={onSaveReview}

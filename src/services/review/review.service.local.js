@@ -16,6 +16,10 @@ async function query(filterBy = {}) {
     try {
         var reviews = await storageService.query(REVIEW_KEY)
 
+        if (filterBy.byUserId) {
+            reviews = reviews.filter(r => r.user._id === filterBy.byUserId)
+        }
+
         if (filterBy.byToyId) {
             reviews = reviews.filter(r => r.toyId === filterBy.byToyId)
         }
@@ -36,6 +40,8 @@ async function query(filterBy = {}) {
             } else if (filterBy.sortType === 'createdAt') {
                 reviews = reviews.sort((r1, r2) => (r1.createdAt - r2.createdAt) * filterBy.dir)
             }
+        } else {
+            reviews = reviews.sort((r1, r2) => (r1.createdAt - r2.createdAt) * -1)
         }
 
 

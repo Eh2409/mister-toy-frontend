@@ -46,7 +46,7 @@ export function Pagination({ maxPageCount, pageIdx, setPageIdx }) {
             {maxPageCount > 0 &&
                 pages.map((pageNum, idx) => {
                     return <Fragment key={pageNum}>
-                        {isGap(pages, idx, pageNum) && <button className="gap" disabled={true}>...</button>}
+                        {isGap(pages, idx, pageNum) && <button className="p-b gap" disabled={true}>...</button>}
                         <button className={`p-b ${pageIdx === pageNum ? "active" : ""}`}
                             onClick={() => { onSetPageIdx(pageNum) }}
                         >
