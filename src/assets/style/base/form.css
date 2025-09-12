@@ -87,6 +87,15 @@ button,
         min-width: 20px;
         aspect-ratio: 1/1;
         border: 1px solid var(--outlineClr1);
+
+        img {
+            width: 1.2em;
+            aspect-ratio: 1/1;
+
+            &.invert {
+                filter: invert(1);
+            }
+        }
     }
 
     &.mobile-nav-btn {

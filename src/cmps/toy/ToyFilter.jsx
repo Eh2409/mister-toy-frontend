@@ -20,6 +20,9 @@ import { useEffectOnUpdate } from '../../hooks/useEffectOnUpdate.js'
 //cmps
 import { LabelPicker } from '../LabelPicker'
 
+//images
+import xMark from '/images/x.svg'
+
 
 export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilter }) {
 
@@ -103,7 +106,9 @@ export function ToyFilter({ filterBy, onSetFilterBy, toysLabels, closeMobileFilt
     return (
         <section className='toy-filter'>
 
-            <button className='close-btn' onClick={closeMobileFilter}>x</button>
+            <button className='close-btn' onClick={closeMobileFilter}>
+                <img src={xMark} alt="xMark" />
+            </button>
 
             <div>
 

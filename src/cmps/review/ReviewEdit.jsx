@@ -12,6 +12,9 @@ import Box from '@mui/material/Box'
 import FormHelperText from "@mui/material/FormHelperText";
 import { ReviewLoader } from "./ReviewLoader.jsx";
 
+//images
+import xMark from '/images/x.svg'
+
 export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, reviewId = null }) {
 
     const [reviewToEdit, setReviewToEdit] = useState(reviewService.getEmptyReview())
@@ -84,7 +87,9 @@ export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, rev
                                 )}
                             </Box>
 
-                            <button className="close-btn" onClick={onCloseReviewEdit}>x</button>
+                            <button className="close-btn" onClick={onCloseReviewEdit}>
+                                <img src={xMark} alt="x Mark" />
+                            </button>
 
                         </div>
 

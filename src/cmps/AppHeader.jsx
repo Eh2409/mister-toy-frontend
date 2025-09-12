@@ -11,11 +11,12 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { UserMsg } from './UserMsg.jsx'
 import { Popup } from './Popup.jsx'
 import { LoginSignup } from './user/LoginSignup.jsx'
+import { UserMenu } from './user/UserMenu.jsx'
+
 //images
 import xMark from '/images/x.svg'
 import bars from '/images/bars.svg'
 import userIcon from '/images/user.svg'
-import { UserMenu } from './user/UserMenu.jsx'
 
 
 export function AppHeader(props) {
@@ -222,7 +223,9 @@ export function AppHeader(props) {
             <nav className={`main-app-nav flex  align-center ${isMobileNavOpen ? "nav-open" : ""}`} ref={navRef}>
                 <div className='nav-header flex justify-between align-center'>
                     <div className='main-app-logo'><span>MISTER</span> TOY</div>
-                    <button className='close-btn' onClick={onCloseMobileNav}>x</button>
+                    <button className='close-btn' onClick={onCloseMobileNav}>
+                        <img src={xMark} alt="x Mark" className='invert' />
+                    </button>
                 </div>
                 <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
                 <NavLink to="/about" onClick={onCloseMobileNav}>About Us</NavLink>

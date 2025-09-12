@@ -11,7 +11,9 @@ import { debounce, getUiTheme } from '../../services/util.service.js'
 // hooks
 import { useEffectOnUpdate } from '../../hooks/useEffectOnUpdate.js'
 
-//cmps
+//images
+import xMark from '/images/x.svg'
+
 
 export function ReviewFilter({ filterBy, onSetFilterBy, closeMobileFilter, isMobileFilterOpen }) {
 
@@ -55,7 +57,9 @@ export function ReviewFilter({ filterBy, onSetFilterBy, closeMobileFilter, isMob
     return (
         <section className={`review-filter ${isMobileFilterOpen ? "mobile-filter-open" : ""}`}>
 
-            <button className='close-btn' onClick={closeMobileFilter}>x</button>
+            <button className='close-btn' onClick={closeMobileFilter}>
+                <img src={xMark} alt="x Mark" />
+            </button>
 
             <div>
 

@@ -1,3 +1,7 @@
+
+//images
+import xMark from '/images/x.svg'
+
 export function Popup({ header, footer, onClosePopup, children, isPopupOpen, aside }) {
     return (
         <div className={`popup-black-wrapper ${isPopupOpen ? "open" : ""}`} onClick={onClosePopup}>
@@ -11,8 +15,9 @@ export function Popup({ header, footer, onClosePopup, children, isPopupOpen, asi
                     <header className="popup-header">
                         {header}
                         <button
-                            className="close-btn" onClick={onClosePopup}
-                        >X</button>
+                            className="close-btn" onClick={onClosePopup}>
+                            <img src={xMark} alt="x Mark" />
+                        </button>
                     </header>
 
                     <main className="popup-main">
