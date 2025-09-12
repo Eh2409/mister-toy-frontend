@@ -24,18 +24,8 @@ import { AppHeader } from "./cmps/AppHeader.jsx";
 function RootCmp() {
 
   useEffect(() => {
-    const filterBy = { sortType: 'createdAt', dir: -1, inStock: true }
-    loadToys(filterBy)
     loadLabels()
   }, [])
-
-  async function loadToys(filterBy) {
-    try {
-      await toyActions.load(filterBy)
-    } catch (err) {
-      console.log('err:', err)
-    }
-  }
 
   async function loadLabels() {
     try {

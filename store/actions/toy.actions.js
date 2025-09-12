@@ -16,8 +16,11 @@ async function load(filterBy = {}, isLoaderActive = true) {
         store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     }
 
+    console.log('filterBy:', filterBy)
+
     try {
         const { toys, maxPageCount } = await toyService.query(filterBy)
+        console.log('maxPageCount:', maxPageCount)
         store.dispatch({ type: SET_TOYS, toys })
         store.dispatch({ type: SET_MAX_PAGE_COUNT, maxPageCount })
     } catch (err) {

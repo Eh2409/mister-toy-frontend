@@ -34,6 +34,7 @@ export function ToyIndex(props) {
         setSearchParams(cleanSearchParams(filterBy))
         onCountActiveFilterOptions(filterBy)
         loadToys(filterBy)
+        console.log('filterBy:', filterBy)
     }, [filterBy])
 
     useEffect(() => {
@@ -60,7 +61,7 @@ export function ToyIndex(props) {
             await toyActions.remove(toyId)
             const isLoaderActive = false
             showSuccessMsg(`toy removed`)
-            await loadToys(filterBy, isLoaderActive)
+            // await loadToys(filterBy, isLoaderActive)
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot remove toy ' + toyId)
@@ -79,7 +80,7 @@ export function ToyIndex(props) {
     }
 
     function onSetFilterBy(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy, pageIdx: 0 }))
     }
 
     function setPageIdx(pageNum) {

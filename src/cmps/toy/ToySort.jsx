@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 // services
 import { getUiTheme } from '../../services/util.service';
 
+// hooks
+import { useEffectOnUpdate } from '../../hooks/useEffectOnUpdate.js'
 
 export function ToySort({ sortBy, onSetFilterBy }) {
 
@@ -22,7 +24,7 @@ export function ToySort({ sortBy, onSetFilterBy }) {
         onSetSelectValue(sortBy)
     }, [])
 
-    useEffect(() => {
+    useEffectOnUpdate(() => {
         onSetFilterBy(sortByToEdit)
     }, [sortByToEdit])
 
