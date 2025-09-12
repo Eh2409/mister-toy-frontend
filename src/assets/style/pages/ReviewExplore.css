@@ -66,6 +66,7 @@
         .review-explore-header {
             grid-column: 1/-1;
             grid-template-columns: 1fr 15em;
+            padding-inline-start: 0.5em;
 
             h2 {
                 display: block;
