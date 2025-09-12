@@ -112,10 +112,12 @@ export function ToyIndex(props) {
         <section className="toy-index">
 
             <div className="toy-content-header">
+                <h2>All Products</h2>
 
                 <button className='mobile-filter-btn' onClick={toggleIsMobileFilterOpen}>
                     Filter {activeFilterOptionsCount ? `(${activeFilterOptionsCount})` : ""}
                 </button>
+
                 {loggedinUser?.isAdmin && <Link to='/toy/edit' className='btn t-a'>Add Toy</Link>}
                 <ToySort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
 
