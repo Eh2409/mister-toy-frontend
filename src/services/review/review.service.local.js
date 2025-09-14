@@ -16,12 +16,17 @@ async function query(filterBy = {}) {
     try {
         var reviews = await storageService.query(REVIEW_KEY)
 
+        if (filterBy.byToyId) {
+            reviews = reviews.filter(r => r.toy._id === filterBy.byToyId)
+        }
+
         if (filterBy.byUserId) {
             reviews = reviews.filter(r => r.user._id === filterBy.byUserId)
         }
 
-        if (filterBy.byToyId) {
-            reviews = reviews.filter(r => r.toy._id === filterBy.byToyId)
+        if (filterBy.toyName) {
+            const regExp = new RegExp(filterBy.toyName, 'i')
+            reviews = reviews.filter(r => regExp.test(r.toy.name))
         }
 
         if (filterBy.minRating) {
@@ -82,7 +87,7 @@ async function save(review) {
             savedReview = await storageService.post(REVIEW_KEY, review)
         }
 
-        const ratingStats = await calculateRatingStats(undefined, review?.toyId)
+        const ratingStats = await calculateRatingStats(undefined, review?.toy?._id)
 
         return { savedReview, ratingStats }
 
@@ -103,7 +108,7 @@ async function calculateRatingStats(reviews, toyId = undefined) {
 
     if (!reviews?.length) {
         reviews = await storageService.query(REVIEW_KEY)
-        reviews = reviews.filter(r => r.toyId === toyId)
+        reviews = reviews.filter(r => r.toy._id === toyId)
     }
 
     // sum rating 

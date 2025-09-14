@@ -60,7 +60,7 @@ export function ToyIndex(props) {
             await toyActions.remove(toyId)
             const isLoaderActive = false
             showSuccessMsg(`toy removed`)
-            // await loadToys(filterBy, isLoaderActive)
+            await loadToys(filterBy, isLoaderActive)
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot remove toy ' + toyId)
