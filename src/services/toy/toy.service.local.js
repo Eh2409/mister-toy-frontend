@@ -264,7 +264,7 @@ function _createToy(brand, productType, company, msgs) {
     return {
         _id: makeId(),
         name: makeLorem(1),
-        imgUrl: `./images/toys/${getRandomIntInclusive(1, 5)}.png`,
+        imgUrls: [`./images/toys/${getRandomIntInclusive(1, 5)}.png`],
         price: getRandomIntInclusive(10, 100),
         brands: [brand] || [],
         productTypes: [productType] || [],

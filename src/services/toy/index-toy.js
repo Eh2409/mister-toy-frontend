@@ -8,7 +8,7 @@ const isRemote = false
 function getEmptyToy() {
     return {
         name: '',
-        imgUrl: '',
+        imgUrls: [],
         price: '',
         brands: [],
         productTypes: [],

@@ -190,7 +190,7 @@ export function ToyDetails(props) {
 
             <section className='toy-details-content'>
                 <div className='toy-img-wrapper'>
-                    <ImageLoader img={toy?.imgUrl} alt={toy?.name} />
+                    <ImageLoader img={toy?.imgUrls[0]} alt={toy?.name} />
                 </div>
 
                 <div className='toy-info'>

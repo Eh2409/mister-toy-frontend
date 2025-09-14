@@ -62,6 +62,30 @@
                     }
                 }
 
+
+            }
+
+            .error-img-urls {
+                font-size: 0.80rem;
+                line-height: 1.66;
+                color: #d32f2f;
+                font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+                text-align: center;
+            }
+
+            &:has(.error-img-urls) {
+                .toy-images-uploader {
+                    color: #d32f2f;
+                    outline: 1px solid #d32f2f;
+
+                    div {
+                        color: #d32f2f;
+                    }
+
+                    &>* {
+                        color: #d32f2f;
+                    }
+                }
             }
 
             button {

@@ -4,7 +4,7 @@ export function ToyPreview({ toy }) {
 
     return (
         <>
-            <ImageLoader img={toy?.imgUrl} alt={toy?.name} />
+            <ImageLoader img={toy?.imgUrls[0]} alt={toy?.name} />
             <div className="toy-prev-info">
                 <h2 className="toy-name">{toy.name}</h2>
                 <div>By: {toy.companies.join(', ')}</div>

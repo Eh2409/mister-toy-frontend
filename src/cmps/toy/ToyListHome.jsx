@@ -36,7 +36,7 @@ export function ToyListHome({ toys }) {
                 if (idx > 9) return
                 return <li key={t._id} className="toy-item" onClick={() => navigate(`/toy/${t._id}`)}>
                     <div className="toy-image-wrapper">
-                        <ImageLoader img={t?.imgUrl} alt={t?.name} />
+                        <ImageLoader img={t?.imgUrls[0]} alt={t?.name} />
                     </div>
                     <div className="toy-name">
                         <span>{t.name}</span>

@@ -23,6 +23,7 @@ import { LabelPicker } from "../cmps/LabelPicker.jsx"
 import { LabelPickerUi } from "../cmps/LabelPickerUi.jsx";
 import { ToyLoader } from "../cmps/toy/ToyLoader.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { ToyImagesUploader } from "../cmps/toy/ToyImagesUploader.jsx";
 
 
 export function ToyEdit(props) {
@@ -140,8 +141,12 @@ export function ToyEdit(props) {
         price: Yup.number()
             .min(0, 'Too Short!')
             .required('Required'),
-        imgUrl: Yup.string()
-            .matches(/\.(jpg|jpeg|png|gif)$/i, "Must be a valid image format"),
+        imgUrls: Yup.array()
+            .of(
+                Yup.string()
+                    .matches(/\.(jpg|jpeg|png|gif|webp)$/i, "Must be a valid image format")
+            )
+            .min(1, "At least one image is required"),
         brands: Yup.array()
             .min(1, 'At least one brand is required')
             .required('Required'),
@@ -221,19 +226,6 @@ export function ToyEdit(props) {
                                     </Field>
 
                                 </div>
-
-
-                                <Field
-                                    as={TextField}
-                                    name="imgUrl"
-                                    id="imgUrl"
-                                    label="Toy Image Url"
-                                    variant="outlined"
-                                    error={touched.imgUrl && Boolean(errors.imgUrl)}
-                                    helperText={touched.imgUrl && errors.imgUrl}
-                                    onChange={e => customHandleChange(e, handleChange)}
-                                />
-
 
                                 <div className="edit-row">
 
@@ -317,6 +309,30 @@ export function ToyEdit(props) {
                                     helperText={touched.description && errors.description}
                                     onChange={e => customHandleChange(e, handleChange)}
                                 />
+
+
+                                <Field>
+                                    {({ field, form }) => (
+                                        <>
+                                            <ToyImagesUploader
+                                                name="imgUrls"
+                                                id="imgUrls"
+                                                label="Toy Image Urls"
+                                                variant="outlined"
+                                                onSaveImages={(newImages) => {
+                                                    form.setFieldValue("imgUrls", newImages)
+                                                    customHandleChange({ target: { name: "imgUrls", value: newImages } }, form.handleChange)
+                                                }}
+                                                currImages={field.value.imgUrls}
+                                            />
+                                        </>
+                                    )}
+                                </Field>
+
+                                {errors.imgUrls && touched.imgUrls ?
+                                    <div className="error-img-urls">{errors.imgUrls}</div> : null}
+
+
 
 
                                 <button className="t-a" type="submit">
