@@ -64,6 +64,12 @@ export function AppHeader(props) {
             })
         }
 
+        return () => {
+            if (headerObserver) {
+                headerObserver.disconnect()
+            }
+        }
+
     }, [isUserMenuOpen])
 
 

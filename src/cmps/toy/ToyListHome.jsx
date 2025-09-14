@@ -22,6 +22,12 @@ export function ToyListHome({ toys }) {
             })
         }
 
+        return () => {
+            if (observer) {
+                observer.disconnect()
+            }
+        }
+
     }, [toys])
 
     return (

@@ -1,4 +1,4 @@
-export function ReviewLoader({ size = 9 }) {
+export function ReviewLoader({ size = 8 }) {
     return (
         <section className="review-loader">
             {Array.from({ length: size }).map((_, idx) => {

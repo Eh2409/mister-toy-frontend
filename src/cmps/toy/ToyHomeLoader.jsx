@@ -19,6 +19,12 @@ export function ToyHomeLoader({ size = 10 }) {
             })
         }
 
+        return () => {
+            if (observer) {
+                observer.disconnect()
+            }
+        }
+
     }, [])
 
 
