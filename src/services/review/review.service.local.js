@@ -21,7 +21,7 @@ async function query(filterBy = {}) {
         }
 
         if (filterBy.byToyId) {
-            reviews = reviews.filter(r => r.toyId === filterBy.byToyId)
+            reviews = reviews.filter(r => r.toy._id === filterBy.byToyId)
         }
 
         if (filterBy.minRating) {

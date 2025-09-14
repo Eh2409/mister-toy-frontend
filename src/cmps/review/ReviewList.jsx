@@ -56,9 +56,9 @@ export function ReviewList({ reviews, isReviewEditOpen, onOpenReviewEdit,
 
                         {isToyNameShown &&
                             <Link
-                                to={`/toy/${r?.toy?.toyId || r.toyId}`}
+                                to={`/toy/${r?.toy?._id}`}
                                 className='toy-name'>
-                                {r?.toy?.name || r.toyId}
+                                {r?.toy?.name}
                             </Link>}
 
                         <header className="review-header">

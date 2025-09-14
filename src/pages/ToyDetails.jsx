@@ -115,7 +115,9 @@ export function ToyDetails(props) {
 
     async function onSaveReview(reviewToSave) {
         setIsMiniLoading(prev => ({ ...prev, isLoading: true }))
-        reviewToSave.toyId = toyId
+
+        if (!reviewToSave?._id) reviewToSave.toy = { _id: toy._id, name: toy.name }
+
         try {
             await reviewActions.save(reviewToSave)
             showSuccessMsg('Review saved successfully')

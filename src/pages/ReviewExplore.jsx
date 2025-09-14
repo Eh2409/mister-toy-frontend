@@ -45,7 +45,9 @@ export function ReviewExplore(props) {
             console.log('err:', err)
             showErrorMsg('Cannot load reviews')
         } finally {
-            setIsReviewsLoading(false)
+            setTimeout(() => {
+                setIsReviewsLoading(false)
+            }, 200);
         }
     }
 
