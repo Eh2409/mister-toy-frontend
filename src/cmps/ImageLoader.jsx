@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 
-import noImg from "../../public/images/toys/no-toy-image.jpg"
+import noImg from "/images/toys/no-toy-image.jpg"
 
 export function ImageLoader({ img, alt }) {
 

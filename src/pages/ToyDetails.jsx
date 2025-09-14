@@ -13,14 +13,15 @@ import { Popup } from '../cmps/Popup.jsx'
 import { Chat } from '../cmps/Chat.jsx'
 import { ToyLoader } from '../cmps/toy/ToyLoader.jsx'
 import { ToyMsgChat } from '../cmps/toy/ToyMsgChat.jsx'
-import { ImageLoader } from '../cmps/ImageLoader.jsx'
+// import { ImageLoader } from '../cmps/ImageLoader.jsx'
 import { ReviewEdit } from '../cmps/review/ReviewEdit.jsx'
 import { ReviewList } from '../cmps/review/ReviewList.jsx'
 import { ReviewRatingStats } from '../cmps/review/ReviewRatingStats.jsx'
+import { ToyDataTable } from '../cmps/toy/ToyDataTable.jsx'
+import { ToyImagesGallery } from '../cmps/toy/ToyImagesGallery.jsx'
 
 //images
 import chatIcon from '/images/chat.svg'
-import { ToyDataTable } from '../cmps/toy/ToyDataTable.jsx'
 
 export function ToyDetails(props) {
 
@@ -189,9 +190,7 @@ export function ToyDetails(props) {
             <hr />
 
             <section className='toy-details-content'>
-                <div className='toy-img-wrapper'>
-                    <ImageLoader img={toy?.imgUrls[0]} alt={toy?.name} />
-                </div>
+                <ToyImagesGallery toy={toy} />
 
                 <div className='toy-info'>
                     <div className={`toy-price ${!toy.inStock ? 'out' : ''}`}>Price: ${toy.price}</div>
