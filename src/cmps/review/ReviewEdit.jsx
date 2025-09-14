@@ -19,8 +19,6 @@ export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, rev
 
     const [reviewToEdit, setReviewToEdit] = useState(reviewService.getEmptyReview())
 
-    console.log('reviewToEdit:', reviewToEdit)
-
     useEffect(() => {
         if (reviewId) {
             loadReview(reviewId)
@@ -47,7 +45,6 @@ export function ReviewEdit({ onSaveReview, isMiniLoading, onCloseReviewEdit, rev
     })
 
     async function onSubmit(reviewToSave) {
-        console.log('reviewToSave:', reviewToSave)
         await onSaveReview(reviewToSave)
     }
 

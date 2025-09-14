@@ -34,7 +34,6 @@ export function ToyIndex(props) {
         setSearchParams(cleanSearchParams(filterBy))
         onCountActiveFilterOptions(filterBy)
         loadToys(filterBy)
-        console.log('filterBy:', filterBy)
     }, [filterBy])
 
     useEffect(() => {
