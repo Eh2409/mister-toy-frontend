@@ -64,6 +64,7 @@ function setLoggedinUser(user) {
         username: user.username,
         fullname: user.fullname,
         isAdmin: user.isAdmin,
+        imgUrl: user.imgUrl,
     }
 
     sessionStorage.setItem('loggedinUser', JSON.stringify(user))
