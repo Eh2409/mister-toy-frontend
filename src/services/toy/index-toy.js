@@ -1,9 +1,7 @@
-
+const { DEV, VITE_LOCAL } = import.meta.env
 
 import { toyService as local } from "./toy.service.local.js"
 import { toyService as remote } from "./toy.service.remote.js"
-
-const isRemote = false
 
 function getEmptyToy() {
     return {
@@ -54,5 +52,5 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-const service = isRemote ? remote : local
+const service = (VITE_LOCAL === 'true') ? local : remote
 export const toyService = { getEmptyToy, getDefaultFilter, getFilterFromSearchParams, ...service }

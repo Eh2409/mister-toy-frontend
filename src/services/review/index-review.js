@@ -1,8 +1,8 @@
 
+const { DEV, VITE_LOCAL } = import.meta.env
+
 import { reviewService as local } from "./review.service.local.js"
 import { reviewService as remote } from "./review.service.remote.js"
-
-const isRemote = false
 
 function getEmptyReview() {
     return {
@@ -38,5 +38,6 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-const service = isRemote ? remote : local
+const service = (VITE_LOCAL === 'true') ? local : remote
+
 export const reviewService = { getEmptyReview, getDefaultFilter, getFilterFromSearchParams, ...service }
