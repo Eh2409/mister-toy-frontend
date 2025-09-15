@@ -146,7 +146,7 @@ export function ToyIndex(props) {
                             isMiniLoading={isMiniLoading}
                             loggedinUser={loggedinUser}
                         />
-                        : <div className='no-toys-found-msg'>No items match your search criteria.</div>
+                        : <div className='no-items-found-msg'>No items match your search criteria.</div>
                     )
                 }
 

@@ -5,4 +5,24 @@
     h3 {
         margin-block-end: 0.5em;
     }
+
+    .user-details-nav {
+        border-block: 3px solid var(--mainSiteClrTheme);
+        margin-block-end: 1em;
+
+        a {
+            &:first-of-type {
+                border-inline: 2px solid var(--mainSiteClrTheme);
+            }
+
+            color:black;
+
+            border-inline-end: 2px solid var(--mainSiteClrTheme);
+            padding: 0.5em;
+
+            &.active {
+                color: var(--mainSiteClrTheme);
+            }
+        }
+    }
 }

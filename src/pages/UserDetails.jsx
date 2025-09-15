@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
-
-// services
-import { ReviewList } from "../cmps/review/ReviewList"
+import { useNavigate, useParams, NavLink, Outlet } from "react-router-dom"
 
 // cmps
-import { reviewActions } from "../../store/actions/review.actions"
-import { ReviewLoader } from "../cmps/review/ReviewLoader"
-import { Pagination } from "../cmps/Pagination"
 import { UserSettings } from "../cmps/user/UserSettings"
+import { UserReviews } from "../cmps/user/UserReviews"
 
 
 
@@ -18,68 +13,29 @@ export function UserDetails(props) {
     const params = useParams()
     const { userId } = params
 
-    const [isReviewsLoading, setIsReviewsLoading] = useState(false)
-    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
 
-    const reviews = useSelector(storeState => storeState.reviewModule.reviews)
-    const maxPageCount = useSelector(storeState => storeState.reviewModule.reviewMaxPageCount)
-    const [pageIdx, setPageIdx] = useState(0)
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
 
     useEffect(() => {
         if (!loggedinUser || loggedinUser._id !== userId) {
             navigate('/')
-        } else {
-            loadReviews(pageIdx)
         }
-    }, [loggedinUser, userId, pageIdx])
+    }, [loggedinUser, userId])
 
-
-    async function loadReviews(pageIdx) {
-        setIsReviewsLoading(true)
-        try {
-            await reviewActions.load({ byUserId: userId, pageIdx })
-        } catch (err) {
-            console.log('err:', err)
-            showErrorMsg('Cannot load reviews')
-        } finally {
-            setIsReviewsLoading(false)
-        }
-    }
-
-    function onSetPageIdx(pageNum) {
-        setPageIdx(pageNum)
-    }
 
 
     if (!loggedinUser) return
     return (
         <section className="user-details">
 
-            <h2>Hello {loggedinUser.fullname}</h2>
+            <h2>Hello {loggedinUser?.username}</h2>
 
+            <nav className="user-details-nav flex">
+                <NavLink to={`/user/${loggedinUser._id}/settings`} >My Settings</NavLink>
+                <NavLink to={`/user/${loggedinUser._id}/reviews`} >My Reviews</NavLink>
+            </nav>
 
-            <UserSettings />
-
-
-            {/* <section className="user-reviews">
-
-                <h3>My Reviews</h3>
-
-                <div>
-                    {isReviewsLoading ? <ReviewLoader />
-                        : reviews?.length > 0 ?
-                            <ReviewList reviews={reviews} />
-                            : <div className='no-review-found-msg'>
-                                No items match your search criteria.
-                            </div>}
-
-                    {reviews?.length > 0 && <Pagination
-                        maxPageCount={maxPageCount}
-                        pageIdx={pageIdx}
-                        setPageIdx={onSetPageIdx}
-                    />}
-                </div>
-            </section> */}
+            <Outlet />
 
         </section >
     )

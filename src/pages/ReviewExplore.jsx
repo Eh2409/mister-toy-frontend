@@ -149,7 +149,7 @@ export function ReviewExplore(props) {
                             loggedinUser={loggedinUser}
                             onRemoveReview={onRemoveReview}
                         />
-                        : <div className='no-review-found-msg'>
+                        : <div className='no-items-found-msg'>
                             No items match your search criteria.
                         </div>}
 

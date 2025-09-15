@@ -81,3 +81,10 @@ pre {
     word-wrap: break-word;
     margin: 0;
 }
+
+.no-items-found-msg {
+    background-color: var(--noToysMsgClr);
+    padding: 1em;
+    text-align: center;
+    text-wrap-style: balance;
+}

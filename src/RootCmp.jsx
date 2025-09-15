@@ -20,6 +20,9 @@ import { ReviewExplore } from "./pages/ReviewExplore.jsx";
 
 //cmps
 import { AppHeader } from "./cmps/AppHeader.jsx";
+import { UserSettings } from "./cmps/user/UserSettings.jsx";
+import { UserReviews } from "./cmps/user/UserReviews.jsx";
+
 
 function RootCmp() {
 
@@ -49,7 +52,10 @@ function RootCmp() {
               <Route path="/toy/:toyId" element={<ToyDetails />} />
               <Route path="/toy/edit" element={<ToyEdit />} />
               <Route path="/toy/edit/:toyId" element={<ToyEdit />} />
-              <Route path="/user/:userId" element={<UserDetails />} />
+              <Route path="/user/:userId" element={<UserDetails />} >
+                <Route path="settings" element={<UserSettings />} />
+                <Route path="reviews" element={<UserReviews />} />
+              </Route>
               <Route path="/review" element={<ReviewExplore />} />
             </Routes>
           </main>
