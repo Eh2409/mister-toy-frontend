@@ -208,7 +208,9 @@ export function AppHeader(props) {
                     ref={userBtnRef}
                 >
                     {loggedinUser
-                        ? <div className=''>{loggedinUser?.username.substring(0, 1)}</div>
+                        ? loggedinUser?.imgUrl
+                            ? <img src={loggedinUser.imgUrl} alt="user-img" className='user-img' />
+                            : <div className=''>{loggedinUser?.username.substring(0, 1)}</div>
                         : <img src={userIcon} alt="user" className='icon' />
                     }
 

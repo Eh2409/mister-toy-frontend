@@ -123,13 +123,13 @@ async function login({ username, password }) {
 }
 
 
-async function signup({ username, password, fullname }) {
+async function signup({ username, password, fullname, imgUrl }) {
 
     if (!username || !password || !fullname) {
         throw new Error("missing required credentials");
     }
 
-    const account = await add({ username, password, fullname })
+    const account = await add({ username, password, fullname, imgUrl })
 
     const user = await login({ username, password })
 
@@ -142,6 +142,7 @@ function setLoggedinUser(user) {
         username: user.username,
         fullname: user.fullname,
         isAdmin: user.isAdmin,
+        imgUrl: user.imgUrl,
     }
 
     sessionStorage.setItem('loggedinUser', JSON.stringify(user))
@@ -181,7 +182,8 @@ function _createUser(i) {
         password: '1010',
         fullname: 'toy' + i,
         isAdmin: false,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        imgUrl: ''
     }
 }
 
@@ -192,6 +194,7 @@ function _createAdmin() {
         password: '1010',
         fullname: 'eliad',
         isAdmin: true,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        imgUrl: ''
     }
 }

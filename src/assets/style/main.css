@@ -27,6 +27,7 @@
 @import "./cmps/GoogleMap.css";
 @import "./cmps/BrandsScroller.css";
 @import "./cmps/ImageLoader.css";
+@import "./cmps/ImageUploader.css";
 
 @import "./cmps/toy/ToyList.css";
 @import "./cmps/toy/ToyFilter.css";

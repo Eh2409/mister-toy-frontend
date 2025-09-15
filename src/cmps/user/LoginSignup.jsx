@@ -19,6 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 // services
 import { userService } from "../../services/user/index-user.js"
 import { getUiTheme } from "../../services/util.service.js";
+import { ImageUploader } from "../ImageUploader.jsx";
 
 
 export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSignup, isMiniLoading }) {
@@ -134,6 +135,7 @@ export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSign
 
                                 {isSignup &&
                                     <Fragment>
+
                                         <Field
                                             as={TextField}
                                             name="fullname"
@@ -143,6 +145,23 @@ export function LoginSignup({ isPopupOpen, signup, login, toggleIsSignup, isSign
                                             error={touched.fullname && Boolean(errors.fullname)}
                                             helperText={touched.fullname && errors.fullname}
                                         />
+
+                                        <Field>
+                                            {({ field, form }) => (
+                                                <>
+                                                    <ImageUploader
+                                                        name="imgUrl"
+                                                        id="imgUrl"
+                                                        label="Toy Image Url"
+                                                        onSaveImage={(newImage) =>
+                                                            form.setFieldValue("imgUrl", newImage)
+                                                        }
+                                                        currImages={field.value}
+                                                    />
+                                                </>
+                                            )}
+                                        </Field>
+
                                     </Fragment>
                                 }
 

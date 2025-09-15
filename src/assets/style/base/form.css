@@ -107,16 +107,24 @@ button,
     &.user-btn {
         border: 2px solid var(--outlineClr1);
         background-color: inherit;
-        min-width: 40px;
+        width: 40px;
         aspect-ratio: 1/1;
         border-radius: 50%;
-
 
         &.loggedin {
             background-color: var(--mainSiteClrTheme);
             color: white;
             font-size: 1.5em;
             border: 2px solid color-mix(in srgb, var(--mainSiteClrTheme) 50%, black 50%);
+            padding: 0;
+            place-content: center;
+            overflow: hidden;
+
+            .user-img {
+                width: 100%;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+            }
         }
     }
 

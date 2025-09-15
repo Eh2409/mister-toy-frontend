@@ -9,6 +9,7 @@ function getEmptyCredentials() {
         username: '',
         password: '',
         fullname: '',
+        imgUrl: ''
     }
 }
 

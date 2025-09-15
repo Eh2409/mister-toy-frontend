@@ -1,0 +1,19 @@
+.image-uploader {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    align-items: center;
+    gap: 1em;
+
+    .btn {
+        text-align: center;
+    }
+
+    .img-preview {
+        border-radius: 50%;
+        outline: 2px solid black;
+
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+}
