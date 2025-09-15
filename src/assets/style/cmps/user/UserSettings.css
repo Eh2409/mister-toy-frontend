@@ -1,0 +1,55 @@
+.user-settings {
+
+    .username-update {
+        margin-block-end: 1em;
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 100px;
+            width: 100%;
+
+            .error-username {
+                grid-column: 1/-1;
+                font-size: 0.80rem;
+                line-height: 1.66;
+                color: #d32f2f;
+                font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            }
+        }
+    }
+
+    .user-img-update {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+
+        width: 100%;
+
+        h3 {
+            margin: 0;
+        }
+
+        .save-btn {
+            width: 100%;
+        }
+    }
+}
+
+
+
+@media (min-width: 750px) {
+    .user-settings {
+        place-items: center;
+
+        .username-update {
+            form {
+                width: 500px;
+            }
+        }
+
+        .user-img-update {
+            width: 500px;
+        }
+    }
+
+}

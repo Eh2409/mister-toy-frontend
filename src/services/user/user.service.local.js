@@ -59,7 +59,6 @@ async function add(credentials) {
         delete user.password
 
         return user
-
     } catch (err) {
         throw err;
     }
@@ -68,7 +67,7 @@ async function add(credentials) {
 
 async function update(userToUpdate) {
     try {
-        const { _id, username } = userToUpdate
+        const { _id, username, imgUrl } = userToUpdate
 
         if (!_id) {
             throw new Error("missing required credentials");
@@ -91,8 +90,13 @@ async function update(userToUpdate) {
             user.username = username
         }
 
+        if (imgUrl) user.imgUrl = imgUrl
+
+
         const savedUser = await storageService.put(USER_KEY, user)
         delete savedUser.password
+
+        setLoggedinUser(savedUser)
 
         return savedUser
 

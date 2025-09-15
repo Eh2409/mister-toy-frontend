@@ -16,6 +16,12 @@ button,
             filter: brightness(0.9);
         }
 
+        &:disabled {
+            color: #000;
+            filter: brightness(0.9);
+            cursor: auto;
+        }
+
         &.signup,
         &.login {
             background-color: var(--mainSiteClrTheme);

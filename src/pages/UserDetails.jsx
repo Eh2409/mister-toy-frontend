@@ -9,6 +9,7 @@ import { ReviewList } from "../cmps/review/ReviewList"
 import { reviewActions } from "../../store/actions/review.actions"
 import { ReviewLoader } from "../cmps/review/ReviewLoader"
 import { Pagination } from "../cmps/Pagination"
+import { UserSettings } from "../cmps/user/UserSettings"
 
 
 
@@ -56,7 +57,11 @@ export function UserDetails(props) {
 
             <h2>Hello {loggedinUser.fullname}</h2>
 
-            <section className="user-reviews">
+
+            <UserSettings />
+
+
+            {/* <section className="user-reviews">
 
                 <h3>My Reviews</h3>
 
@@ -74,7 +79,7 @@ export function UserDetails(props) {
                         setPageIdx={onSetPageIdx}
                     />}
                 </div>
-            </section>
+            </section> */}
 
         </section >
     )

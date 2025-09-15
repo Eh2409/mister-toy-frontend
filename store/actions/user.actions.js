@@ -34,8 +34,8 @@ async function remove(userId) {
 
 async function update(userToUpdate) {
     try {
-        const user = await userService.update(userToUpdate)
-        store.dispatch({ type: UPDATE_USER, user })
+        const loggedinUser = await userService.update(userToUpdate)
+        store.dispatch({ type: SET_LOGGEDIN_USER, loggedinUser })
     } catch (err) {
         throw err
     }
