@@ -88,6 +88,7 @@ export function ReviewExplore(props) {
 
     function setPageIdx(pageNum) {
         setFilterBy(prevFilter => ({ ...prevFilter, pageIdx: pageNum }))
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     function onSetFilterBy(filterBy) {

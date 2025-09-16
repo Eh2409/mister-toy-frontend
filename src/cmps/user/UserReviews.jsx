@@ -38,6 +38,7 @@ export function UserReviews(props) {
 
     function onSetPageIdx(pageNum) {
         setPageIdx(pageNum)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     return (
