@@ -46,17 +46,21 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyI
         <section className="chat">
 
             <ul className="chat-messages" ref={chatMessagesRef}>
-                {toyMsgs.length > 0 && toyMsgs.map((m, idx) => {
-                    return <li key={m.at + idx} className={`msg ${loggedinUser?._id === m.by._id ? 'you' : ''}`}>
-                        <div className="msg-header flex justify-between align-center ">
-                            <span>by: {m.by.username}</span>
-                            <span>{new Date(m.at).toLocaleTimeString('en-US', options)}</span>
-                            {loggedinUser?.isAdmin &&
-                                <button className="remove-btn" onClick={() => onRemoveMsg(m?.id)}>X</button>}
-                        </div>
-                        <div>{m.txt}</div>
-                    </li>
-                })}
+                {toyMsgs.length > 0 ? (
+                    toyMsgs.map((m, idx) => (
+                        <li key={m.at + idx} className={`msg ${loggedinUser?._id === m.by._id ? 'you' : ''}`}>
+                            <div className="msg-header flex justify-between align-center">
+                                <span>by: {m.by.username}</span>
+                                <span>{new Date(m.at).toLocaleTimeString('en-US', options)}</span>
+                                {loggedinUser?.isAdmin &&
+                                    <button className="remove-btn" onClick={() => onRemoveMsg(m?.id)}>X</button>}
+                            </div>
+                            <div>{m.txt}</div>
+                        </li>
+                    ))
+                ) : (
+                    <li className="no-items-found-msg ">No messages yet — start the conversation!</li>
+                )}
             </ul>
 
             {loggedinUser ?

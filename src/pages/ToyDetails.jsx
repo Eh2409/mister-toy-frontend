@@ -270,7 +270,10 @@ export function ToyDetails(props) {
             <Popup
                 isPopupOpen={isPopupOpen}
                 onClosePopup={onClosePopup}
-                header={<h2>Toy Chat</h2>}
+                header={<>
+                    <h2>Toy Chat</h2>
+                    <h4>Topic :{toy.name}</h4>
+                </>}
             >
                 {/* <Chat /> */}
 
