@@ -59,7 +59,7 @@
     .review-explore {
 
         display: grid;
-        grid-template-columns: max-content 1fr;
+        grid-template-columns: minmax(200px, 20vw) 1fr;
         gap: 0.5em;
         padding-block: 1em;
 
