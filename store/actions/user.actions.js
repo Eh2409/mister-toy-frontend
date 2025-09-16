@@ -1,3 +1,4 @@
+import { socketService } from "../../src/services/socket.service.js"
 import { userService } from "../../src/services/user/index-user.js"
 import { REMOVE_USER, SET_IS_LOGIN_OPEN, SET_LOGGEDIN_USER, SET_USERS, UPDATE_USER } from "../reducers/user.reducer"
 import { store } from "../store.js"
@@ -47,6 +48,7 @@ async function signup(credentials) {
     try {
         const loggedinUser = await userService.signup(credentials)
         store.dispatch({ type: SET_LOGGEDIN_USER, loggedinUser })
+        socketService.login(loggedinUser._id)
     } catch (err) {
         throw err
     }
@@ -56,6 +58,7 @@ async function login(credentials) {
     try {
         const loggedinUser = await userService.login(credentials)
         store.dispatch({ type: SET_LOGGEDIN_USER, loggedinUser })
+        socketService.login(loggedinUser._id)
     } catch (err) {
         throw err
     }
@@ -65,6 +68,7 @@ async function logout() {
     try {
         await userService.logout()
         store.dispatch({ type: SET_LOGGEDIN_USER, loggedinUser: null })
+        socketService.logout()
     } catch (err) {
         throw err
     }
