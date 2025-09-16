@@ -19,6 +19,7 @@ import { ReviewList } from '../cmps/review/ReviewList.jsx'
 import { ReviewRatingStats } from '../cmps/review/ReviewRatingStats.jsx'
 import { ToyDataTable } from '../cmps/toy/ToyDataTable.jsx'
 import { ToyImagesGallery } from '../cmps/toy/ToyImagesGallery.jsx'
+import { SOCKET_EMIT_DELETE_MSG, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EVENT_REMOVE_MSG, socketService } from '../services/socket.service.js'
 
 //images
 import chatIcon from '/images/chat.svg'
@@ -41,6 +42,15 @@ export function ToyDetails(props) {
         if (toyId) {
             loadToy(toyId)
             loadReview(toyId)
+        }
+    }, [])
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_ADD_MSG, socketAddMsg)
+        socketService.on(SOCKET_EVENT_REMOVE_MSG, socketRemoveMsg)
+        return () => {
+            socketService.off(SOCKET_EVENT_ADD_MSG, socketAddMsg)
+            socketService.off(SOCKET_EVENT_REMOVE_MSG, socketRemoveMsg)
         }
     }, [])
 
@@ -86,6 +96,7 @@ export function ToyDetails(props) {
     async function onSaveMsg(msgToSave) {
         try {
             const savedMsg = await toyService.saveMsg(msgToSave, toy._id)
+            socketService.emit(SOCKET_EMIT_SEND_MSG, savedMsg)
             setToy(prev => ({ ...prev, msgs: [...prev.msgs, savedMsg] }))
         } catch (err) {
             console.log('err:', err)
@@ -96,11 +107,20 @@ export function ToyDetails(props) {
     async function onRemoveMsg(msgId) {
         try {
             await toyService.removeMsg(msgId, toy._id)
+            socketService.emit(SOCKET_EMIT_DELETE_MSG, msgId)
             setToy(prev => ({ ...prev, msgs: prev.msgs.filter(m => m.id !== msgId) }))
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot save msg')
         }
+    }
+
+    function socketAddMsg(msg) {
+        setToy(prev => ({ ...prev, msgs: [...prev.msgs, msg] }))
+    }
+
+    function socketRemoveMsg(msgId) {
+        setToy(prev => ({ ...prev, msgs: prev.msgs.filter(m => m.id !== msgId) }))
     }
 
     // review
@@ -259,6 +279,7 @@ export function ToyDetails(props) {
                     loggedinUser={loggedinUser}
                     onSaveMsg={onSaveMsg}
                     onRemoveMsg={onRemoveMsg}
+                    toyId={toyId}
                 />
 
             </Popup>

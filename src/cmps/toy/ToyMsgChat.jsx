@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react"
 import { userActions } from "../../../store/actions/user.actions.js"
+import { SOCKET_EMIT_SET_TOPIC, socketService } from "../../services/socket.service.js"
 
-export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg }) {
+export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyId }) {
 
     const [msgToEdit, setMsgToEdit] = useState({ txt: '' })
 
@@ -20,6 +21,11 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg }) {
         })
     }, [toyMsgs])
 
+    useEffect(() => {
+        if (toyId) {
+            socketService.emit(SOCKET_EMIT_SET_TOPIC, toyId)
+        }
+    }, [toyId])
 
     function onSendMsg(ev) {
         ev.preventDefault()
