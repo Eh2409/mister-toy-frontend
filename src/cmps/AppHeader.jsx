@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { toyActions } from '../../store/actions/toy.actions.js'
 import { userActions } from '../../store/actions/user.actions.js'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { SOCKET_EVENT_ADMIN_UPDATE_SITE, socketService } from '../services/socket.service.js'
 
 // cmps
 import { UserMsg } from './UserMsg.jsx'
@@ -72,6 +73,15 @@ export function AppHeader(props) {
 
     }, [isUserMenuOpen])
 
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_ADMIN_UPDATE_SITE, (msg) => {
+            showSuccessMsg(msg)
+        })
+
+        return (() => {
+            socketService.off(SOCKET_EVENT_ADMIN_UPDATE_SITE)
+        })
+    })
 
     useEffect(() => {
         if (isUserMenuOpen) {
@@ -94,7 +104,6 @@ export function AppHeader(props) {
             toggleIsUserMenuOpen()
         }
     }
-
 
 
     function onSearch(ev) {

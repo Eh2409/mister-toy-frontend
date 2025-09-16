@@ -1,6 +1,6 @@
 .user-msg {
     display: flex;
-    padding: .5em 1em;
+    padding: 1em 1em;
     position: fixed;
     bottom: 1em;
     right: 1em;
@@ -10,6 +10,9 @@
     z-index: 20;
     color: white;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.436);
+
+    max-width: 350px;
+    text-wrap-style: balance;
 
     p {
         margin: 0;
@@ -22,6 +25,13 @@
 
 .user-msg.error {
     background-color: var(--homePageBgClr);
+}
+
+.user-msg.notification {
+    bottom: 1em;
+    right: auto;
+    left: 1em;
+    background-color: color-mix(in srgb, var(--mainSiteClrTheme) 50%, var(--homePageBgClr) 50%);
 }
 
 

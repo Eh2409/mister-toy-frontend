@@ -10,6 +10,8 @@ export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 export const SOCKET_EMIT_DELETE_MSG = 'chat-delete-msg'
 export const SOCKET_EVENT_REMOVE_MSG = 'chat-remove-msg'
 
+export const SOCKET_EVENT_ADMIN_UPDATE_SITE = 'admin-update-site'
+
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 

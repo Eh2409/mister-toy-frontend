@@ -25,6 +25,10 @@ export function showSuccessMsg(txt) {
     showUserMsg({ txt, type: 'success' })
 }
 
+export function showNotificationMsg(txt) {
+    showUserMsg({ txt, type: 'notification' })
+}
+
 export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
