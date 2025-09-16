@@ -39,16 +39,6 @@
 @media (max-width: 750px) {
     .toy-index {
 
-        &:has(.mobile-filter-open) {
-            /* i need to imprvoe this */
-            overflow-x: hidden;
-
-            .toy-index-content {
-                height: 75vh;
-                overflow: hidden;
-            }
-        }
-
         .toy-filter-wrapper {
             position: fixed;
             top: 15vh;

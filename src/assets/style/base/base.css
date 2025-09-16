@@ -21,6 +21,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+@media (max-width: 750px) {
+    &:has(.nav-open, .mobile-filter-open) {
+        overflow: hidden;
+    }
+}
+
 img,
 picture,
 video,
