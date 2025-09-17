@@ -45,6 +45,17 @@ export function debounce(func, timeout = 300) {
     }
 }
 
+export function throttle(func, limit) {
+    let lastCall = 0
+    return function (...args) {
+        const now = Date.now()
+        if (now - lastCall >= limit) {
+            lastCall = now
+            func(...args)
+        }
+    }
+}
+
 export function saveToStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }

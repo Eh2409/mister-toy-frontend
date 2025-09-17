@@ -1,31 +1,68 @@
 import { useState, useEffect, useRef } from "react"
 import { userActions } from "../../../store/actions/user.actions.js"
-import { SOCKET_EMIT_SET_TOPIC, socketService } from "../../services/socket.service.js"
+import { SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_USER_TYPING, SOCKET_EVENT_ADD_MSG, SOCKET_EVENT_USER_TYPING, socketService } from "../../services/socket.service.js"
+import { throttle } from "../../services/util.service.js"
 
 export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyId }) {
 
     const [msgToEdit, setMsgToEdit] = useState({ txt: '' })
+    const [typingUsers, setTypingUsers] = useState([])
 
     const chatMessagesRef = useRef()
-
-    function handleChange({ target }) {
-        var { value, name } = target
-
-        setMsgToEdit(prev => ({ ...prev, [name]: value }))
-    }
+    const emitTypingRef = useRef(
+        throttle((username) => {
+            socketService.emit(SOCKET_EMIT_USER_TYPING, username)
+        }, 1000)
+    )
 
     useEffect(() => {
         chatMessagesRef.current.scrollTo({
             top: chatMessagesRef.current.scrollHeight,
             behavior: 'smooth'
         })
-    }, [toyMsgs])
+    }, [toyMsgs, typingUsers])
 
     useEffect(() => {
         if (toyId) {
             socketService.emit(SOCKET_EMIT_SET_TOPIC, toyId)
         }
     }, [toyId])
+
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_ADD_MSG, (msg) => {
+            setTypingUsers(prev =>
+                prev.filter(username => username !== msg?.by?.username)
+            )
+        })
+
+        return () => socketService.off(SOCKET_EVENT_ADD_MSG)
+    }, [])
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_USER_TYPING, (username) => {
+            setTypingUsers(prev => {
+                if (prev.includes(username)) return prev
+                return [...prev, username]
+            })
+
+            setTimeout(() => {
+                setTypingUsers(prev =>
+                    prev.filter(u => u !== username)
+                )
+            }, 2000)
+        })
+
+        return () => socketService.off(SOCKET_EVENT_USER_TYPING)
+    }, [])
+
+    function handleChange({ target }) {
+        var { value, name } = target
+
+        setMsgToEdit(prev => ({ ...prev, [name]: value }))
+        if (loggedinUser?.username) emitTypingRef.current(loggedinUser.username)
+    }
+
 
     function onSendMsg(ev) {
         ev.preventDefault()
@@ -55,11 +92,17 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyI
                                 {loggedinUser?.isAdmin &&
                                     <button className="remove-btn" onClick={() => onRemoveMsg(m?.id)}>X</button>}
                             </div>
-                            <div>{m.txt}</div>
+                            <pre>{m.txt}</pre>
                         </li>
                     ))
                 ) : (
                     <li className="no-items-found-msg ">No messages yet — start the conversation!</li>
+                )}
+
+                {typingUsers?.length > 0 && (
+                    <li className="user-typing-msg" >
+                        {typingUsers.join(", ")} {typingUsers.length === 1 ? "is typing..." : "are typing..."}
+                    </li>
                 )}
             </ul>
 

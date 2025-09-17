@@ -1,11 +1,19 @@
 .chat {
     .chat-messages {
+        display: flex;
+        flex-direction: column;
+
         height: 300px;
         background-color: white;
         margin-block-end: 1em;
         border-radius: 10px;
         overflow-y: scroll;
         padding: 0.5em;
+
+        .user-typing-msg {
+            flex-grow: 1;
+            align-content: end;
+        }
 
         .msg {
             background-color: var(--chatMsgClr1);
@@ -22,6 +30,7 @@
             &.you {
                 background-color: var(--chatMsgClr2);
                 justify-self: end;
+                align-self: end;
                 margin-inline-start: 1em;
             }
 
@@ -30,6 +39,7 @@
                 margin-block-end: 0.2em;
                 text-transform: capitalize;
             }
+
         }
     }
 
