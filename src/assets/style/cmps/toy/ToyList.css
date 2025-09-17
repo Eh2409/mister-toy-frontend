@@ -21,6 +21,7 @@
 
         .img-loader,
         img {
+            width: 100%;
             grid-row: span 2;
             aspect-ratio: 1 / 1;
             object-fit: cover;
