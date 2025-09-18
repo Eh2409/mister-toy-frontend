@@ -254,7 +254,7 @@ export function AppHeader(props) {
 
             <Popup
                 header={<h2 className='login-signup-logo'>{isSignup ? "Signup" : "Login"}</h2>}
-                aside={<img src="./images/aside-image.jpg" alt="popup-img" />}
+                aside={<img src="./images/aside-image.webp" alt="popup-img" />}
                 onClosePopup={onClosePopup}
                 isPopupOpen={isPopupOpen}>
 
