@@ -16,8 +16,6 @@
                 padding-inline-start: 0.5em;
             }
         }
-
-
     }
 
     hr {
@@ -110,8 +108,13 @@
 
         .toy-details-content {
             display: grid;
-            grid-template-columns: minmax(10px, 40%) 1fr;
+            grid-template-columns: minmax(200px, 40%) 1fr;
             gap: 1em;
+
+            .review-rating-state {
+                grid-column: span 2;
+                grid-row: 2;
+            }
         }
 
         .chat-btn {

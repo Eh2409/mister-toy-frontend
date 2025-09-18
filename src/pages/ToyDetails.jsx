@@ -218,11 +218,11 @@ export function ToyDetails(props) {
 
                         <h3 >Toy Details</h3>
                         <ToyDataTable toy={toy} />
-
-                        {ratingStats?.reviewsLength > 0 &&
-                            <ReviewRatingStats ratingStats={ratingStats} />}
                     </div>
                 </div>
+
+                {ratingStats?.reviewsLength > 0 &&
+                    <ReviewRatingStats ratingStats={ratingStats} />}
 
             </section>
 

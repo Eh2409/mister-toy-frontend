@@ -37,7 +37,7 @@ export function ReviewRatingStats({ ratingStats }) {
                 <ul >
                     {Object.entries(ratingStats.reviewPercentages).map(([rating, percentage]) => {
                         return <li key={rating} className="rating-item">
-                            <div>{rating} {rating > 1 ? "Stars" : "Star"}</div>
+                            <div className="s-n" >{rating} {rating > 1 ? "Stars" : "Star"}</div>
                             <div className="p-m">
                                 <span
                                     className={`p-n ${isMounted ? "animate" : ""}`}
