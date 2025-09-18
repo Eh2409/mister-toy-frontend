@@ -13,14 +13,12 @@ async function uploadImg(ev) {
         const formData = new FormData()
         formData.append('upload_preset', UPLOAD_PRESET)
         formData.append('file', file)
-        console.log('ev', ev)
 
         const res = await fetch(UPLOAD_URL, {
             method: 'POST',
             body: formData
         })
         const imgData = await res.json()
-        console.log('imgData', imgData)
         return imgData
     } catch (err) {
         console.error('Failed to upload', err)
@@ -52,7 +50,6 @@ async function uploadImgs(ev) {
         }
 
         const uploadedImages = await Promise.all(uploadPromises)
-        console.log('uploadedImages', uploadedImages)
         return uploadedImages
     } catch (err) {
         console.error('Failed to upload images', err)

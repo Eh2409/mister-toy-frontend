@@ -10,8 +10,6 @@ export function ToyImagesUploader({ onSaveImages, currImages = [] }) {
     const [ImagesPreview, setImagesPreview] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    // console.log('currImages:', currImages)
-
     useEffect(() => {
         if (currImages) {
             setImagesPreview([...currImages])
