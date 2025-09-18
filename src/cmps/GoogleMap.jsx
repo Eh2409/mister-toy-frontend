@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Fragment } from "react"
+import { useState, Fragment } from "react"
 import { AdvancedMarker, APIProvider, Map, Pin, InfoWindow, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 
 const apiKey = 'AIzaSyD0Pzw5IoHqPkTT9cEnnqDqEO9lPNCmKmg'

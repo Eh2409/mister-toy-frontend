@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 export function LabelPicker({ labels, filterLabels, onSaveLabels, labelType }) {
 

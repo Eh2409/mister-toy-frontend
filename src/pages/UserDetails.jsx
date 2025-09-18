@@ -2,11 +2,6 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams, NavLink, Outlet } from "react-router-dom"
 
-// cmps
-import { UserSettings } from "../cmps/user/UserSettings"
-import { UserReviews } from "../cmps/user/UserReviews"
-
-
 
 export function UserDetails(props) {
     const navigate = useNavigate()

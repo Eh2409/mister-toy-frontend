@@ -19,7 +19,6 @@ import { getUiTheme } from "../services/util.service.js";
 import { useConfirmTabClose } from "../hooks/useConfirmTabClose.js";
 
 // cmps
-import { LabelPicker } from "../cmps/LabelPicker.jsx"
 import { LabelPickerUi } from "../cmps/LabelPickerUi.jsx";
 import { ToyLoader } from "../cmps/toy/ToyLoader.jsx"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
