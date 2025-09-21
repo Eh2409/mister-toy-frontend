@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { userActions } from "../../../store/actions/user.actions.js"
 import { SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_USER_TYPING, SOCKET_EVENT_ADD_MSG, SOCKET_EVENT_USER_TYPING, socketService } from "../../services/socket.service.js"
-import { throttle } from "../../services/util.service.js"
+import { debounce } from "../../services/util.service.js"
 
 export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyId }) {
 
@@ -9,11 +9,7 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyI
     const [typingUsers, setTypingUsers] = useState([])
 
     const chatMessagesRef = useRef()
-    const emitTypingRef = useRef(
-        throttle((username) => {
-            socketService.emit(SOCKET_EMIT_USER_TYPING, username)
-        }, 1000)
-    )
+    const debounceRef = useRef(debounce(removeTypingUser, 600))
 
     useEffect(() => {
         chatMessagesRef.current.scrollTo({
@@ -46,21 +42,23 @@ export function ToyMsgChat({ toyMsgs, loggedinUser, onSaveMsg, onRemoveMsg, toyI
                 return [...prev, username]
             })
 
-            setTimeout(() => {
-                setTypingUsers(prev =>
-                    prev.filter(u => u !== username)
-                )
-            }, 2000)
+            debounceRef.current(username)
         })
 
         return () => socketService.off(SOCKET_EVENT_USER_TYPING)
     }, [])
 
+    function removeTypingUser(username) {
+        setTypingUsers(prev =>
+            prev.filter(u => u !== username)
+        )
+    }
+
     function handleChange({ target }) {
         var { value, name } = target
 
         setMsgToEdit(prev => ({ ...prev, [name]: value }))
-        if (loggedinUser?.username) emitTypingRef.current(loggedinUser.username)
+        if (loggedinUser?.username) socketService.emit(SOCKET_EMIT_USER_TYPING, loggedinUser.username)
     }
 
 
