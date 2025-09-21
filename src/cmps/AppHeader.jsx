@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 //services
 import { toyActions } from '../../store/actions/toy.actions.js'
 import { userActions } from '../../store/actions/user.actions.js'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { showErrorMsg, showNotificationMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { SOCKET_EVENT_ADMIN_UPDATE_SITE, socketService } from '../services/socket.service.js'
 
 // cmps
@@ -18,6 +18,7 @@ import { UserMenu } from './user/UserMenu.jsx'
 import xMark from '/images/x.svg'
 import bars from '/images/bars.svg'
 import userIcon from '/images/user.svg'
+import asideImg from '/images/aside-image.webp'
 
 
 export function AppHeader(props) {
@@ -75,7 +76,7 @@ export function AppHeader(props) {
 
     useEffect(() => {
         socketService.on(SOCKET_EVENT_ADMIN_UPDATE_SITE, (msg) => {
-            showSuccessMsg(msg)
+            showNotificationMsg(msg)
         })
 
         return (() => {
@@ -254,7 +255,7 @@ export function AppHeader(props) {
 
             <Popup
                 header={<h2 className='login-signup-logo'>{isSignup ? "Signup" : "Login"}</h2>}
-                aside={<img src="./images/aside-image.webp" alt="popup-img" />}
+                aside={<img src={asideImg} alt="popup-img" />}
                 onClosePopup={onClosePopup}
                 isPopupOpen={isPopupOpen}>
 
