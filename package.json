@@ -12,6 +12,8 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "build:local": "set VITE_LOCAL=true&&vite build",
+    "build:remote": "vite build",
     "deploy:local": "npm run build:local && gh-pages -d dist",
     "deploy:remote": "npm run build:remote && gh-pages -d dist"
   },
